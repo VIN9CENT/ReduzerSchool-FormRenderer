@@ -57,13 +57,13 @@ export default function FAQ() {
      }
   }
   return (
-    <div className="flex flex-col gap-4 bg-background opacity-95 text-black p-3">
+    <div className="flex flex-col gap-4 bg-(--color-faq-white) opacity-95 text-black p-4">
       <h1 className="text-center font-extrabold text-4xl">FAQ</h1>
      {faqs.map((faq) => (
-      <div key={faq.id} onClick={() => toggleFaq(faq.id)} className="border-1 border-red-500 rounded-md bg-background cursor-pointer p-3">
-        <div className="flex justify-between p-2">
-        <h2 className="font-bold text-[16px]">{faq.question}</h2>
-        {activeId === faq.id ? <ChevronUp className=""/> : <ChevronDown />}
+      <div key={faq.id} onClick={() => toggleFaq(faq.id)} className="shadow-none sm:shadow-3xl rounded-md bg-(--color-faq-white-1) cursor-pointer p-3 sm:mx-24">
+        <div className="flex justify-between items-center">
+        <h2 className="font-bold text-[14px] sm:text-[16px]">{faq.question}</h2>
+        {activeId === faq.id ? <ChevronUp color="red" size={24}/> : <ChevronDown color="red" size={24}/>}
         </div>
         {activeId === faq.id && (
         <p className="text-sm mx-6" >{faq.answer}</p> )}
