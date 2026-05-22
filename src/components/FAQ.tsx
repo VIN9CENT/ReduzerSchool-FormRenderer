@@ -1,4 +1,6 @@
-import {ChevronDown } from "lucide-react"
+'use client'
+import {ChevronDown, ChevronUp } from "lucide-react"
+import { useState } from "react";
 
 const faqs = [
   {
@@ -45,16 +47,26 @@ const faqs = [
 
 ]
 export default function FAQ() {
+  const [activeId,setActiveId] = useState<number | null>(null)
+
+  const toggleFaq = (id: number) => {
+     if(activeId === id){
+      setActiveId(null)
+     } else {
+      setActiveId(id)
+     }
+  }
   return (
     <div className="flex flex-col gap-4 bg-background opacity-95 text-black p-3">
       <h1 className="text-center font-extrabold text-4xl">FAQ</h1>
      {faqs.map((faq) => (
-      <div key={faq.id} className="border-1 border-red-500 rounded-md bg-background">
-        <div className="flex justify-between p-4">
-        <h2 className="font-bold text-[20px]">{faq.question}</h2>
-        <ChevronDown />
+      <div key={faq.id} onClick={() => toggleFaq(faq.id)} className="border-1 border-red-500 rounded-md bg-background cursor-pointer p-3">
+        <div className="flex justify-between p-2">
+        <h2 className="font-bold text-[16px]">{faq.question}</h2>
+        {activeId === faq.id ? <ChevronUp className=""/> : <ChevronDown />}
         </div>
-        <p className="text-sm mx-6">{faq.answer}</p>
+        {activeId === faq.id && (
+        <p className="text-sm mx-6" >{faq.answer}</p> )}
       </div>
      ))}
     </div>
