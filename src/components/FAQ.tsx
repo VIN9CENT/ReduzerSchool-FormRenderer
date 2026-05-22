@@ -46,15 +46,15 @@ const faqs = [
 ]
 export default function FAQ() {
   return (
-    <div>
-      <h1>FAQ</h1>
+    <div className="flex flex-col gap-4 bg-background opacity-95 text-black p-3">
+      <h1 className="text-center font-extrabold text-4xl">FAQ</h1>
      {faqs.map((faq) => (
-      <div key={faq.id}>
-        <div>
-        <h2>{faq.question}</h2>
+      <div key={faq.id} className="border-1 border-red-500 rounded-md bg-background">
+        <div className="flex justify-between p-4">
+        <h2 className="font-bold text-[20px]">{faq.question}</h2>
         <ChevronDown />
         </div>
-        <p>{faq.answer}</p>
+        <p className="text-sm mx-6">{faq.answer}</p>
       </div>
      ))}
     </div>
