@@ -16,38 +16,68 @@ const features = [
 
 export default function HeroSection() {
   return (
-    <section>
-      <div>
-        <div>
-          <h1>
-            Launch Your <span>Career</span> in Tech With Our Intensive 12-Month
-            Bootcamp
+    <section className="relative w-full overflow-hidden bg-[#F7F9FB]">
+      {/* Decorative Background Blobs */}
+      <div className="absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] -left-[139px] top-[399px] bg-[rgba(255,56,60,0.32)] blur-[105px] -rotate-[112.15deg]" />
+      <div className="absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] left-[1400px] top-[119px] bg-[rgba(255,56,60,0.37)] blur-[105px] -rotate-[112.15deg]" />
+
+      {/* Main Content */}
+      <div className="relative flex flex-col items-center pt-[160px] gap-[120px] pb-16">
+        {/* Hero content area */}
+        <div className="flex flex-col items-center gap-12 w-full max-w-[896px] px-6">
+          {/* Heading */}
+          <h1 className="font-['Inter'] font-bold text-[64px] leading-[85px] tracking-[-2.56px] text-center text-[#191C1E] max-w-[986px] w-full">
+            Launch Your{' '}
+            <span className="text-[#BB001F] underline italic">Career</span> in
+            Tech With Our Intensive 12-Month Bootcamp
           </h1>
 
-          <p>
+          {/* Subtitle */}
+          <p className="font-['Inter'] font-normal text-[24px] leading-[32px] tracking-[-0.2px] text-center text-[#5F3E3C] max-w-[560px]">
             Hands-on training, mentorship, and real-world projects built for
             ambitious learners ready to break into tech.
           </p>
 
-          <p>Apply for September Intake</p>
+          {/* Intake label */}
+          <p className="font-['Inter'] font-semibold text-[14px] leading-[12px] tracking-[1.2px] text-center uppercase text-[#565E74]">
+            Apply for September Intake
+          </p>
 
-          <div>
-            <Link href="#apply">
-              Apply Now
-              <ArrowRight size={16} />
+          {/* CTA Buttons */}
+          <div className="flex flex-row justify-center items-center gap-[30px] w-full pt-[17.1px] pb-[49.1px]">
+            {/* Primary button */}
+            <Link
+              href="#apply"
+              className="flex flex-row justify-center items-center gap-2 rounded-[8px] bg-[#BB001F] px-8 pt-[17.5px] pb-[18.5px] shadow-[0px_10px_15px_-3px_rgba(187,0,31,0.2),0px_4px_6px_-4px_rgba(187,0,31,0.2)] hover:bg-[#a0001a] transition-colors"
+            >
+              <span className="font-['Inter'] font-semibold text-[18px] leading-[28px] tracking-[1.8px] text-center text-white">
+                Apply Now
+              </span>
+              <ArrowRight size={16} className="text-white" />
             </Link>
 
-            <Link href="#curriculum">View Curriculum</Link>
+            {/* Secondary button */}
+            <Link
+              href="#curriculum"
+              className="flex flex-col justify-center items-center rounded-[8px] border border-[#FF383C] py-4 px-8 hover:bg-[#FF383C]/5 transition-colors"
+            >
+              <span className="font-['Inter'] font-semibold text-[18px] leading-[28px] tracking-[1.8px] text-center text-[#BB001F]">
+                View Curriculum
+              </span>
+            </Link>
           </div>
 
-          <div>
-            <div>
+          {/* Feature grid */}
+          <div className="w-full pt-12 ">
+            <div className="flex flex-row justify-between items-start">
               {features.map(({ icon: Icon, label }) => (
-                <div key={label}>
-                  <div>
-                    <Icon size={20} />
+                <div key={label} className="flex flex-col items-center gap-4">
+                  <div className="flex justify-center items-center w-12 h-12 bg-[#ECEEF0] rounded-full">
+                    <Icon size={20} color="#BB001F" />
                   </div>
-                  <span>{label}</span>
+                  <span className="font-['Inter'] font-semibold text-[12px] leading-[12px] tracking-[1.2px] text-center text-[#191C1E]">
+                    {label}
+                  </span>
                 </div>
               ))}
             </div>
