@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
@@ -16,13 +17,16 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-10 w-full bg-[rgba(247,249,251,0.8)] backdrop-blur-md border-b border-gray-100">
+    <nav className="sticky top-0 z-10 w-full bg-white border-b border-gray-100">
       <div className="flex flex-row justify-between items-center w-full max-w-[1280px] mx-auto px-6 h-20 md:px-8">
-        <Link
-          href="/"
-          className="font-semibold text-[20px] text-[#BB001F] tracking-tight"
-        >
-          Reduzer School
+        <Link href="/">
+          <Image
+            src="https://brand-assets.reduzer.tech/horizontal/white/reduzer.png"
+            alt="Reduzer School"
+            width={160}
+            height={32}
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -61,7 +65,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden flex flex-col gap-0 border-t border-gray-100 bg-[rgba(247,249,251,0.98)] px-6 pb-6 pt-4">
+        <div className="md:hidden flex flex-col gap-0 border-t border-gray-100 bg-white px-6 pb-6 pt-4">
           {navLinks.map(({ label, href }) => (
             <Link
               key={label}
