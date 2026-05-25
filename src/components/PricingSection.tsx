@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function PricingSection() {
   return (
-    <section className="w-full min-h-screen bg-white/95 backdrop-blur-sm rounded-[25px] overflow-hidden font-['Inter']">
+    <section id="pricing" className="w-full min-h-screen bg-white/95 backdrop-blur-sm rounded-[25px] overflow-hidden font-['Inter sans-serif']">
       {/* Banner */}
       <div className="w-full bg-[#d92b2b] text-center py-4 px-4 shadow-sm rounded-t-[25px]">
         <span className="text-white font-black text-sm md:text-base tracking-widest uppercase">
@@ -13,14 +13,13 @@ export default function PricingSection() {
       {/* Main Wrapper */}
       <div className="w-full px-6 py-12 md:px-12 lg:px-24 xl:px-32">
         <div className="max-w-5xl mx-auto space-y-8">
-
           {/* Header Card */}
           <div className="bg-white rounded-2xl shadow-md p-8 md:p-10 text-center">
             <h2 className="font-bold text-[#111] text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
-              Investment in Your{" "}
+              Investment in Your{' '}
               <span className="text-[#d92b2b] italic">
                 Software Engineering
-              </span>{" "}
+              </span>{' '}
               Career
             </h2>
           </div>
@@ -40,7 +39,7 @@ export default function PricingSection() {
               Best Plan
             </span>
 
-            <h3 className="font-black text-[#d92b2b] text-xl sm:text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-tight">
+            <h3 className="font-black text-[#d92b2b] text-xl sm:text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-tight font-['Inter sans-serif']">
               Monthly Plan
             </h3>
 
@@ -94,7 +93,6 @@ export default function PricingSection() {
               Apply Now
             </Link>
           </div>
-
         </div>
       </div>
     </section>

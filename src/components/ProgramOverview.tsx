@@ -1,4 +1,7 @@
+'use client';
+
 import { useState } from 'react';
+import Link from 'next/link';
 import {
   Clock,
   MapPin,
@@ -25,7 +28,7 @@ export default function ProgramOverview() {
   ];
 
   return (
-    <section className="bg-white w-full py-16 px-4">
+    <section id="program" className="bg-white w-full py-16 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="bg-black text-center px-4 py-16 rounded-2xl mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-red-600">
@@ -131,7 +134,7 @@ export default function ProgramOverview() {
           )}
         </div>
 
-        <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div id="curriculum" className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">
               Curriculum Deep Dive
@@ -153,10 +156,10 @@ export default function ProgramOverview() {
         </div>
 
         <div className="flex justify-center">
-          <button className="flex items-center gap-2 bg-red-600  transition-colors duration-200 text-white font-bold text-base px-10 py-4 rounded-full">
+          <Link href="#apply" className="flex items-center gap-2 bg-red-600 transition-colors duration-200 text-white font-bold text-base px-10 py-4 rounded-full">
             Apply Now
             <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>

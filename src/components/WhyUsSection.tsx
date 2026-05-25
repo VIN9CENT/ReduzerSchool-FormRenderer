@@ -2,7 +2,7 @@ import { Target, Brain, Users, Zap, ArrowRight } from 'lucide-react';
 
 export default function WhyUsSection() {
   return (
-    <section className="relative bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16 font-[Inter sans-serif]">
+    <section id="about" className="relative bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16 font-[Inter sans-serif]">
       <div className="absolute inset-0 opacity-[0.03]">
         <div
           className="h-full w-full"

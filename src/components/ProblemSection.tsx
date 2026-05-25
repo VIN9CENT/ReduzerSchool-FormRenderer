@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { BookOpen, Briefcase, TrendingUp, ArrowRight } from 'lucide-react';
 
 export default function ProblemSection() {
@@ -155,10 +156,10 @@ export default function ProblemSection() {
               </p>
             </div>
 
-            <button className="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:px-8">
+            <Link href="#apply" className="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:px-8">
               Apply Now
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

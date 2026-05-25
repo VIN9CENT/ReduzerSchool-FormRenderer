@@ -1,6 +1,6 @@
 export default function FAQSection() {
   return (
-    <section>
+    <section id="faq">
       <p>FAQ Section</p>
     </section>
   );
