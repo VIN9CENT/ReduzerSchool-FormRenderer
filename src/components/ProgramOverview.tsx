@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Clock,
   MapPin,
@@ -6,9 +7,12 @@ import {
   BookOpen,
   Download,
   ArrowRight,
+  ChevronDown,
 } from 'lucide-react';
 
 export default function ProgramOverview() {
+  const [skillsOpen, setSkillsOpen] = useState(false);
+
   const skills = [
     'Build and deploy full-stack web applications from scratch.',
     'Work in teams using industry tools and workflows.',
@@ -90,31 +94,42 @@ export default function ProgramOverview() {
           <p className="text-white text-xl font-bold">100% Physical Classes</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 shadow-sm">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="bg-red-600 rounded-full p-2 flex items-center justify-center">
-              <BookOpen className="text-white w-5 h-5" />
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 shadow-sm overflow-hidden">
+          <button
+            onClick={() => setSkillsOpen(!skillsOpen)}
+            className="w-full flex items-center justify-between px-8 py-5 cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <div className="bg-red-600 rounded-full p-2 flex items-center justify-center">
+                <BookOpen className="text-white w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-black">
+                Skills You Will Gain
+              </h3>
             </div>
+            <ChevronDown
+              className={`text-gray-500 w-5 h-5 transition-transform duration-300 ${
+                skillsOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
 
-            <h3 className="text-lg font-bold text-gray-900">
-              Skills You Will Gain
-            </h3>
-          </div>
-
-          <ul className="space-y-2">
-            {skills.map((skill, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-2 text-gray-700 text-sm md:text-base"
-              >
-                <span className="text-red-600 font-bold mt-0.5 shrink-0">
-                  •
-                </span>
-
-                {skill}
-              </li>
-            ))}
-          </ul>
+        
+          {skillsOpen && (
+            <ul className="px-8 pb-6 space-y-2 border-t border-gray-100 pt-4">
+              {skills.map((skill, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-2 text-black font-medium text-sm md:text-base"
+                >
+                  <span className="text-red-600 font-bold mt-0.5 shrink-0">
+                    •
+                  </span>
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -139,7 +154,7 @@ export default function ProgramOverview() {
         </div>
 
         <div className="flex justify-center">
-          <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 transition-colors duration-200 text-white font-bold text-base px-10 py-4 rounded-full">
+          <button className="flex items-center gap-2 bg-red-600 hover:bg-black transition-colors duration-200 text-white font-bold text-base px-10 py-4 rounded-full">
             Apply Now
             <ArrowRight className="w-5 h-5" />
           </button>
