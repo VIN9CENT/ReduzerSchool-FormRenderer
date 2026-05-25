@@ -114,7 +114,6 @@ export default function ProgramOverview() {
             />
           </button>
 
-        
           {skillsOpen && (
             <ul className="px-8 pb-6 space-y-2 border-t border-gray-100 pt-4">
               {skills.map((skill, i) => (
