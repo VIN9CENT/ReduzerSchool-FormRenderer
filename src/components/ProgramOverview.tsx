@@ -94,7 +94,7 @@ export default function ProgramOverview() {
           <p className="text-white text-xl font-bold">100% Physical Classes</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 shadow-sm overflow-hidden">
+        <div className="bg-white  rounded-2xl p-8 mb-8 shadow-sm overflow-hidden">
           <button
             onClick={() => setSkillsOpen(!skillsOpen)}
             className="w-full flex items-center justify-between px-8 py-5 cursor-pointer"
@@ -108,7 +108,7 @@ export default function ProgramOverview() {
               </h3>
             </div>
             <ChevronDown
-              className={`text-gray-500 w-5 h-5 transition-transform duration-300 ${
+              className={`text-black w-5 h-5 transition-transform duration-300 ${
                 skillsOpen ? 'rotate-180' : ''
               }`}
             />
@@ -153,7 +153,7 @@ export default function ProgramOverview() {
         </div>
 
         <div className="flex justify-center">
-          <button className="flex items-center gap-2 bg-red-600 hover:bg-black transition-colors duration-200 text-white font-bold text-base px-10 py-4 rounded-full">
+          <button className="flex items-center gap-2 bg-red-600  transition-colors duration-200 text-white font-bold text-base px-10 py-4 rounded-full">
             Apply Now
             <ArrowRight className="w-5 h-5" />
           </button>
