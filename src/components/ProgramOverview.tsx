@@ -33,7 +33,6 @@ export default function ProgramOverview() {
       className="bg-white w-full py-20 px-6 md:px-16 lg:px-24"
     >
       <div className="max-w-7xl mx-auto">
-     
         <div className="bg-black text-center px-8 py-20 rounded-3xl mb-12">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-red-600 leading-tight mb-6">
             Reduzer Software Engineering <br /> School Program
@@ -90,7 +89,6 @@ export default function ProgramOverview() {
           <p className="text-white text-3xl font-bold">100% Physical Classes</p>
         </div>
 
-       
         <div className="bg-white border border-gray-200 rounded-2xl mb-8 shadow-md overflow-hidden">
           <button
             onClick={() => setSkillsOpen(!skillsOpen)}
@@ -128,7 +126,6 @@ export default function ProgramOverview() {
           )}
         </div>
 
-        
         <div
           id="curriculum"
           className="bg-zinc-900 border border-zinc-700 rounded-2xl p-8 mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
@@ -155,7 +152,6 @@ export default function ProgramOverview() {
           </a>
         </div>
 
-     
         <div className="flex justify-center">
           <Link
             href="#apply"
