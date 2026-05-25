@@ -1,79 +1,148 @@
-import { Clock, MapPin, Calendar, MonitorPlay} from 'lucide-react';
+import {
+  Clock,
+  MapPin,
+  Calendar,
+  MonitorPlay,
+  BookOpen,
+  Download,
+  ArrowRight,
+} from 'lucide-react';
 
-
-
-const overviewCards =[
-  {
-    icon: <Clock/>,
-    title: "Course Duration",
-    text: "52 Weeks",
-  },
-  {
-    icon: <Calendar/>,
-    title: "Schedule",
-    text: "Mon - Fri 8am - 5pm",
-  },
-  {
-    icon: <MapPin/>,
-    title: "Location",
-    text: "Kisii, Kenya",
-  },
-  {
-    icon: <MonitorPlay/>,
-    title:"Mode of Learning",
-    text: "100% physical Clases"
-  },
-  
-];
 export default function ProgramOverview() {
+  const skills = [
+    'Build and deploy full-stack web applications from scratch.',
+    'Work in teams using industry tools and workflows.',
+    'Solve problems like an engineer, not just copy code.',
+    'Write clean, maintainable, professional code.',
+    'Use React, JavaScript, TypeScript, and Node.js confidently.',
+    'Present your work in interviews and client meetings.',
+    'Learn independently and continuously grow.',
+    'Collaborate effectively with strong communication and teamwork skills.',
+  ];
+
   return (
-    <section className="program-overview-section">
-      <div className="program-overview-container">
-        <div className="program-overview-content">
-          <div className="block">
-            <h2 className="title">Reduzer Software Engineering School</h2>
-            <p className="description">
-              A one-year immersive program that takes you from foundational
-              concepts to a job-ready softaware developer through hands-on
-              training, mentorship, and real-world projects. Designed for
-              ambitious learners seeking practical skills and structured growth.
+    <section className="bg-white w-full py-16 px-4">
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-black text-center px-4 py-16 rounded-2xl mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-red-600">
+            Reduzer Software Engineering <br /> School
+          </h2>
+
+          <p className="text-white text-sm md:text-base max-w-xl mx-auto">
+            A one-year immersive program that takes you from foundational
+            concepts to a job-ready softaware developer through hands-on
+            training, mentorship, and real-world projects. Designed for
+            ambitious learners seeking practical skills and structured growth.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="bg-red-600 rounded-xl p-6 flex flex-col items-center text-center">
+            <Clock className="text-white w-7 h-7 mb-2" />
+
+            <p className="text-white text-xs font-medium uppercase tracking-wide mb-1">
+              Course Duration
+            </p>
+
+            <p className="text-white text-xl font-bold">52 Weeks</p>
+          </div>
+
+          <div className="bg-red-600 rounded-xl p-6 flex flex-col items-center text-center">
+            <Clock className="text-white w-7 h-7 mb-2" />
+
+            <p className="text-white text-xs font-medium uppercase tracking-wide mb-1">
+              Schedule
+            </p>
+
+            <p className="text-white text-xl font-bold">Mon-Fri 8am-5pm</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="bg-red-600 rounded-xl p-6 flex flex-col items-center text-center">
+            <MapPin className="text-white w-7 h-7 mb-2" />
+
+            <p className="text-white text-xs font-medium uppercase tracking-wide mb-1">
+              Location
+            </p>
+
+            <p className="text-white text-xl font-bold">Kisii, Kenya</p>
+          </div>
+
+          <div className="bg-red-600 rounded-xl p-6 flex flex-col items-center text-center">
+            <Calendar className="text-white w-7 h-7 mb-2" />
+
+            <p className="text-white text-xs font-medium uppercase tracking-wide mb-1">
+              Start Date
+            </p>
+
+            <p className="text-white text-xl font-bold">September 1st 2026</p>
+          </div>
+        </div>
+
+        <div className="bg-red-600 rounded-xl p-6 flex flex-col items-center text-center mb-10">
+          <MonitorPlay className="text-white w-7 h-7 mb-2" />
+
+          <p className="text-white text-xs font-medium uppercase tracking-wide mb-1">
+            Mode of Learning
+          </p>
+
+          <p className="text-white text-xl font-bold">100% Physical Classes</p>
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 shadow-sm">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="bg-red-600 rounded-full p-2 flex items-center justify-center">
+              <BookOpen className="text-white w-5 h-5" />
+            </div>
+
+            <h3 className="text-lg font-bold text-gray-900">
+              Skills You Will Gain
+            </h3>
+          </div>
+
+          <ul className="space-y-2">
+            {skills.map((skill, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-2 text-gray-700 text-sm md:text-base"
+              >
+                <span className="text-red-600 font-bold mt-0.5 shrink-0">
+                  •
+                </span>
+
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">
+              Curriculum Deep Dive
+            </p>
+
+            <p className="text-white font-semibold text-sm md:text-base">
+              Full program breakdown.
             </p>
           </div>
 
-          <div className="cards">
-            {overviewCards.map((card, index) => (
-              <div key={index} className="info-card">
-                <span className="card-icon">{card.icon}</span>
+          <a
+            href="/curriculum.pdf"
+            download
+            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 transition-colors duration-200 text-white font-semibold text-sm px-6 py-3 rounded-full whitespace-nowrap"
+          >
+            <Download className="w-4 h-4" />
+            Download Here
+          </a>
+        </div>
 
-                <p className="card-title">{card.title}</p>
-
-                <p className="card-text">{card.text}</p>
-              </div>
-            ))}
-          </div>
-          <div className="Skills-section">
-            <div className="skills-icon"></div>
-            <h3 className="skills-title">Skills You Will Gain</h3>
-            <ul className="skills-list">
-              <li>Build and deploy full-stack web applications.</li>
-              <li>Work in teams using industry tools and workflows.</li>
-              <li>Solve problems like an engineer, not just copy code.</li>
-              <li> Write clean, maintainable, professional code. </li>
-              <li>
-                Use React, JavaScript, TypeScript, and Node.js confidently.{' '}
-              </li>
-              <li>Present your work in interviews and client meetings.</li>
-              <li> Learn independently and continuously grow. </li>
-              <li>
-                Collaborate effectively with strong communication and teamwork
-                skills.
-              </li>
-            </ul>
-          </div>
-
-          <div className="apply-block">
-            <button className="apply-btn">Apply Now</button>
-          </div>
+        <div className="flex justify-center">
+          <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 transition-colors duration-200 text-white font-bold text-base px-10 py-4 rounded-full">
+            Apply Now
+            <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>
