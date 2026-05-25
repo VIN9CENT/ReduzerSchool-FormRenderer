@@ -34,7 +34,7 @@ export default function ProgramOverview() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="bg-black text-center px-8 py-20 rounded-3xl mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-#FF002E leading-tight mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#FF002E] leading-tight mb-6">
             Reduzer Software Engineering <br /> School Program
           </h2>
           <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
@@ -46,17 +46,17 @@ export default function ProgramOverview() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-#FF002E rounded-2xl p-10 flex flex-col items-center text-center ">
+          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
             <Clock className="text-white w-10 h-10 mb-4" />
-            <p className="text-red-200 text-sm font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-sm font-bold uppercase tracking-widest mb-2">
               Course Duration
             </p>
             <p className="text-white text-3xl font-medium">52 Weeks</p>
           </div>
 
-          <div className="bg-#FF002E rounded-2xl p-10 flex flex-col items-center text-center ">
+          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
             <Clock className="text-white w-10 h-10 mb-4" />
-            <p className="text-red-200 text-sm font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-sm font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
             <p className="text-white text-3xl font-medium">Mon-Fri • 8am-5pm</p>
@@ -64,17 +64,17 @@ export default function ProgramOverview() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-#FF002E rounded-2xl p-10 flex flex-col items-center text-center ">
+          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
             <MapPin className="text-white w-10 h-10 mb-4" />
-            <p className="text-red-200 text-sm font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-sm font-bold uppercase tracking-widest mb-2">
               Location
             </p>
             <p className="text-white text-3xl font-medium">Kisii, Kenya</p>
           </div>
 
-          <div className="bg-#FF002E rounded-2xl p-10 flex flex-col items-center text-center">
+          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center">
             <Calendar className="text-white w-10 h-10 mb-4" />
-            <p className="text-red-200 text-sm font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-sm font-bold uppercase tracking-widest mb-2">
               Start Date
             </p>
             <p className="text-white text-3xl font-medium">
@@ -83,9 +83,9 @@ export default function ProgramOverview() {
           </div>
         </div>
 
-        <div className="bg-#FF002E rounded-2xl p-10 flex flex-col items-center text-center mb-12 ">
+        <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center mb-12 ">
           <MonitorPlay className="text-white w-10 h-10 mb-4" />
-          <p className="text-red-200 text-sm font-bold uppercase tracking-widest mb-2">
+          <p className="text-white text-sm font-bold uppercase tracking-widest mb-2">
             Mode of Learning
           </p>
           <p className="text-white text-3xl font-medium">
@@ -99,7 +99,7 @@ export default function ProgramOverview() {
             className="w-full flex items-center justify-between px-10 py-7 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
           >
             <div className="flex items-center gap-4">
-              <div className="bg-#FF002E rounded-full p-3 flex items-center justify-center">
+              <div className="bg-[#FF002E] rounded-full p-3 flex items-center justify-center">
                 <BookOpen className="text-white w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-black">
@@ -120,7 +120,7 @@ export default function ProgramOverview() {
                   key={i}
                   className="flex items-start gap-3 text-gray-800 font-medium text-base"
                 >
-                  <span className="text-#FF002E font-bold mt-0.5 shrink-0 text-lg">
+                  <span className="text-[#FF002E] font-bold mt-0.5 shrink-0 text-lg">
                     •
                   </span>
                   {skill}
@@ -135,7 +135,7 @@ export default function ProgramOverview() {
           className="bg-zinc-900 border border-zinc-700 rounded-2xl p-8 mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
         >
           <div>
-            <p className="text-#FF002E text-xs font-semibold uppercase tracking-widest mb-2">
+            <p className="text-[#FF002E] text-xs font-semibold uppercase tracking-widest mb-2">
               Curriculum Deep Dive
             </p>
             <p className="text-white font-bold text-xl mb-1">
@@ -147,9 +147,9 @@ export default function ProgramOverview() {
             </p>
           </div>
           <a
-            href="#"
+            href="/curriculum.pdf"
             download
-            className="flex items-center gap-3 bg-#FF002E hover:bg-red-700 transition-colors duration-200 text-white font-bold text-base px-8 py-4 rounded-full whitespace-nowrap"
+            className="flex items-center gap-3 bg-[#FF002E] transition-colors duration-200 text-white font-bold text-base px-8 py-4 rounded-full whitespace-nowrap"
           >
             <Download className="w-5 h-5" />
             Download Here
@@ -159,7 +159,7 @@ export default function ProgramOverview() {
         <div className="flex justify-center">
           <Link
             href="#apply"
-            className="flex items-center gap-3 bg-#FF002E hover:bg-black transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
+            className="flex items-center gap-3 bg-[#FF002E] hover:bg-black transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
           >
             Apply Now
             <ArrowRight className="w-6 h-6" />
