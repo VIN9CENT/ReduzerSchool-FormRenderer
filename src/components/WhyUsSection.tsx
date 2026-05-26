@@ -1,8 +1,9 @@
-import { Target, Brain, Users, Zap, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Target, Building2, Users, ArrowRight } from 'lucide-react';
 
 export default function WhyUsSection() {
   return (
-    <section id="about" className="relative bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16 font-[Inter sans-serif]">
+    <section id="about" className="relative bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16 font-[Inter,sans-serif]">
       <div className="absolute inset-0 opacity-[0.03]">
         <div
           className="h-full w-full"
@@ -14,102 +15,90 @@ export default function WhyUsSection() {
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-12 text-center md:mb-16">
-          <h1 className="mb-4 text-3xl font-bold md:text-4xl text-black lg:text-5xl">
+          <h1 className="mb-4 text-3xl font-bold text-black md:text-4xl lg:text-5xl">
             Why Reduzer School
           </h1>
 
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600 md:text-base">
-            We&apos;ve deconstructed the traditional education model to build a
-            fast-path for the next generation of technical leaders.
+            We&apos;re not just another coding bootcamp. Reduzer School is built 
+            differently because we know what it takes to get hired—and we&apos;re 
+            here to make sure you get there.
           </p>
         </div>
 
-        {/* 4 Feature Cards Grid */}
-        <div className="mb-12 grid gap-6 md:grid-cols-2 md:gap-8 lg:gap-10">
-          {/* Card 1: Production-Grade Curriculum */}
+        {/* 3 Feature Cards Grid */}
+        <div className="mb-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:gap-10">
+          {/* Card 1: Beyond Teaching */}
           <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:p-8">
             <div className="mb-4 inline-flex rounded-lg bg-red-50 p-3">
               <Target className="h-6 w-6 text-red-600" strokeWidth={2} />
             </div>
 
             <h2 className="mb-3 text-xl font-bold text-gray-900">
-              Production-Grade Curriculum
+              Beyond Teaching
             </h2>
 
             <p className="text-sm leading-relaxed text-gray-600">
-              Forget &quot;Hello World&quot;. Our syllabus is reverse-engineered
-              from the complexity of Fortune 500 production systems. You&apos;ll
-              master distributed systems, high-concurrency patterns, and
-              cloud-native architecture from day one.
+              Most programs stop at teaching. Reduzer School goes further with 
+              career support, portfolio building, interview preparation, and access 
+              to real opportunities—because getting hired matters just as much as 
+              learning the skills.
             </p>
           </div>
 
-          {/* Card 2: Architectural Thinking */}
+          {/* Card 2: Industry-Backed */}
           <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:p-8">
             <div className="mb-4 inline-flex rounded-lg bg-red-50 p-3">
-              <Brain className="h-6 w-6 text-red-600" strokeWidth={2} />
+              <Building2 className="h-6 w-6 text-red-600" strokeWidth={2} />
             </div>
 
             <h2 className="mb-3 text-xl font-bold text-gray-900">
-              Architectural Thinking
+              Industry-Backed
             </h2>
 
             <p className="text-sm leading-relaxed text-gray-600">
-              We don&apos;t just teach you how to write code; we teach you how
-              to design software. Understand the &quot;why&quot; behind every
-              decision, from CAP theorem trade-offs to microservices
-              orchestration.
+              Reduzer School is built by the same team behind Reduzer Technologies, 
+              a company already placing Kenyan engineers with global companies. We 
+              didn&apos;t guess at what the industry needs. We already know.
             </p>
           </div>
 
-          {/* Card 3: Elite Mentorship */}
-          <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:p-8">
+          {/* Card 3: Full Year Immersive */}
+          <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:col-span-2 lg:col-span-1 md:p-8">
             <div className="mb-4 inline-flex rounded-lg bg-red-50 p-3">
               <Users className="h-6 w-6 text-red-600" strokeWidth={2} />
             </div>
 
             <h2 className="mb-3 text-xl font-bold text-gray-900">
-              Elite Mentorship
+              Full Year Immersive
             </h2>
 
             <p className="text-sm leading-relaxed text-gray-600">
-              Learn directly from Staff Engineers and CTOs who have scaled
-              systems to millions of users. No TAs—just direct access to the
-              industry&apos;s best minds.
-            </p>
-          </div>
-
-          {/* Card 4: High-Velocity Growth */}
-          <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:p-8">
-            <div className="mb-4 inline-flex rounded-lg bg-red-50 p-3">
-              <Zap className="h-6 w-6 text-red-600" strokeWidth={2} />
-            </div>
-
-            <h2 className="mb-3 text-xl font-bold text-gray-900">
-              High-Velocity Growth
-            </h2>
-
-            <p className="text-sm leading-relaxed text-gray-600">
-              Our immersive format compresses years of on-the-job learning into
-              months. Join a cohort of high-performers and push your limits in
-              an environment designed for rapid skill acquisition.
+              A full year of immersive, in-person software engineering training with 
+              real projects, mentorship, career support, and honest expectations—built 
+              for serious learners ready to create better opportunities for themselves.
             </p>
           </div>
         </div>
 
+        {/* CTA Section */}
         <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between lg:justify-end">
           <p className="text-center text-sm font-medium uppercase tracking-wide text-gray-500 md:text-left lg:hidden">
-            Ready to scale your career?
+            Ready to transform your career?
           </p>
 
-          <button className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-8 py-4 font-semibold text-white transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto">
+          <Link 
+            href="#apply"
+            className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-8 py-4 font-semibold text-white transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto"
+          >
             Start Application
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
+
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-400">
-            NEXT COHORT STARTS SEPTEMBER 2024 • LIMITED SLOTS AVAILABLE
+            NEXT COHORT STARTS SEPTEMBER 2026 • LIMITED SLOTS AVAILABLE
           </p>
         </div>
       </div>
