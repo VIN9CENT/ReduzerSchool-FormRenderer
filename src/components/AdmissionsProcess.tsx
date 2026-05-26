@@ -75,10 +75,8 @@ const steps = [
 
 export default function AdmissionsProcess() {
   return (
-    
-    <main
-      id="admissions"
-      className="w-full"
+    <section
+      id="apply"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
 
