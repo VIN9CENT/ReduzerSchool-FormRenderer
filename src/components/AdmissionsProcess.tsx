@@ -265,6 +265,7 @@ export default function AdmissionsProcess() {
 
       </section>
 
-    </main>
+    </section>
+   
   );
 }
