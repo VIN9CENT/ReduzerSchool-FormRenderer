@@ -148,7 +148,7 @@ export default function ProgramOverview() {
             </p>
           </div>
           <a
-            href="/curriculum.pdf"
+            href="#"
             download
             className="flex items-center gap-3 bg-[#FF002E] transition-colors duration-200 text-white font-bold text-base px-8 py-4 rounded-full whitespace-nowrap"
           >
