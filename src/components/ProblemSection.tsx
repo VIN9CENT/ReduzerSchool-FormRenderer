@@ -1,16 +1,5 @@
 import Link from 'next/link';
-<<<<<<< HEAD
 import { BookOpen, Clock, ArrowRight, DollarSign, Target } from 'lucide-react';
-=======
-import {
-  BookOpen,
-  Users,
-  Clock,
-  ArrowRight,
-  DollarSign,
-  Target,
-} from 'lucide-react';
->>>>>>> a9dc3a2 (added apply now button)
 
 export default function ProblemSection() {
   return (
@@ -25,11 +14,7 @@ export default function ProblemSection() {
           <p className="max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
             Tech opportunities are growing fast, but access to practical
             training still feels out of reach for many Kenyans. The problem
-<<<<<<< HEAD
             isn&apos;t that people aren&apos;t trying; they&apos;re doing
-=======
-            isn&apos;t that people aren&apos;t trying—they&apos;re doing
->>>>>>> a9dc3a2 (added apply now button)
             everything they can. The problem is that nobody has built a program
             deep enough, long enough, and close enough to actually close the
             gap.
@@ -95,11 +80,7 @@ export default function ProblemSection() {
               <p className="mb-6 leading-relaxed text-gray-600">
                 Many are balancing work, family responsibilities, or the
                 pressure to rebuild their future after life took a different
-<<<<<<< HEAD
                 path. They need a program that fits their reality; not one
-=======
-                path. They need a program that fits their reality—not one
->>>>>>> a9dc3a2 (added apply now button)
                 designed for people with unlimited time and resources.
               </p>
 
@@ -196,24 +177,15 @@ export default function ProblemSection() {
                 That&apos;s what Reduzer School is here to do
               </h2>
               <p className="leading-relaxed text-gray-300">
-<<<<<<< HEAD
                 A program built for Kenyans who are ready to put in the work;
                 designed to give you the depth, duration, and support you
-=======
-                A program built for Kenyans who are ready to put in the
-                work—designed to give you the depth, duration, and support you
->>>>>>> a9dc3a2 (added apply now button)
                 actually need to succeed.
               </p>
             </div>
 
             <Link
               href="#apply"
-<<<<<<< HEAD
               className="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:px-8"
-=======
-              className="group flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto md:px-8"
->>>>>>> a9dc3a2 (added apply now button)
             >
               Join Reduzer
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
