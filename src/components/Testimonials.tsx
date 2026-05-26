@@ -76,7 +76,7 @@ export default function Testimonials() {
         <div className="relative w-full rounded-xl border border-[#EABCB8]/20 bg-white px-8 pb-16 pt-20 shadow-[0px_20px_50px_rgba(0,0,0,0.04),0px_4px_10px_rgba(0,0,0,0.02)]">
           {/* Avatar */}
           <div className="absolute -top-13 left-1/2 -translate-x-1/2">
-            <div className="flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#f5f5f5] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+            <div className="relative flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#f5f5f5] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
               {t.avatar ? (
                 <Image
                   src={t.avatar}
@@ -118,17 +118,38 @@ export default function Testimonials() {
         </button>
       </div>
 
-      {/* Dots */}
-      <div className="flex items-center gap-2.5">
-        {testimonials.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`h-1 rounded-full transition-all duration-300 ${
-              i === current ? 'w-10 bg-[#BB001F]' : 'w-2 bg-[#EABCB8]'
-            }`}
-          />
-        ))}
+      {/* Dots + mobile nav */}
+      <div className="flex items-center gap-4">
+        <button
+          type="button"
+          onClick={prev}
+          className="flex sm:hidden h-10 w-10 items-center justify-center rounded-full border border-[#EABCB8]/50 bg-white text-[#565E74] transition hover:border-[#BB001F] hover:text-[#BB001F]"
+          aria-label="Previous testimonial"
+        >
+          <ChevronLeft size={20} />
+        </button>
+
+        <div className="flex items-center gap-2.5">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setCurrent(i)}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                i === current ? 'w-10 bg-[#BB001F]' : 'w-2 bg-[#EABCB8]'
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={next}
+          className="flex sm:hidden h-10 w-10 items-center justify-center rounded-full border border-[#EABCB8]/50 bg-white text-[#565E74] transition hover:border-[#BB001F] hover:text-[#BB001F]"
+          aria-label="Next testimonial"
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
     </section>
   );

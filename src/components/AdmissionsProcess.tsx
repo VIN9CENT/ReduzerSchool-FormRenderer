@@ -1,177 +1,221 @@
-// src/components/AdmissionsProcess.tsx
-
-import {
-  Monitor,
-  Laptop,
-  Heart,
-  Clock,
-  Users,
-  Code,
-} from "lucide-react";
+import { Monitor, Laptop, Heart, Clock, Users, Code } from 'lucide-react';
 
 const BRAND = {
-  red: "#FF002E",
-  black: "#000000",
-  // Logo URLs
-  logoLight: "https://brand-assets.reduzer.tech/horizontal/white/reduzer.png",       // for white/light bg
-  logoDark: "https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png",  // for dark/red bg
-  logoIcon: "https://brand-assets.reduzer.tech/primary/transparent/reduzer.png",     // icon only
+  red: '#FF002E',
+  black: '#000000',
 };
 
 const requirements = [
-  { icon: <Monitor size={24} />, title: "Basic Computer", desc: "Access to a working computer" },
-  { icon: <Laptop size={24} />, title: "Laptop/Computer", desc: "Personal device recommended" },
-  { icon: <Heart size={24} />, title: "Passion For Learning", desc: "A drive to grow in" },
-  { icon: <Clock size={24} />, title: "Commitment", desc: "Dedicated time for learning" },
-  { icon: <Users size={24} />, title: "Teamwork", desc: "Collaborate with class peers" },
-  { icon: <Code size={24} />, title: "No Coding Needed", desc: "Beginners are welcome" },
+  {
+    icon: <Monitor size={28} aria-hidden="true" />,
+    title: 'Basic Computer',
+    desc: 'Access to a working computer',
+  },
+  {
+    icon: <Laptop size={28} aria-hidden="true" />,
+    title: 'Laptop/Computer',
+    desc: 'Personal device recommended',
+  },
+  {
+    icon: <Heart size={28} aria-hidden="true" />,
+    title: 'Passion For Learning',
+    desc: 'A drive to grow in technology',
+  },
+  {
+    icon: <Clock size={28} aria-hidden="true" />,
+    title: 'Commitment',
+    desc: 'Dedicated time for learning',
+  },
+  {
+    icon: <Users size={28} aria-hidden="true" />,
+    title: 'Teamwork',
+    desc: 'Collaborate with class peers',
+  },
+  {
+    icon: <Code size={28} aria-hidden="true" />,
+    title: 'No Coding Needed',
+    desc: 'Beginners are welcome',
+  },
 ];
 
 const whoCanApply = [
-  { num: "1", label: "High School Students" },
-  { num: "2", label: "University Students" },
-  { num: "3", label: "Fresh Graduates" },
-  { num: "4", label: "Self-Taught Learners" },
-  { num: "5", label: "Aspiring Developers" },
+  { num: '1', label: 'High School Students' },
+  { num: '2', label: 'University Students' },
+  { num: '3', label: 'Fresh Graduates' },
+  { num: '4', label: 'Self-Taught Learners' },
+  { num: '5', label: 'Aspiring Developers' },
 ];
 
 const steps = [
-  { title: "Submit Application", desc: "Fill out the online form and tell us about yourself." },
-  { title: "Interview / Assessment", desc: "Attend a brief interview or skill check." },
-  { title: "Admission Decision", desc: "Receive your result within 3–5 business days." },
-  { title: "Confirm Enrollment", desc: "Pay fees and confirm your spot in the program." },
+  {
+    title: 'Submit Application',
+    desc: 'Fill out the online form and tell us about yourself.',
+  },
+  {
+    title: 'Interview / Assessment',
+    desc: 'Attend a brief interview or skill check.',
+  },
+  {
+    title: 'Admission Decision',
+    desc: 'Receive your result within 3–5 business days.',
+  },
+  {
+    title: 'Confirm Enrollment',
+    desc: 'Pay fees and confirm your spot in the program.',
+  },
 ];
 
 export default function AdmissionsProcess() {
   return (
-    <section
-      id="apply"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
-
-      {/* ── HERO ── white background → use light logo (black wordmark) */}
-      <div className="bg-white text-center py-16 px-6">
-        
+    <section id="apply" style={{ fontFamily: "'Inter', sans-serif" }}>
+      {/* HERO SECTION */}
+      <section className="bg-white text-center py-20 px-6">
         <p
-          className="text-sm font-semibold uppercase tracking-widest mb-2"
+          className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] mb-3"
           style={{ color: BRAND.red }}
         >
           Admission Requirements
         </p>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-black mb-4">
+
+        <h2 className="text-3xl md:text-5xl font-bold leading-tight text-black mb-5">
           Start your journey to becoming a <br />
           <span style={{ color: BRAND.red }}>Software Engineer</span>
         </h2>
-        <p className="text-gray-500 max-w-md mx-auto mb-8 font-normal">
-          We welcome motivated learners ready to push their projects and grow
+
+        <p className="text-sm md:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed mb-8">
+          We welcome motivated learners ready to learn, build projects, and grow
           their careers in tech.
         </p>
-        <button
-          className="font-semibold px-8 py-3 rounded text-white transition hover:opacity-90"
+
+        <a
+          href="#curriculum"
+          className="inline-block text-sm md:text-base font-semibold px-8 py-3 rounded-xl text-white transition hover:opacity-90"
           style={{ backgroundColor: BRAND.red }}
         >
-          View Carriculum
-        </button>
-      </div>
+          View Curriculum
+        </a>
+      </section>
 
-      {/* ── WHAT YOU'LL NEED ── light gray bg */}
-      <div className="bg-gray-50 py-16 px-6">
-        <h3 className="text-center text-2xl font-bold text-black mb-10">
+      {/* WHAT YOU'LL NEED */}
+      <section className="bg-gray-50 py-20 px-6">
+        <h3 className="text-center text-2xl md:text-4xl font-bold text-black mb-14">
           What you&apos;ll need
         </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {requirements.map((item, i) => (
             <div
               key={i}
-              className="flex flex-col gap-2 p-5 bg-white rounded-xl shadow-sm border border-gray-100"
+              className="flex flex-col gap-4 p-8 min-h-[210px] bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition"
             >
               <div style={{ color: BRAND.red }}>{item.icon}</div>
-              <h4 className="font-semibold text-black text-sm">{item.title}</h4>
-              <p className="text-gray-500 text-xs">{item.desc}</p>
+
+              <h4 className="font-semibold text-xl text-black">{item.title}</h4>
+
+              <p className="text-gray-500 text-sm md:text-base leading-relaxed">
+                {item.desc}
+              </p>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* ── WHO CAN APPLY ── white bg */}
-      <div className="bg-white py-16 px-6">
-        <h3 className="text-center text-2xl font-bold text-black mb-10">
+      {/* WHO CAN APPLY */}
+      <section className="bg-white py-20 px-6">
+        <h3 className="text-center text-2xl md:text-4xl font-bold text-black mb-14">
           Who can apply?
         </h3>
-        <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-5 max-w-6xl mx-auto">
           {whoCanApply.map((item, i) => (
             <div
               key={i}
-              className="flex flex-col items-center border rounded-xl p-6 w-36 shadow-sm"
-              style={{ borderColor: "#e5e7eb" }}
+              className="flex flex-col items-center justify-center border border-gray-200 rounded-2xl p-6 min-h-[170px] shadow-sm hover:shadow-md transition"
             >
               <span
-                className="text-3xl font-extrabold"
+                className="text-3xl md:text-4xl font-bold"
                 style={{ color: BRAND.red }}
+                aria-hidden="true"
               >
                 {item.num}
               </span>
-              <p className="text-gray-700 text-sm text-center mt-2 font-medium">
+
+              <p className="text-sm md:text-base text-gray-700 text-center mt-3 leading-snug font-medium">
                 {item.label}
               </p>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* ── APPLICATION PROCESS ── light gray bg */}
-      <div className="bg-gray-50 py-16 px-6">
-        <h3 className="text-center text-2xl font-bold text-black mb-10">
+      {/* APPLICATION PROCESS */}
+      <section className="bg-gray-50 py-20 px-6">
+        <h3 className="text-center text-2xl md:text-4xl font-bold text-black mb-14">
           Application Process
         </h3>
-        <div className="relative max-w-xl mx-auto">
+
+        <ol className="relative max-w-3xl mx-auto">
           {steps.map((step, i) => (
-            <div key={i} className="flex gap-4 mb-8 items-start">
-              {/* Timeline dot + connector line */}
-              <div className="flex flex-col items-center">
+            <li key={i} className="flex gap-5 mb-10 items-start">
+              <div className="flex flex-col items-center self-stretch">
                 <div
-                  className="w-9 h-9 rounded-full text-white flex items-center justify-center font-bold text-sm shrink-0"
+                  className="w-10 h-10 rounded-full text-white flex items-center justify-center font-semibold text-sm shrink-0"
                   style={{ backgroundColor: BRAND.red }}
+                  aria-hidden="true"
                 >
                   {i + 1}
                 </div>
+
                 {i < steps.length - 1 && (
                   <div
-                    className="w-0.5 h-10 mt-1"
-                    style={{ backgroundColor: "#fca5a5" }}
+                    className="w-0.5 flex-1 mt-2 rounded-full"
+                    style={{ backgroundColor: '#fca5a5' }}
                   />
                 )}
               </div>
-              {/* Step text */}
-              <div className="pt-1">
-                <h4 className="font-semibold text-black">{step.title}</h4>
-                <p className="text-gray-500 text-sm mt-1">{step.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* ── FOOTER CTA ── brand red bg → use dark/transparent logo (white wordmark) */}
-      <div
-        className="text-white text-center py-14 px-6"
+              {/* CONTENT */}
+              <div className="pt-1 pb-4">
+                <h4 className="font-semibold text-lg md:text-xl text-black mb-2">
+                  {step.title}
+                </h4>
+
+                <p className="text-sm md:text-base text-gray-500 leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* FOOTER CTA */}
+      <section
+        className="text-white text-center py-20 px-6"
         style={{ backgroundColor: BRAND.red }}
       >
-        
-        <h3 className="text-2xl md:text-3xl font-extrabold mb-3">
+        <h3 className="text-2xl md:text-4xl font-bold leading-tight mb-4">
           Ready to build your future?
         </h3>
-        <p className="mb-8 max-w-md mx-auto font-normal opacity-90">
-          Join our program and start your journey into tech today.
+
+        <p className="text-sm md:text-lg max-w-xl mx-auto leading-relaxed opacity-90 mb-8">
+          Join our program and start your journey into technology today.
         </p>
-        <button
-          className="font-bold px-8 py-3 rounded transition hover:opacity-90"
-          style={{ backgroundColor: BRAND.black, color: "white" }}
+
+        <a
+          href="https://your-application-form-link.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-sm md:text-base font-bold px-10 py-3 rounded-xl transition hover:opacity-90"
+          style={{
+            backgroundColor: BRAND.black,
+            color: 'white',
+          }}
+          aria-label="Apply Now - opens in new tab"
         >
           APPLY NOW
-        </button>
-      </div>
-
+        </a>
+      </section>
     </section>
   );
 }
