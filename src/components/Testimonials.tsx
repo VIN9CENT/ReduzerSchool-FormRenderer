@@ -118,17 +118,38 @@ export default function Testimonials() {
         </button>
       </div>
 
-      {/* Dots */}
-      <div className="flex items-center gap-2.5">
-        {testimonials.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`h-1 rounded-full transition-all duration-300 ${
-              i === current ? 'w-10 bg-[#BB001F]' : 'w-2 bg-[#EABCB8]'
-            }`}
-          />
-        ))}
+      {/* Dots + mobile nav */}
+      <div className="flex items-center gap-4">
+        <button
+          type="button"
+          onClick={prev}
+          className="flex sm:hidden h-10 w-10 items-center justify-center rounded-full border border-[#EABCB8]/50 bg-white text-[#565E74] transition hover:border-[#BB001F] hover:text-[#BB001F]"
+          aria-label="Previous testimonial"
+        >
+          <ChevronLeft size={20} />
+        </button>
+
+        <div className="flex items-center gap-2.5">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setCurrent(i)}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                i === current ? 'w-10 bg-[#BB001F]' : 'w-2 bg-[#EABCB8]'
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={next}
+          className="flex sm:hidden h-10 w-10 items-center justify-center rounded-full border border-[#EABCB8]/50 bg-white text-[#565E74] transition hover:border-[#BB001F] hover:text-[#BB001F]"
+          aria-label="Next testimonial"
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
     </section>
   );

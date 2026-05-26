@@ -51,8 +51,9 @@ export default function Navbar() {
 
         {/* Hamburger */}
         <button
+          type="button"
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex items-center justify-center"
+          className="md:hidden flex items-center justify-center w-10 h-10 -mr-2"
           aria-label={open ? 'Close menu' : 'Open menu'}
         >
           {open ? (

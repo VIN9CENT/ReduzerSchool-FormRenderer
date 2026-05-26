@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -12,10 +12,15 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: 'Reduzer School',
   description:
-    'Reduzer School is a 12-week, part-time program designed to help you launch your career in tech. Learn the skills you need to succeed in the industry, build real-world projects, and get hired by top companies.',
+    'Reduzer School is a 12-month, part-time program designed to help you launch your career in tech. Learn the skills you need to succeed in the industry, build real-world projects, and get hired by top companies.',
 };
 
 export default function RootLayout({
