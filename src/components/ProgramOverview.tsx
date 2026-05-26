@@ -78,7 +78,7 @@ export default function ProgramOverview() {
             <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Start Date
             </p>
-            <p className="text-white text-sm font-medium">
+            <p className="text-white text-base font-medium">
               September 1st 2026
             </p>
           </div>
@@ -89,7 +89,7 @@ export default function ProgramOverview() {
           <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
             Mode of Learning
           </p>
-          <p className="text-white text-sm font-medium">
+          <p className="text-white text-base font-medium">
             100% Physical Classes
           </p>
         </div>
