@@ -76,7 +76,7 @@ export default function Testimonials() {
         <div className="relative w-full rounded-xl border border-[#EABCB8]/20 bg-white px-8 pb-16 pt-20 shadow-[0px_20px_50px_rgba(0,0,0,0.04),0px_4px_10px_rgba(0,0,0,0.02)]">
           {/* Avatar */}
           <div className="absolute -top-13 left-1/2 -translate-x-1/2">
-            <div className="flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#f5f5f5] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+            <div className="relative flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#f5f5f5] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
               {t.avatar ? (
                 <Image
                   src={t.avatar}

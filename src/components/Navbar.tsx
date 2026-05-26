@@ -17,7 +17,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-10 w-full bg-white border-b border-gray-100">
+    <nav className="sticky top-0 z-50 w-full bg-white border-b border-gray-100">
       <div className="flex flex-row justify-between items-center w-full max-w-[1280px] mx-auto px-6 h-20 md:px-8">
         <Link href="/">
           <Image

@@ -1,12 +1,12 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-inter: 'Inter', sans-serif;
+  --font-sans: var(--font-inter);
   --color-faq-white: rgba(0, 0, 0, 0.02);
   --color-faq-white-1: rgba(255, 255, 255, 1);
   --shadow-3xl: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 body {
-  font-family: var(--font-inter);
+  font-family: var(--font-sans);
 }
