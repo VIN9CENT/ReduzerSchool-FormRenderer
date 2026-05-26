@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 export default function PricingSection() {
   return (
-    <section className="w-full min-h-screen bg-white/95 backdrop-blur-sm font-['Inter sans-serif']">
+    <section id="pricing" className="w-full min-h-screen bg-white/95 backdrop-blur-sm overflow-hidden font-['Inter sans-serif']">
       {/* Banner */}
-      <div className="w-full bg-[#FF002E] text-center py-4 px-4 shadow-sm">
+      <div className="w-full bg-[#d92b2b] text-center py-4 px-4 shadow-sm ">
         <span className="text-white font-black text-sm md:text-base tracking-widest uppercase">
           Limited Spots · Enroll Now
         </span>
@@ -17,7 +17,7 @@ export default function PricingSection() {
           <div className="bg-white rounded-2xl shadow-md p-8 md:p-10 text-center">
             <h2 className="font-bold text-[#111] text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
               Investment in Your{' '}
-              <span className="text-[#FF002E] italic">
+              <span className="text-[#d92b2b] italic">
                 Software Engineering
               </span>{' '}
               Career
@@ -39,7 +39,7 @@ export default function PricingSection() {
               Best Plan
             </span>
 
-            <h3 className="font-black text-[#FF002E] text-xl sm:text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-tight">
+            <h3 className="font-black text-[#d92b2b] text-xl sm:text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-tight font-['Inter sans-serif']">
               Monthly Plan
             </h3>
 
@@ -88,8 +88,8 @@ export default function PricingSection() {
           <div className="bg-white rounded-2xl shadow-md p-6 md:p-8">
             <Link
               href="#apply"
-            className="w-full block text-center bg-[#FF002E] hover:bg-[#d92b2b] active:scale-[0.98] text-white font-black text-base md:text-lg tracking-widest uppercase py-5 rounded-xl shadow-md transition duration-200">
-
+              className="w-full block text-center bg-[#d92b2b] hover:bg-[#b81f1f] active:scale-[0.98] text-white font-black text-base md:text-lg tracking-widest uppercase py-5 rounded-xl shadow-md transition-all duration-200"
+            >
               Apply Now
             </Link>
           </div>
