@@ -1,8 +1,9 @@
+import Link from 'next/link';
 import { BookOpen, Briefcase, TrendingUp, ArrowRight } from 'lucide-react';
 
 export default function ProblemSection() {
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white px-4 py-12 md:px-8 md:py-20 lg:px-16">
+    <section className="bg-linear-to-b from-gray-50 to-white px-4 py-12 md:px-8 md:py-20 lg:px-16">
       <div className="mx-auto max-w-6xl font-[Inter sans-serif]">
         <div className="mb-16">
           <h1 className="mb-6 text-4xl text-black font-bold leading-tight md:text-5xl lg:text-6xl">
@@ -155,10 +156,10 @@ export default function ProblemSection() {
               </p>
             </div>
 
-            <button className="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:px-8">
+            <Link href="#apply" className="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:px-8">
               Apply Now
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
