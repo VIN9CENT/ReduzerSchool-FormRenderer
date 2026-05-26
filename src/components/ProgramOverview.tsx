@@ -52,7 +52,7 @@ export default function ProgramOverview() {
             <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Course Duration
             </p>
-            <p className="text-white text-sm font-medium">52 Weeks</p>
+            <p className="text-white text-base font-medium">52 Weeks</p>
           </div>
 
           <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
@@ -60,7 +60,7 @@ export default function ProgramOverview() {
             <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
-            <p className="text-white text-sm font-medium">Mon-Fri • 8am-5pm</p>
+            <p className="text-white text-base font-medium">Mon-Fri  8am-5pm</p>
           </div>
         </div>
 
@@ -70,7 +70,7 @@ export default function ProgramOverview() {
             <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Location
             </p>
-            <p className="text-white text-sm font-medium">Kisii, Kenya</p>
+            <p className="text-white text-base font-medium">Kisii, Kenya</p>
           </div>
 
           <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center">
