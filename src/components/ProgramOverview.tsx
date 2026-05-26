@@ -49,7 +49,7 @@ export default function ProgramOverview() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
             <Clock className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-xl font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Course Duration
             </p>
             <p className="text-white text-sm font-medium">52 Weeks</p>
@@ -57,7 +57,7 @@ export default function ProgramOverview() {
 
           <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
             <CalendarDays className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-xl font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
             <p className="text-white text-sm font-medium">Mon-Fri • 8am-5pm</p>
@@ -67,7 +67,7 @@ export default function ProgramOverview() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
             <MapPin className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-xl font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Location
             </p>
             <p className="text-white text-sm font-medium">Kisii, Kenya</p>
