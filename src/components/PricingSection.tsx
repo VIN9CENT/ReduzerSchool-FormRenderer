@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="w-full min-h-screen bg-white/95 backdrop-blur-sm rounded-[25px] overflow-hidden font-['Inter sans-serif']">
+    <section id="pricing" className="w-full min-h-screen bg-white/95 backdrop-blur-sm overflow-hidden font-['Inter sans-serif']">
       {/* Banner */}
-      <div className="w-full bg-[#d92b2b] text-center py-4 px-4 shadow-sm rounded-t-[25px]">
+      <div className="w-full bg-[#d92b2b] text-center py-4 px-4 shadow-sm ">
         <span className="text-white font-black text-sm md:text-base tracking-widest uppercase">
           Limited Spots · Enroll Now
         </span>
