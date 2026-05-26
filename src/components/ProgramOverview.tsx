@@ -11,6 +11,7 @@ import {
   Download,
   ArrowRight,
   ChevronDown,
+  CalendarDays,
 } from 'lucide-react';
 
 export default function ProgramOverview() {
@@ -55,7 +56,7 @@ export default function ProgramOverview() {
           </div>
 
           <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
-            <Clock className="text-white w-10 h-10 mb-4" />
+            <CalendarDays className="text-white w-10 h-10 mb-4" />
             <p className="text-white text-sm font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
