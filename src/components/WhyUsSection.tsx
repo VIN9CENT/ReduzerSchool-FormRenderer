@@ -1,9 +1,12 @@
 import Link from 'next/link';
-import { Target, Briefcase, Building2, Users, ArrowRight } from 'lucide-react';
+import { Target, Building2, Users, ArrowRight } from 'lucide-react';
 
 export default function WhyUsSection() {
   return (
-    <section id="about" className="relative bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16 font-[Inter,sans-serif]">
+    <section
+      id="about"
+      className="relative bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16 font-[Inter,sans-serif]"
+    >
       <div className="absolute inset-0 opacity-[0.03]">
         <div
           className="h-full w-full"
@@ -20,9 +23,9 @@ export default function WhyUsSection() {
           </h1>
 
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600 md:text-base">
-            We&apos;re not just another coding bootcamp. Reduzer School is built 
-            differently because we know what it takes to get hired—and we&apos;re 
-            here to make sure you get there.
+            We&apos;re not just another coding bootcamp. Reduzer School is built
+            differently because we know what it takes to get hired—and
+            we&apos;re here to make sure you get there.
           </p>
         </div>
 
@@ -39,10 +42,10 @@ export default function WhyUsSection() {
             </h2>
 
             <p className="text-sm leading-relaxed text-gray-600">
-              Most programs stop at teaching. Reduzer School goes further with 
-              career support, portfolio building, interview preparation, and access 
-              to real opportunities—because getting hired matters just as much as 
-              learning the skills.
+              Most programs stop at teaching. Reduzer School goes further with
+              career support, portfolio building, interview preparation, and
+              access to real opportunities—because getting hired matters just as
+              much as learning the skills.
             </p>
           </div>
 
@@ -57,9 +60,10 @@ export default function WhyUsSection() {
             </h2>
 
             <p className="text-sm leading-relaxed text-gray-600">
-              Reduzer School is built by the same team behind Reduzer Technologies, 
-              a company already placing Kenyan engineers with global companies. We 
-              didn&apos;t guess at what the industry needs. We already know.
+              Reduzer School is built by the same team behind Reduzer
+              Technologies, a company already placing Kenyan engineers with
+              global companies. We didn&apos;t guess at what the industry needs.
+              We already know.
             </p>
           </div>
 
@@ -74,9 +78,10 @@ export default function WhyUsSection() {
             </h2>
 
             <p className="text-sm leading-relaxed text-gray-600">
-              A full year of immersive, in-person software engineering training with 
-              real projects, mentorship, career support, and honest expectations—built 
-              for serious learners ready to create better opportunities for themselves.
+              A full year of immersive, in-person software engineering training
+              with real projects, mentorship, career support, and honest
+              expectations—built for serious learners ready to create better
+              opportunities for themselves.
             </p>
           </div>
         </div>
@@ -87,7 +92,7 @@ export default function WhyUsSection() {
             Ready to transform your career?
           </p>
 
-          <Link 
+          <Link
             href="#apply"
             className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-8 py-4 font-semibold text-white transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto"
           >
