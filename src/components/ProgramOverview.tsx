@@ -75,7 +75,7 @@ export default function ProgramOverview() {
 
           <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center">
             <Calendar className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-xl font-bold uppercase tracking-widest mb-2">
+            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Start Date
             </p>
             <p className="text-white text-sm font-medium">
@@ -86,7 +86,7 @@ export default function ProgramOverview() {
 
         <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center mb-12 ">
           <MonitorPlay className="text-white w-10 h-10 mb-4" />
-          <p className="text-white text-xl font-bold uppercase tracking-widest mb-2">
+          <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
             Mode of Learning
           </p>
           <p className="text-white text-sm font-medium">
