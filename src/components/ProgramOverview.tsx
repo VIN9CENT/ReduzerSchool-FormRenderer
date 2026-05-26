@@ -35,7 +35,7 @@ export default function ProgramOverview() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="bg-black text-center px-8 py-20 rounded-3xl mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#FF002E] leading-tight mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF002E] leading-tight mb-6">
             Reduzer Software Engineering <br /> School Program
           </h2>
           <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
