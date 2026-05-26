@@ -1,57 +1,82 @@
 // src/components/AdmissionsProcess.tsx
 
-import {
-  Monitor,
-  Laptop,
-  Heart,
-  Clock,
-  Users,
-  Code,
-} from "lucide-react";
+import { Monitor, Laptop, Heart, Clock, Users, Code } from 'lucide-react';
 
 const BRAND = {
-  red: "#FF002E",
-  black: "#000000",
+  red: '#FF002E',
+  black: '#000000',
   // Logo URLs
-  logoLight: "https://brand-assets.reduzer.tech/horizontal/white/reduzer.png",       // for white/light bg
-  logoDark: "https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png",  // for dark/red bg
-  logoIcon: "https://brand-assets.reduzer.tech/primary/transparent/reduzer.png",     // icon only
+  logoLight: 'https://brand-assets.reduzer.tech/horizontal/white/reduzer.png', // for white/light bg
+  logoDark:
+    'https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png', // for dark/red bg
+  logoIcon: 'https://brand-assets.reduzer.tech/primary/transparent/reduzer.png', // icon only
 };
 
 const requirements = [
-  { icon: <Monitor size={24} />, title: "Basic Computer", desc: "Access to a working computer" },
-  { icon: <Laptop size={24} />, title: "Laptop/Computer", desc: "Personal device recommended" },
-  { icon: <Heart size={24} />, title: "Passion For Learning", desc: "A drive to grow in" },
-  { icon: <Clock size={24} />, title: "Commitment", desc: "Dedicated time for learning" },
-  { icon: <Users size={24} />, title: "Teamwork", desc: "Collaborate with class peers" },
-  { icon: <Code size={24} />, title: "No Coding Needed", desc: "Beginners are welcome" },
+  {
+    icon: <Monitor size={24} />,
+    title: 'Basic Computer',
+    desc: 'Access to a working computer',
+  },
+  {
+    icon: <Laptop size={24} />,
+    title: 'Laptop/Computer',
+    desc: 'Personal device recommended',
+  },
+  {
+    icon: <Heart size={24} />,
+    title: 'Passion For Learning',
+    desc: 'A drive to grow in',
+  },
+  {
+    icon: <Clock size={24} />,
+    title: 'Commitment',
+    desc: 'Dedicated time for learning',
+  },
+  {
+    icon: <Users size={24} />,
+    title: 'Teamwork',
+    desc: 'Collaborate with class peers',
+  },
+  {
+    icon: <Code size={24} />,
+    title: 'No Coding Needed',
+    desc: 'Beginners are welcome',
+  },
 ];
 
 const whoCanApply = [
-  { num: "1", label: "High School Students" },
-  { num: "2", label: "University Students" },
-  { num: "3", label: "Fresh Graduates" },
-  { num: "4", label: "Self-Taught Learners" },
-  { num: "5", label: "Aspiring Developers" },
+  { num: '1', label: 'High School Students' },
+  { num: '2', label: 'University Students' },
+  { num: '3', label: 'Fresh Graduates' },
+  { num: '4', label: 'Self-Taught Learners' },
+  { num: '5', label: 'Aspiring Developers' },
 ];
 
 const steps = [
-  { title: "Submit Application", desc: "Fill out the online form and tell us about yourself." },
-  { title: "Interview / Assessment", desc: "Attend a brief interview or skill check." },
-  { title: "Admission Decision", desc: "Receive your result within 3–5 business days." },
-  { title: "Confirm Enrollment", desc: "Pay fees and confirm your spot in the program." },
+  {
+    title: 'Submit Application',
+    desc: 'Fill out the online form and tell us about yourself.',
+  },
+  {
+    title: 'Interview / Assessment',
+    desc: 'Attend a brief interview or skill check.',
+  },
+  {
+    title: 'Admission Decision',
+    desc: 'Receive your result within 3–5 business days.',
+  },
+  {
+    title: 'Confirm Enrollment',
+    desc: 'Pay fees and confirm your spot in the program.',
+  },
 ];
 
 export default function AdmissionsProcess() {
   return (
-    <section
-      id="apply"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
-
+    <section id="admission" style={{ fontFamily: "'Inter', sans-serif" }}>
       {/* ── HERO ── white background → use light logo (black wordmark) */}
       <div className="bg-white text-center py-16 px-6">
-        
         <p
           className="text-sm font-semibold uppercase tracking-widest mb-2"
           style={{ color: BRAND.red }}
@@ -103,7 +128,7 @@ export default function AdmissionsProcess() {
             <div
               key={i}
               className="flex flex-col items-center border rounded-xl p-6 w-36 shadow-sm"
-              style={{ borderColor: "#e5e7eb" }}
+              style={{ borderColor: '#e5e7eb' }}
             >
               <span
                 className="text-3xl font-extrabold"
@@ -138,7 +163,7 @@ export default function AdmissionsProcess() {
                 {i < steps.length - 1 && (
                   <div
                     className="w-0.5 h-10 mt-1"
-                    style={{ backgroundColor: "#fca5a5" }}
+                    style={{ backgroundColor: '#fca5a5' }}
                   />
                 )}
               </div>
@@ -157,7 +182,6 @@ export default function AdmissionsProcess() {
         className="text-white text-center py-14 px-6"
         style={{ backgroundColor: BRAND.red }}
       >
-        
         <h3 className="text-2xl md:text-3xl font-extrabold mb-3">
           Ready to build your future?
         </h3>
@@ -166,12 +190,11 @@ export default function AdmissionsProcess() {
         </p>
         <button
           className="font-bold px-8 py-3 rounded transition hover:opacity-90"
-          style={{ backgroundColor: BRAND.black, color: "white" }}
+          style={{ backgroundColor: BRAND.black, color: 'white' }}
         >
           APPLY NOW
         </button>
       </div>
-
     </section>
   );
 }

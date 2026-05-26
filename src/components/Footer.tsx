@@ -15,11 +15,11 @@ export default function Footer() {
     <footer className="bg-black text-white px-6 md:px-10 py-12">
       <div className="max-w-7xl mx-auto">
         {/* TOP TEXT */}
-        <div className="text-center mb-16">
-          <h2 className="text-sm md:text-5xl font-light">
+        <div className="text-center mb-16 px-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light">
             Join The <span className="text-red-500">Success !</span>
           </h2>
-          <p className="text-gray-300 mt-4 text-lg md:text-2xl">
+          <p className="text-gray-300 mt-4 text-base sm:text-lg md:text-xl lg:text-2xl">
             Start your journey with us today
           </p>
         </div>
@@ -88,13 +88,13 @@ export default function Footer() {
             <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
             <ul className="space-y-8 text-sm text-gray-200">
               <li>
-                <Link href="/privacy-policy">Privacy policy</Link>
+                <Link href="#privacy-policy">Privacy policy</Link>
               </li>
               <li>
-                <Link href="/terms-and-conditions">Terms and conditions</Link>
+                <Link href="#terms-and-conditions">Terms and conditions</Link>
               </li>
               <li>
-                <Link href="/cookie-policy">Cookie policy</Link>
+                <Link href="#cookie-policy">Cookie policy</Link>
               </li>
             </ul>
           </div>
@@ -105,13 +105,13 @@ export default function Footer() {
             <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
             <ul className="space-y-8 text-sm text-gray-200">
               <li>
-                <Link href="/curriculum">Curriculum</Link>
+                <Link href="#curriculum">Curriculum</Link>
               </li>
               <li>
-                <Link href="/pricing">Pricing</Link>
+                <Link href="#pricing">Pricing</Link>
               </li>
               <li>
-                <Link href="/admission">Admission</Link>
+                <Link href="#admission">Admission</Link>
               </li>
             </ul>
           </div>
@@ -124,14 +124,14 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
-            className="bg-green-500 p-2 rounded-full "
+            className="bg-green-500 p-0 rounded-full "
           >
             <FaWhatsapp className="text-5xl" />
           </a>
           <button
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className="bg-red-500 p-2 rounded-full hover:bg-red-600 transition-colors duration-500"
+            className="bg-red-500 p-0 rounded-full hover:bg-red-600 transition-colors duration-500"
           >
             <IoIosArrowUp className="text-5xl" />
           </button>
@@ -141,7 +141,7 @@ export default function Footer() {
         <div className="border-b border-gray-600 mt-10"></div>
 
         {/* COPYRIGHT */}
-        <p className="text-xl text-gray-300 mt-10 ">
+        <p className="text-sm text-gray-300 mt-10 ">
           © 2026 Reduzer School. Copyright Protected
         </p>
       </div>
