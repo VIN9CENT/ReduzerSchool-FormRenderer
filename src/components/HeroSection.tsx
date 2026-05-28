@@ -18,7 +18,7 @@ const features = [
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F7F9FB]">
+    <section id="home" className="relative w-full overflow-hidden bg-[#F7F9FB]">
       {/* Decorative Background Blobs */}
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] -left-[139px] top-[399px] bg-[rgba(255,56,60,0.32)] blur-[105px] -rotate-[112.15deg]" />
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] left-[1400px] top-[119px] bg-[rgba(255,56,60,0.37)] blur-[105px] -rotate-[112.15deg]" />
@@ -77,7 +77,7 @@ export default function HeroSection() {
                   <div className="flex justify-center items-center w-12 h-12 bg-[#ECEEF0] rounded-full">
                     <Icon size={20} color="#BB001F" />
                   </div>
-                  <span className="font-sans font-semibold text-[12px] leading-[12px] tracking-[1.2px] text-center text-[#191C1E]">
+                  <span className="font-sans font-semibold text-[15px] leading-[20px] tracking-[0.6px] text-center text-[#191C1E]">
                     {label}
                   </span>
                 </div>
