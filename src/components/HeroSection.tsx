@@ -1,3 +1,5 @@
+// Hero section component for the landing page, showcasing the main headline, subheadline, call-to-action buttons, and key features of the bootcamp program. The design includes decorative background elements and is fully responsive for optimal display on various screen sizes.
+
 import Link from 'next/link';
 import {
   Code2,
