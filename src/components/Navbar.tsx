@@ -2,10 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
+  { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
   { label: 'Program', href: '#program' },
   { label: 'Curriculum', href: '#curriculum' },
@@ -15,11 +16,44 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = navLinks.map((link) => link.href.slice(1));
+
+    const observers = sectionIds.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { threshold: 0, rootMargin: '-80px 0px -60% 0px' }
+      );
+
+      observer.observe(el);
+      return { observer, el };
+    });
+
+    return () => {
+      observers.forEach((item) => {
+        if (item) item.observer.unobserve(item.el);
+      });
+    };
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white border-b border-gray-100">
+    <nav className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white shadow-[0_2px_20px_rgba(0,0,0,0.08)] border-b border-gray-200' : 'bg-transparent border-b border-transparent'}`}>
       <div className="flex flex-row justify-between items-center w-full max-w-[1280px] mx-auto px-6 h-20 md:px-8">
-        <Link href="/">
+        <Link href="#home">
           <Image
             src="https://brand-assets.reduzer.tech/horizontal/white/reduzer.png"
             alt="Reduzer School"
@@ -31,15 +65,25 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex flex-row items-center gap-8">
-          {navLinks.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className="text-[16px] font-medium text-[#374151] hover:text-[#FF002E] transition-colors"
-            >
-              {label}
-            </Link>
-          ))}
+          {navLinks.map(({ label, href }) => {
+            const isActive = activeSection === href.slice(1);
+            return (
+              <Link
+                key={label}
+                href={href}
+                className={`relative text-[16px] font-medium transition-colors ${
+                  isActive
+                    ? 'text-[#BB001F]'
+                    : 'text-[#374151] hover:text-[#FF002E]'
+                }`}
+              >
+                {label}
+                {isActive && (
+                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-[#BB001F] rounded-full" />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         <Link
@@ -51,8 +95,9 @@ export default function Navbar() {
 
         {/* Hamburger */}
         <button
+          type="button"
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex items-center justify-center"
+          className="md:hidden flex items-center justify-center w-10 h-10 -mr-2"
           aria-label={open ? 'Close menu' : 'Open menu'}
         >
           {open ? (
@@ -66,16 +111,23 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden flex flex-col gap-0 border-t border-gray-100 bg-white px-6 pb-6 pt-4">
-          {navLinks.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              onClick={() => setOpen(false)}
-              className="py-3 text-[16px] font-medium text-[#374151] hover:text-[#FF002E] transition-colors border-b border-gray-100 last:border-0"
-            >
-              {label}
-            </Link>
-          ))}
+          {navLinks.map(({ label, href }) => {
+            const isActive = activeSection === href.slice(1);
+            return (
+              <Link
+                key={label}
+                href={href}
+                onClick={() => setOpen(false)}
+                className={`py-3 text-[16px] font-medium transition-colors border-b border-gray-100 last:border-0 ${
+                  isActive
+                    ? 'text-[#BB001F] font-semibold'
+                    : 'text-[#374151] hover:text-[#FF002E]'
+                }`}
+              >
+                {label}
+              </Link>
+            );
+          })}
           <Link
             href="#apply"
             onClick={() => setOpen(false)}

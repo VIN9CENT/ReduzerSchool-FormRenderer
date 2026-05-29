@@ -1,3 +1,5 @@
+// Hero section component for the landing page, showcasing the main headline, subheadline, call-to-action buttons, and key features of the bootcamp program. The design includes decorative background elements and is fully responsive for optimal display on various screen sizes.
+
 import Link from 'next/link';
 import {
   Code2,
@@ -16,19 +18,19 @@ const features = [
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F7F9FB]">
+    <section id="home" className="relative w-full overflow-hidden bg-[#F7F9FB]">
       {/* Decorative Background Blobs */}
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] -left-[139px] top-[399px] bg-[rgba(255,56,60,0.32)] blur-[105px] -rotate-[112.15deg]" />
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] left-[1400px] top-[119px] bg-[rgba(255,56,60,0.37)] blur-[105px] -rotate-[112.15deg]" />
 
       {/* Main Content */}
-      <div className="relative flex flex-col items-center pt-20 md:pt-28 lg:pt-[160px] gap-16 md:gap-[120px] pb-16">
+      <div className="relative flex flex-col items-center pt-10 md:pt-14 lg:pt-[90px] gap-16 md:gap-[120px] pb-16">
         {/* Hero content area */}
         <div className="flex flex-col items-center gap-8 md:gap-12 w-full max-w-[896px] px-6">
           {/* Heading */}
           <h1 className="font-sans font-bold text-4xl sm:text-5xl lg:text-[64px] leading-tight lg:leading-[85px] tracking-[-1px] lg:tracking-[-2.56px] text-center text-[#191C1E] max-w-[986px] w-full">
             Launch Your{' '}
-            <span className="text-[#BB001F] underline italic">Career</span> in
+            <span className="text-[#BB001F] underline italic">Career </span> in
             Tech With Our Intensive 12-Month Bootcamp
           </h1>
 
@@ -75,7 +77,7 @@ export default function HeroSection() {
                   <div className="flex justify-center items-center w-12 h-12 bg-[#ECEEF0] rounded-full">
                     <Icon size={20} color="#BB001F" />
                   </div>
-                  <span className="font-sans font-semibold text-[12px] leading-[12px] tracking-[1.2px] text-center text-[#191C1E]">
+                  <span className="font-sans font-semibold text-[15px] leading-[20px] tracking-[0.6px] text-center text-[#191C1E]">
                     {label}
                   </span>
                 </div>
