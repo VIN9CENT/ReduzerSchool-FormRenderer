@@ -117,26 +117,36 @@ export default function Footer() {
         </div>
 
         {/* BUTTONS */}
-        <div className="fixed bottom-6 right-6 z-50">
-          <a
-            href="https://wa.me/254709090889"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat on WhatsApp"
-            className="bg-green-500 p-2 rounded-full "
-          >
-            <FaWhatsapp className="text-5xl" />
-          </a>
-        </div>
 
-        {/* LINE */}
-        <div className="border-b border-gray-600 mt-10"></div>
-
-        {/* COPYRIGHT */}
-        <p className="text-sm text-gray-300 mt-10 ">
-          © 2026 Reduzer School. Copyright Protected
-        </p>
+        <a
+          href="https://wa.me/254709090889"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            backgroundColor: '#25D366',
+            borderRadius: '50%',
+            width: '46px',
+            height: '46px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FaWhatsapp style={{ fontSize: '28px', color: 'white' }} />
+        </a>
       </div>
+
+      {/* LINE */}
+      <div className="border-b border-gray-600 mt-10"></div>
+
+      {/* COPYRIGHT */}
+      <p className="text-sm text-gray-300 mt-10 ">
+        © 2026 Reduzer School. Copyright Protected
+      </p>
     </footer>
   );
 }
