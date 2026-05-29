@@ -4,7 +4,7 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="w-full min-h-screen bg-white/95 backdrop-blur-sm overflow-hidden font-['Inter_sans-serif']"
+      className="w-full min-h-screen bg-white/95 backdrop-blur-sm overflow-hidden font-sans"
     >
       {/* Banner */}
       <div className="w-full bg-[#d92b2b] text-center py-7 px-4 shadow-sm">
