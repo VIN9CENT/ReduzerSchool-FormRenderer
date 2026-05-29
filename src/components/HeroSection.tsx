@@ -29,7 +29,7 @@ export default function HeroSection() {
           {/* Heading — clamp scales smoothly across all screen widths */}
           <h1
             className="font-sans font-bold leading-[1.2] tracking-[-0.03em] text-center text-[#191C1E] w-full"
-            style={{ fontSize: 'clamp(1.875rem, 5vw, 4rem)' }}
+            style={{ fontSize: 'clamp(1.875rem, 4.8vw, 3.75rem)' }}
           >
             Launch Your{' '}
             <span className="text-[#BB001F] underline italic">Career</span> in
