@@ -18,24 +18,24 @@ const features = [
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative w-full overflow-hidden bg-[#F7F9FB]">
+    <section id="home" className="relative w-full min-h-[calc(100vh-80px)] flex flex-col justify-center overflow-hidden bg-[#F7F9FB]">
       {/* Decorative Background Blobs */}
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] -left-[139px] top-[399px] bg-[rgba(255,56,60,0.32)] blur-[105px] -rotate-[112.15deg]" />
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] left-[1400px] top-[119px] bg-[rgba(255,56,60,0.37)] blur-[105px] -rotate-[112.15deg]" />
 
       {/* Main Content */}
-      <div className="relative flex flex-col items-center pt-10 md:pt-14 lg:pt-[90px] gap-16 md:gap-[120px] pb-16">
+      <div className="relative flex flex-col items-center py-12 gap-8 md:gap-10">
         {/* Hero content area */}
         <div className="flex flex-col items-center gap-8 md:gap-12 w-full max-w-[896px] px-6">
           {/* Heading */}
-          <h1 className="font-sans font-bold text-4xl sm:text-5xl lg:text-[64px] leading-tight lg:leading-[85px] tracking-[-1px] lg:tracking-[-2.56px] text-center text-[#191C1E] max-w-[986px] w-full">
+          <h1 className="font-sans font-bold text-3xl sm:text-4xl lg:text-[48px] leading-tight lg:leading-[64px] tracking-[-1px] lg:tracking-[-1.92px] text-center text-[#191C1E] max-w-[800px] w-full">
             Launch Your{' '}
             <span className="text-[#BB001F] underline italic">Career </span> in
             Tech With Our Intensive 12-Month Bootcamp
           </h1>
 
           {/* Subtitle */}
-          <p className="font-sans font-normal text-lg md:text-xl lg:text-[24px] leading-[1.5] lg:leading-[32px] tracking-[-0.2px] text-center text-[#5F3E3C] max-w-[560px]">
+          <p className="font-sans font-normal text-base md:text-lg lg:text-[20px] leading-[1.5] lg:leading-[30px] tracking-[-0.2px] text-center text-[#5F3E3C] max-w-[520px]">
             Hands-on training, mentorship, and real-world projects built for
             ambitious learners ready to break into tech.
           </p>
