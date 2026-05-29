@@ -3,20 +3,15 @@
 import { FaXTwitter, FaWhatsapp } from 'react-icons/fa6';
 import { MdOutlineMail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
-import { IoIosArrowUp } from 'react-icons/io';
 import Link from 'next/link';
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <footer className="bg-black text-white px-6 md:px-10 py-12">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-blacks text-white px-6 md:px-10 py-12">
+      <div className="max-w-5xl mx-auto px-6 md:px-10">
         {/* TOP TEXT */}
         <div className="text-center mb-16 px-4">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light">
             Join The <span className="text-red-500">Success !</span>
           </h2>
           <p className="text-gray-300 mt-4 text-base sm:text-lg md:text-xl lg:text-2xl">
@@ -38,9 +33,9 @@ export default function Footer() {
             </p>
 
             {/* SOCIALS */}
-            <div className="flex gap-6 mt-10">
+            <div className="flex gap-6 mt-6">
               <a
-                href="https://x.com"
+                href="https://x.com/reduzer_tech"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X / Twitter"
@@ -88,10 +83,14 @@ export default function Footer() {
             <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
             <ul className="space-y-8 text-sm text-gray-200">
               <li>
-                <Link href="#privacy-policy">Privacy policy</Link>
+                <Link href="https://reduzer.tech/privacy-policy">
+                  Privacy policy
+                </Link>
               </li>
               <li>
-                <Link href="#terms-and-conditions">Terms and conditions</Link>
+                <Link href="https://reduzer.tech/terms-of-service">
+                  Terms of services
+                </Link>
               </li>
               <li>
                 <Link href="#cookie-policy">Cookie policy</Link>
@@ -118,33 +117,36 @@ export default function Footer() {
         </div>
 
         {/* BUTTONS */}
-        <div className="flex justify-end gap-6 mt-20">
-          <a
-            href="https://wa.me/254709090889"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat on WhatsApp"
-            className="bg-green-500 p-0 rounded-full "
-          >
-            <FaWhatsapp className="text-5xl" />
-          </a>
-          <button
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-            className="bg-red-500 p-0 rounded-full hover:bg-red-600 transition-colors duration-500"
-          >
-            <IoIosArrowUp className="text-5xl" />
-          </button>
-        </div>
 
-        {/* LINE */}
-        <div className="border-b border-gray-600 mt-10"></div>
-
-        {/* COPYRIGHT */}
-        <p className="text-sm text-gray-300 mt-10 ">
-          © 2026 Reduzer School. Copyright Protected
-        </p>
+        <a
+          href="https://wa.me/254709090889"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            backgroundColor: '#25D366',
+            borderRadius: '50%',
+            width: '46px',
+            height: '46px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FaWhatsapp style={{ fontSize: '28px', color: 'white' }} />
+        </a>
       </div>
+
+      {/* LINE */}
+      <div className="border-b border-gray-600 mt-10"></div>
+
+      {/* COPYRIGHT */}
+      <p className="text-sm text-gray-300 mt-10 ">
+        © 2026 Reduzer School. Copyright Protected
+      </p>
     </footer>
   );
 }
