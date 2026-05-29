@@ -23,10 +23,9 @@ export default function HeroSection() {
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] -left-[139px] top-[399px] bg-[rgba(255,56,60,0.32)] blur-[105px] -rotate-[112.15deg]" />
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] left-[1400px] top-[119px] bg-[rgba(255,56,60,0.37)] blur-[105px] -rotate-[112.15deg]" />
 
-      {/* Above-fold: fills the viewport, content centred vertically */}
-      <div className="relative flex flex-col items-center justify-start min-h-[calc(100vh-80px)] px-6 pt-12 md:pt-24 pb-10">
+      <div className="relative flex flex-col items-center px-6 pt-12 md:pt-24 pb-16 gap-12">
         <div className="flex flex-col items-center gap-6 w-full max-w-[760px]">
-          {/* Heading — clamp scales smoothly across all screen widths */}
+          {/* Heading */}
           <h1
             className="font-sans font-bold leading-[1.2] tracking-[-0.03em] text-center text-[#191C1E] w-full"
             style={{ fontSize: 'clamp(1.875rem, 4.8vw, 3.75rem)' }}
@@ -72,11 +71,9 @@ export default function HeroSection() {
             </Link>
           </div>
         </div>
-      </div>
 
-      {/* Feature grid — sits below the fold, scrolls into view */}
-      <div className="relative px-6 pb-16">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 justify-items-center max-w-[896px] mx-auto">
+        {/* Feature grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 justify-items-center w-full max-w-[896px]">
           {features.map(({ icon: Icon, label }) => (
             <div key={label} className="flex flex-col items-center gap-4">
               <div className="flex justify-center items-center w-12 h-12 bg-[#ECEEF0] rounded-full">
