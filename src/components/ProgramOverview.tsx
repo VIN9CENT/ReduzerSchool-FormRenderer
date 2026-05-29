@@ -8,7 +8,7 @@ import {
   Calendar,
   MonitorPlay,
   BookOpen,
-  Download,
+  // Download,
   ArrowRight,
   ChevronDown,
   CalendarDays,
