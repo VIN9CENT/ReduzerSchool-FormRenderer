@@ -6,7 +6,7 @@ import WhyUsSection from '@/components/WhyUsSection';
 import AdmissionsProcess from '@/components/AdmissionsProcess';
 import Testimonials from '@/components/Testimonials';
 import PricingSection from '@/components/PricingSection';
-import FAQSection from '@/components/FAQSection';
+import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
       <AdmissionsProcess />
       <Testimonials />
       <PricingSection />
-      <FAQSection />
+      <FAQ />
       <Footer />
     </main>
   );
