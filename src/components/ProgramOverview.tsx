@@ -8,7 +8,7 @@ import {
   Calendar,
   MonitorPlay,
   BookOpen,
-  Download,
+  // Download,
   ArrowRight,
   ChevronDown,
   CalendarDays,
@@ -60,7 +60,7 @@ export default function ProgramOverview() {
             <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
-            <p className="text-white text-base font-medium">Mon-Fri  8am-5pm</p>
+            <p className="text-white text-base font-medium">Mon-Fri 8am-5pm</p>
           </div>
         </div>
 
@@ -131,10 +131,10 @@ export default function ProgramOverview() {
           )}
         </div>
 
-        <div
+        {/* <div
           id="curriculum"
           className="bg-zinc-900 border border-zinc-700 rounded-2xl p-8 mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-        >
+           >
           <div>
             <p className="text-[#FF002E] text-xs font-semibold uppercase tracking-widest mb-2">
               Curriculum Deep Dive
@@ -155,7 +155,7 @@ export default function ProgramOverview() {
             <Download className="w-5 h-5" />
             Download Here
           </a>
-        </div>
+        </div> */}
 
         <div className="flex justify-center">
           <Link
