@@ -24,13 +24,13 @@ export default function HeroSection() {
       <div className="hidden md:block absolute pointer-events-none rounded-full w-[394.53px] h-[518.25px] left-[1400px] top-[119px] bg-[rgba(255,56,60,0.37)] blur-[105px] -rotate-[112.15deg]" />
 
       {/* Main Content */}
-      <div className="relative flex flex-col items-center pt-20 md:pt-28 lg:pt-[160px] gap-16 md:gap-[120px] pb-16">
+      <div className="relative flex flex-col items-center pt-10 md:pt-14 lg:pt-[90px] gap-16 md:gap-[120px] pb-16">
         {/* Hero content area */}
         <div className="flex flex-col items-center gap-8 md:gap-12 w-full max-w-[896px] px-6">
           {/* Heading */}
           <h1 className="font-sans font-bold text-4xl sm:text-5xl lg:text-[64px] leading-tight lg:leading-[85px] tracking-[-1px] lg:tracking-[-2.56px] text-center text-[#191C1E] max-w-[986px] w-full">
             Launch Your{' '}
-            <span className="text-[#BB001F] underline italic">Career</span> in
+            <span className="text-[#BB001F] underline italic">Career </span> in
             Tech With Our Intensive 12-Month Bootcamp
           </h1>
 
