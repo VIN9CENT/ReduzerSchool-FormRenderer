@@ -16,12 +16,12 @@ const BRAND = {
 const requirements = [
   {
     icon: <Monitor size={28} aria-hidden="true" />,
-    title: "Basic Computer",
-    desc: "Access to a working computer",
+    title: "Basic Computer Literacy",
+    desc: "Ability to navigate computer basics",
   },
   {
     icon: <Laptop size={28} aria-hidden="true" />,
-    title: "Laptop/Computer",
+    title: "Laptop",
     desc: "Personal device recommended",
   },
   {
@@ -41,7 +41,7 @@ const requirements = [
   },
   {
     icon: <Code size={28} aria-hidden="true" />,
-    title: "No Coding Needed",
+    title: "No Prior Coding Experience",
     desc: "Beginners are welcome",
   },
 ];
