@@ -8,7 +8,6 @@ import {
   Calendar,
   MonitorPlay,
   BookOpen,
-  // Download,
   ArrowRight,
   ChevronDown,
   CalendarDays,
@@ -29,67 +28,66 @@ export default function ProgramOverview() {
   ];
 
   return (
-    <section
-      id="program"
-      className="bg-white w-full py-20 px-6 md:px-16 lg:px-24"
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="bg-black text-center px-8 py-20 rounded-3xl mb-12">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#FF002E] leading-tight mb-6">
-            Reduzer Software Engineering <br /> School Program
-          </h2>
-          <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
-            A one-year immersive program that takes you from foundational
-            concepts to a job-ready software developer through hands-on
-            training, mentorship, and real-world projects. Designed for
-            ambitious learners seeking practical skills and structured growth.
-          </p>
-        </div>
+    <section id="program" className="w-full py-20 bg-gray-50">
+      {/* Full-width black hero */}
+      <div className="bg-black text-center px-6 md:px-16 lg:px-24 py-20 mb-12">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#FF002E] leading-tight mb-6">
+          Reduzer Software Engineering <br /> School Program
+        </h2>
+        <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+          A one-year immersive program that takes you from foundational
+          concepts to a job-ready software developer through hands-on
+          training, mentorship, and real-world projects. Designed for
+          ambitious learners seeking practical skills and structured growth.
+        </p>
+      </div>
 
+      {/* Rest of content with padding */}
+      <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center ">
-            <Clock className="text-red w-10 h-10 mb-4" />
-            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="rounded-2xl p-10 flex flex-col items-center text-center border border-gray-200 bg-white">
+            <Clock className="text-[#FF002E] w-10 h-10 mb-4" />
+            <p className="text-gray-800 text-lg font-bold uppercase tracking-widest mb-2">
               Course Duration
             </p>
-            <p className="text-black text-base font-medium">52 Weeks</p>
+            <p className="text-gray-600 text-base font-medium">52 Weeks</p>
           </div>
 
-          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center ">
-            <CalendarDays className="text-red w-10 h-10 mb-4" />
-            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="rounded-2xl p-10 flex flex-col items-center text-center border border-gray-200 bg-white">
+            <CalendarDays className="text-[#FF002E] w-10 h-10 mb-4" />
+            <p className="text-gray-800 text-lg font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
-            <p className="text-black text-base font-medium">Mon-Fri 8am-5pm</p>
+            <p className="text-gray-600 text-base font-medium">Mon-Fri  8am-5pm</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center ">
-            <MapPin className="text-red w-10 h-10 mb-4" />
-            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="rounded-2xl p-10 flex flex-col items-center text-center border border-gray-200 bg-white">
+            <MapPin className="text-[#FF002E] w-10 h-10 mb-4" />
+            <p className="text-gray-800 text-lg font-bold uppercase tracking-widest mb-2">
               Location
             </p>
-            <p className="text-black text-base font-medium">Kisii, Kenya</p>
+            <p className="text-gray-600 text-base font-medium">Kisii, Kenya</p>
           </div>
 
-          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center">
-            <Calendar className="text-red w-10 h-10 mb-4" />
-            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="rounded-2xl p-10 flex flex-col items-center text-center border border-gray-200 bg-white">
+            <Calendar className="text-[#FF002E] w-10 h-10 mb-4" />
+            <p className="text-gray-800 text-lg font-bold uppercase tracking-widest mb-2">
               Start Date
             </p>
-            <p className="text-black text-base font-medium">
+            <p className="text-gray-600 text-base font-medium">
               September 1st 2026
             </p>
           </div>
         </div>
 
-        <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center mb-12 ">
-          <MonitorPlay className="text-red w-10 h-10 mb-4" />
-          <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
+        <div className="rounded-2xl p-10 flex flex-col items-center text-center mb-12 border border-gray-200 bg-white">
+          <MonitorPlay className="text-[#FF002E] w-10 h-10 mb-4" />
+          <p className="text-gray-800 text-lg font-bold uppercase tracking-widest mb-2">
             Mode of Learning
           </p>
-          <p className="text-blackgit text-base font-medium">
+          <p className="text-gray-600 text-base font-medium">
             100% Physical Classes
           </p>
         </div>
@@ -131,36 +129,11 @@ export default function ProgramOverview() {
           )}
         </div>
 
-        {/* <div
-          id="curriculum"
-          className="bg-zinc-900 border border-zinc-700 rounded-2xl p-8 mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-           >
-          <div>
-            <p className="text-[#FF002E] text-xs font-semibold uppercase tracking-widest mb-2">
-              Curriculum Deep Dive
-            </p>
-            <p className="text-white font-bold text-xl mb-1">
-              Full Program Breakdown
-            </p>
-            <p className="text-gray-400 text-sm">
-              Phases, tools, outcomes &amp; schedule; everything you need to
-              know.
-            </p>
-          </div>
-          <a
-            href="#"
-            download
-            className="flex items-center gap-3 bg-[#FF002E] transition-colors duration-200 text-white font-bold text-base px-8 py-4 rounded-full whitespace-nowrap"
-          >
-            <Download className="w-5 h-5" />
-            Download Here
-          </a>
-        </div> */}
 
         <div className="flex justify-center">
           <Link
             href="#apply"
-            className="flex items-center gap-3 bg-[#FF002E] hover:bg-red-700 transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
+            className="flex items-center gap-3 bg-[#FF002E] hover:bg-[#e60028] transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
           >
             Apply Now
             <ArrowRight className="w-6 h-6" />
