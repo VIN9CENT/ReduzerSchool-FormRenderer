@@ -22,7 +22,7 @@ const requirements = [
   {
     icon: <Laptop size={28} aria-hidden="true" />,
     title: "Laptop",
-    desc: "Personal device recommended",
+    desc: "Personal device required",
   },
   {
     icon: <Heart size={28} aria-hidden="true" />,
@@ -264,7 +264,7 @@ export default function AdmissionsProcess() {
         </a>
 
       </section>
+      </section>
 
-    </main>
   );
 }
