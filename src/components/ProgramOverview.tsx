@@ -47,49 +47,49 @@ export default function ProgramOverview() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
-            <Clock className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center ">
+            <Clock className="text-red w-10 h-10 mb-4" />
+            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
               Course Duration
             </p>
-            <p className="text-white text-base font-medium">52 Weeks</p>
+            <p className="text-black text-base font-medium">52 Weeks</p>
           </div>
 
-          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
-            <CalendarDays className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center ">
+            <CalendarDays className="text-red w-10 h-10 mb-4" />
+            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
-            <p className="text-white text-base font-medium">Mon-Fri 8am-5pm</p>
+            <p className="text-black text-base font-medium">Mon-Fri 8am-5pm</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center ">
-            <MapPin className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center ">
+            <MapPin className="text-red w-10 h-10 mb-4" />
+            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
               Location
             </p>
-            <p className="text-white text-base font-medium">Kisii, Kenya</p>
+            <p className="text-black text-base font-medium">Kisii, Kenya</p>
           </div>
 
-          <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center">
-            <Calendar className="text-white w-10 h-10 mb-4" />
-            <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
+          <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center">
+            <Calendar className="text-red w-10 h-10 mb-4" />
+            <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
               Start Date
             </p>
-            <p className="text-white text-base font-medium">
+            <p className="text-black text-base font-medium">
               September 1st 2026
             </p>
           </div>
         </div>
 
-        <div className="bg-[#FF002E] rounded-2xl p-10 flex flex-col items-center text-center mb-12 ">
-          <MonitorPlay className="text-white w-10 h-10 mb-4" />
-          <p className="text-white text-lg font-bold uppercase tracking-widest mb-2">
+        <div className="bg-[#FFFF] rounded-2xl p-10 flex flex-col items-center text-center mb-12 ">
+          <MonitorPlay className="text-red w-10 h-10 mb-4" />
+          <p className="text-black text-lg font-bold uppercase tracking-widest mb-2">
             Mode of Learning
           </p>
-          <p className="text-white text-base font-medium">
+          <p className="text-blackgit text-base font-medium">
             100% Physical Classes
           </p>
         </div>
