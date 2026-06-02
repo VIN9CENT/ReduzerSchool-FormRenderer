@@ -1,11 +1,4 @@
 import Link from 'next/link';
-import {
-  BookOpen,
-  Clock,
-  ArrowRight,
-  DollarSign,
-  Target,
-} from 'lucide-react';
 import { BookOpen, Clock, ArrowRight, DollarSign, Target } from 'lucide-react';
 
 export default function ProblemSection() {
