@@ -1,6 +1,6 @@
 'use client';
 
-import { FaXTwitter, FaWhatsapp } from 'react-icons/fa6';
+import { FaXTwitter, FaWhatsapp, FaLinkedinIn } from 'react-icons/fa6';
 import { MdOutlineMail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
 import Link from 'next/link';
@@ -42,6 +42,14 @@ export default function Footer() {
               >
                 <FaXTwitter className="text-2xl " />
               </a>
+              <a
+                href="https://www.linkedin.com/company/reduzer-technologies"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label=" In / LinkedIn"
+              >
+                <FaLinkedinIn className="text-2xl" />
+              </a>
             </div>
           </div>
 
@@ -68,11 +76,7 @@ export default function Footer() {
                 className="flex items-center gap-2 whitespace-nowrap"
               >
                 <MdOutlineMail className="text-red-500 w-5 h-5 shrink-0" />
-                <span>
-                  {' '}
-                  contact@Reduzer <br />
-                  School.tech
-                </span>
+                <span> Hello@Reduzer.tech</span>
               </a>
             </div>
           </div>
@@ -107,14 +111,7 @@ export default function Footer() {
                 <Link href="#curriculum">Curriculum</Link>
               </li>
               <li>
-                <Link href="https://reduzer-school.reduzer.tech/#pricing">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link href="https://reduzer-school.reduzer.tech/#apply">
-                  Admission
-                </Link>
+                <Link href="#admission">Admission</Link>
               </li>
             </ul>
           </div>
@@ -146,6 +143,9 @@ export default function Footer() {
 
       {/* LINE */}
       <div className="border-b border-gray-600 mt-10"></div>
+
+      {/* COPYRIGHT */}
+      <p className="text-sm text-gray-300 mt-10 ">© 2026 Reduzer School.</p>
     </footer>
   );
 }
