@@ -142,11 +142,6 @@ export default function Footer() {
 
       {/* LINE */}
       <div className="border-b border-gray-600 mt-10"></div>
-
-      {/* COPYRIGHT */}
-      <p className="text-sm text-gray-300 mt-10 ">
-        © 2026 Reduzer School. Copyright Protected
-      </p>
     </footer>
   );
 }
