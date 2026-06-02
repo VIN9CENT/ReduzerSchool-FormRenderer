@@ -50,21 +50,18 @@ export default function Footer() {
             <h2 className="text-sm font-bold uppercase">Contact</h2>
             <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
             <div className="space-y-8 text-sm">
-              <a
-                href="tel:+254769 267 965"
-                className="flex items-center gap-4 "
-              >
+              <a href="tel:+254769267965" className="flex items-center gap-4 ">
                 <FiPhoneCall className="text-red-500 w-5 h-5 shrink-0" />
-                <span>+254769 267 965</span>
+                <span>+254769267965</span>
               </a>
               <a
-                href="https://wa.me/254769 267 965"
+                href="https://wa.me/254769267965"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 "
               >
                 <FaWhatsapp className="text-red-500 w-5 h-5 shrink-0" />
-                <span>+254 769 267 965</span>
+                <span>+254769267965</span>
               </a>
               <a
                 href="mailto:contact@ReduzerSchool.tech"
@@ -119,7 +116,7 @@ export default function Footer() {
         {/* BUTTONS */}
 
         <a
-          href="https://wa.me/254769 267 965"
+          href="https://wa.me/+254769267965"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
