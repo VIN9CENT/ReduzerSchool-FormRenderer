@@ -17,16 +17,52 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const siteUrl = 'https://reduzer-school.reduzer.tech/';
 export const metadata: Metadata = {
-  title: 'Reduzer School',
-  description:
-    'Reduzer School is a 12-month, part-time program designed to help you launch your career in tech. Learn the skills you need to succeed in the industry, build real-world projects, and get hired by top companies.',
-    alternates: {
-    canonical: "https://reduzer-school.reduzer.tech/",
+  title: {
+    default: 'Reduzer School',
+    template: '%s | Reduzer School',
   },
-    
-};
+  description:
+    'Launch your career as a full-stack developer in 12 months. Learn in-demand coding skills, build real projects, and get hired by top tech companies.',
 
+  metadataBase: new URL(siteUrl),
+
+  openGraph: {
+    type: 'website',
+    url: siteUrl,
+    siteName: 'Reduzer School',
+    title: 'Reduzer School',
+    description:
+      'Launch your career as a full-stack developer in 12 months. Learn in-demand coding skills, build real projects, and get hired by top tech companies.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Reduzer School',
+      },
+    ],
+    locale: 'en_US',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Reduzer School',
+    description:
+      'Launch your career as a full-stack developer in 12 months. Learn in-demand coding skills, build real projects, and get hired by top tech companies.',
+    images: ['/og-image.png'],
+    site: '@reduzer_tech',
+  },
+
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 export default function RootLayout({
   children,
 }: Readonly<{

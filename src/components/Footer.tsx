@@ -4,6 +4,7 @@ import { FaXTwitter, FaWhatsapp } from 'react-icons/fa6';
 import { MdOutlineMail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -24,8 +25,14 @@ export default function Footer() {
           {/* BRAND */}
           <div>
             <Link href="/">
-              <h1 className="text-xl md:text-4xl font-bold ">Reduzer School</h1>
-            </Link>
+  <Image
+    src="https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png"
+    alt="Reduzer School"
+    width={160}
+    height={32}
+    priority
+  />
+</Link>
             <p className="mt-5 text-gray-300 text-sm leading-relaxed">
               Innovating Today.
               <br />
@@ -104,10 +111,17 @@ export default function Footer() {
             <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
             <ul className="space-y-8 text-sm text-gray-200">
               <li>
-                <Link href="#pricing">Pricing</Link>
+                <Link href="#curriculum">Curriculum</Link>
               </li>
               <li>
-                <Link href="#admission">Admission</Link>
+                <Link href="https://reduzer-school.reduzer.tech/#pricing">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link href="https://reduzer-school.reduzer.tech/#apply">
+                  Admission
+                </Link>
               </li>
             </ul>
           </div>
@@ -142,3 +156,8 @@ export default function Footer() {
     </footer>
   );
 }
+
+
+
+
+
