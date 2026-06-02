@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-blacks text-white px-6 md:px-10 py-12">
+    <footer className="bg-black text-white px-6 md:px-10 py-12">
       <div className="max-w-5xl mx-auto px-6 md:px-10">
         {/* TOP TEXT */}
         <div className="text-center mb-16 px-4">
@@ -50,18 +50,21 @@ export default function Footer() {
             <h2 className="text-sm font-bold uppercase">Contact</h2>
             <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
             <div className="space-y-8 text-sm">
-              <a href="tel:+254789090890" className="flex items-center gap-4 ">
+              <a
+                href="tel:+254769 267 965"
+                className="flex items-center gap-4 "
+              >
                 <FiPhoneCall className="text-red-500 w-5 h-5 shrink-0" />
-                <span>+254789090890</span>
+                <span>+254769 267 965</span>
               </a>
               <a
-                href="https://wa.me/254709090889"
+                href="https://wa.me/254769 267 965"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 "
               >
                 <FaWhatsapp className="text-red-500 w-5 h-5 shrink-0" />
-                <span>+254709090889</span>
+                <span>+254769 267 965</span>
               </a>
               <a
                 href="mailto:contact@ReduzerSchool.tech"
@@ -119,7 +122,7 @@ export default function Footer() {
         {/* BUTTONS */}
 
         <a
-          href="https://wa.me/254709090889"
+          href="https://wa.me/254769 267 965"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
