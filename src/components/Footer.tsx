@@ -64,7 +64,7 @@ export default function Footer() {
                 className="flex items-center gap-4 "
               >
                 <FaWhatsapp className="text-red-500 w-5 h-5 shrink-0" />
-                <span>+254769 267 965</span>
+                <span>+254 769 267 965</span>
               </a>
               <a
                 href="mailto:contact@ReduzerSchool.tech"
@@ -145,11 +145,6 @@ export default function Footer() {
 
       {/* LINE */}
       <div className="border-b border-gray-600 mt-10"></div>
-
-      {/* COPYRIGHT */}
-      <p className="text-sm text-gray-300 mt-10 ">
-        © 2026 Reduzer School. Copyright Protected
-      </p>
     </footer>
   );
 }
