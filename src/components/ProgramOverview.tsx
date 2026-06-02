@@ -160,7 +160,7 @@ export default function ProgramOverview() {
         <div className="flex justify-center">
           <Link
             href="#apply"
-            className="flex items-center gap-3 bg-[#FF002E] hover:bg-black transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
+            className="flex items-center gap-3 bg-[#FF002E] hover:bg-red-700 transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
           >
             Apply Now
             <ArrowRight className="w-6 h-6" />
