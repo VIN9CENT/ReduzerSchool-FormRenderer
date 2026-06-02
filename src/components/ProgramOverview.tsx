@@ -94,6 +94,8 @@ export default function ProgramOverview() {
         <div className="bg-white border border-gray-200 rounded-2xl mb-8 shadow-md overflow-hidden">
           <button
             onClick={() => setSkillsOpen(!skillsOpen)}
+            aria-expanded={skillsOpen}
+            aria-controls="skills-content"
             className="w-full flex items-center justify-between px-10 py-7 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
           >
             <div className="flex items-center gap-4">
@@ -112,7 +114,9 @@ export default function ProgramOverview() {
           </button>
 
           {skillsOpen && (
-            <ul className="px-10 pb-8 space-y-3 border-t border-gray-100 pt-6">
+            <ul 
+            id="skills-content"
+            className="px-10 pb-8 space-y-3 border-t border-gray-100 pt-6">
               {skills.map((skill, i) => (
                 <li
                   key={i}

@@ -6,12 +6,11 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Program', href: '#program' },
-  { label: 'About', href: '#about' },
-  { label: 'Admissions', href: '#apply' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Home', href: '/#home' },
+  { label: 'Program', href: '/#program' },
+  { label: 'About', href: '/#about' },
+  { label: 'Admissions', href: '/#apply' },
+  { label: 'FAQ', href: '/#faq' },
 ];
 
 export default function Navbar() {
@@ -26,7 +25,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const sectionIds = navLinks.map((link) => link.href.slice(1));
+    const sectionIds = navLinks.map((link) => link.href.replace('/#', ''));
 
     const observers = sectionIds.map((id) => {
       const el = document.getElementById(id);
@@ -51,9 +50,11 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white shadow-[0_2px_20px_rgba(0,0,0,0.08)] border-b border-gray-200' : 'bg-transparent border-b border-transparent'}`}>
+    <nav
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white shadow-[0_2px_20px_rgba(0,0,0,0.08)] border-b border-gray-200' : 'bg-transparent border-b border-transparent'}`}
+    >
       <div className="flex flex-row justify-between items-center w-full max-w-[1280px] mx-auto px-6 h-20 md:px-8">
-        <Link href="#home">
+        <Link href="/">
           <Image
             src="https://brand-assets.reduzer.tech/horizontal/white/reduzer.png"
             alt="Reduzer School"
@@ -66,7 +67,7 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex flex-row items-center gap-8">
           {navLinks.map(({ label, href }) => {
-            const isActive = activeSection === href.slice(1);
+            const isActive = activeSection === href.replace('/#', '');
             return (
               <Link
                 key={label}
@@ -87,7 +88,7 @@ export default function Navbar() {
         </div>
 
         <Link
-          href="#apply"
+          href="/apply"
           className="hidden md:flex items-center justify-center h-9 px-6 rounded-[8px] border border-[#FF002E] text-[13px] font-semibold text-black hover:bg-[#BB001F]/5 transition-colors"
         >
           Apply Now
@@ -112,7 +113,7 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden flex flex-col gap-0 border-t border-gray-100 bg-white px-6 pb-6 pt-4">
           {navLinks.map(({ label, href }) => {
-            const isActive = activeSection === href.slice(1);
+            const isActive = activeSection === href.replace('/#', '');
             return (
               <Link
                 key={label}
@@ -129,7 +130,7 @@ export default function Navbar() {
             );
           })}
           <Link
-            href="#apply"
+            href="/apply"
             onClick={() => setOpen(false)}
             className="mt-4 flex items-center justify-center h-10 rounded-[8px] border border-[#FF002E] text-[13px] font-semibold text-black hover:bg-[#BB001F]/5 transition-colors"
           >

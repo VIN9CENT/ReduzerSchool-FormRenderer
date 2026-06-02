@@ -87,9 +87,11 @@ export default function FAQ() {
         Frequently Asked Questions
       </h2>
       {faqs.map((faq) => (
-        <div
+        <button
           key={faq.id}
           onClick={() => toggleFaq(faq.id)}
+          aria-expanded={activeId === faq.id}
+          aria-controls={`faq-panel-${faq.id}`}
           className="flex flex-col gap-3 sm:gap-4 w-full max-w-3xl mx-auto shadow-none sm:shadow-3xl rounded-xl border border-black/5 transition-all duration-300 bg-faq-white-1 cursor-pointer p-3"
         >
           <div className="flex justify-between items-center gap-4 p-4 sm:p-5">
@@ -116,7 +118,7 @@ export default function FAQ() {
               ))}
             </div>
           )}
-        </div>
+        </button>
       ))}
     </section>
   );

@@ -56,14 +56,14 @@ export default function Testimonials() {
         <h2 className="text-3xl font-bold tracking-[-1.44px] text-[#191C1E] sm:text-5xl">
           What our students say
         </h2>
-        <p className="max-w-[560px] text-lg leading-relaxed text-[#565E74]">
+        <p className="max-w-140 text-lg leading-relaxed text-[#565E74]">
           Hear directly from those who&rsquo;ve made the leap from learner to
           professional.
         </p>
       </div>
 
       {/* Carousel */}
-      <div className="relative flex w-full max-w-[896px] items-center justify-center">
+      <div className="relative flex w-full max-w-4xl items-center justify-center">
         {/* Prev */}
         <button
           onClick={prev}
@@ -76,7 +76,7 @@ export default function Testimonials() {
         <div className="relative w-full rounded-xl border border-[#EABCB8]/20 bg-white px-8 pb-16 pt-20 shadow-[0px_20px_50px_rgba(0,0,0,0.04),0px_4px_10px_rgba(0,0,0,0.02)]">
           {/* Avatar */}
           <div className="absolute -top-13 left-1/2 -translate-x-1/2">
-            <div className="relative flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#f5f5f5] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+            <div className="relative flex h-26 w-26 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#f5f5f5] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
               {t.avatar ? (
                 <Image
                   src={t.avatar}
@@ -103,7 +103,7 @@ export default function Testimonials() {
               </span>
             </div>
 
-            <p className="max-w-[640px] text-center text-lg italic leading-relaxed tracking-[-0.2px] text-[#5C647A]">
+            <p className="max-w-160 text-center text-lg italic leading-relaxed tracking-[-0.2px] text-[#5C647A]">
               &ldquo;{t.quote}&rdquo;
             </p>
           </div>
