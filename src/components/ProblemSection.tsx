@@ -3,7 +3,7 @@ import { BookOpen, Clock, ArrowRight, DollarSign, Target } from 'lucide-react';
 
 export default function ProblemSection() {
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white px-4 py-12 md:px-8 md:py-20 lg:px-16">
+    <section className="bg-linear-to-b from-gray-50 to-white px-4 py-12 md:px-8 md:py-20 lg:px-16">
       <div className="mx-auto max-w-6xl font-[Inter,sans-serif]">
         {/* Header */}
         <div className="mb-16">
