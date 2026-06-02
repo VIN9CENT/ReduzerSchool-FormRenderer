@@ -73,7 +73,8 @@ export default function HeroSection() {
         </div>
 
         {/* Feature grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 justify-items-center w-full max-w-[896px]">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 justify-i .
+        tems-center w-full max-w-[896px]">
           {features.map(({ icon: Icon, label }) => (
             <div key={label} className="flex flex-col items-center gap-4">
               <div className="flex justify-center items-center w-12 h-12 bg-[#ECEEF0] rounded-full">
