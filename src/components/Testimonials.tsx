@@ -7,36 +7,36 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const testimonials = [
   {
-    name: 'Alex',
-    cohort: 'Software Engineering · 2026',
-    initials: 'A',
-    avatar: null,
-    quote:
-      "Reduzer School didn't just teach me new syntax, it reshaped how I think about systems. The rigour of the curriculum and direct mentorship from industry experts gave me the confidence to lead architectural shifts at my company.",
-  },
-  {
-    name: 'Priya',
-    cohort: 'Product Design · 2025',
-    initials: 'P',
-    avatar: null,
-    quote:
-      'The hands-on projects were the real differentiator. I shipped three production apps before graduation. Employers noticed immediately, I had my offer within two weeks of the programme ending.',
-  },
-  {
-    name: 'Daniel',
-    cohort: 'Data Engineering · 2026',
-    initials: 'D',
-    avatar: null,
-    quote:
-      "I came in knowing almost nothing. I left with a job at a fintech startup and a salary I didn't think was possible this early. The structure and accountability at Reduzer is unlike any bootcamp I've seen.",
-  },
-  {
-    name: 'Amara',
+    name: 'Amos Ogutu',
     cohort: 'Software Engineering · 2025',
-    initials: 'A',
+    initials: 'AO',
     avatar: null,
     quote:
-      "The mentors don't just answer your questions, they challenge how you're thinking. That shift in mindset is what I use every single day at work.",
+      'The one-year course was practical, easy to follow, and the instructors were with me every step of the way. I gained real programming skills, grew in confidence, and left ready to solve real-world problems. Reduzer School is the place to be if you are serious about software engineering.',
+  },
+  {
+    name: 'Dorah Momanyi',
+    cohort: 'Software Engineering · 2025',
+    initials: 'DM',
+    avatar: null,
+    quote:
+      'Being among the first students at Reduzer was transformative. Through hands-on projects and strong mentorship, I built full-stack applications, sharpened my problem-solving, and walked out with the confidence and skills employers actually want. I highly recommend it to anyone serious about a career in tech.',
+  },
+  {
+    name: 'Vincent Ochieng',
+    cohort: 'Software Engineering · 2025',
+    initials: 'VO',
+    avatar: null,
+    quote:
+      'Before Reduzer I was stuck in tutorial hell, unsure which skills actually mattered. The mentorship and focus on core concepts completely changed how I think as a developer. I came out with stronger problem-solving skills, real confidence, and a clear path forward in tech.',
+  },
+  {
+    name: 'Gilbert Tallam',
+    cohort: 'Software Engineering · 2025',
+    initials: 'GT',
+    avatar: null,
+    quote:
+      'Reduzer gave me the structure, mentorship, and hands-on projects I needed to level up fast. The community is genuinely supportive and the learning approach is built for the real world, not just theory. If you want to accelerate your journey into tech, this is where you start.',
   },
 ];
 
