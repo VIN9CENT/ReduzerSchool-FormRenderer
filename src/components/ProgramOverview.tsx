@@ -29,9 +29,9 @@ export default function ProgramOverview() {
 
   return (
     <section id="program" className="w-full py-20 bg-gray-50">
-      {/* Full-width black hero */}
+    
       <div className="bg-black text-center px-6 md:px-16 lg:px-24 py-20 mb-12">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#FF002E] leading-tight mb-6">
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#FF002E] leading-tight mb-6">
           Reduzer Software Engineering <br /> School Program
         </h2>
         <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
@@ -42,7 +42,6 @@ export default function ProgramOverview() {
         </p>
       </div>
 
-      {/* Rest of content with padding */}
       <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="rounded-2xl p-10 flex flex-col items-center text-center border border-gray-200 bg-white">
