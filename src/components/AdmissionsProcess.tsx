@@ -87,13 +87,6 @@ export default function AdmissionsProcess() {
           their careers in tech.
         </p>
 
-        <a
-          href="#curriculum"
-          className="inline-block text-sm md:text-base font-semibold px-8 py-3 rounded-xl text-white transition hover:opacity-90"
-          style={{ backgroundColor: BRAND.red }}
-        >
-          View Curriculum
-        </a>
       </section>
 
       {/* WHAT YOU'LL NEED */}
@@ -203,15 +196,12 @@ export default function AdmissionsProcess() {
         </p>
 
         <a
-          href="https://your-application-form-link.com"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/apply"
           className="inline-block text-sm md:text-base font-bold px-10 py-3 rounded-xl transition hover:opacity-90"
           style={{
             backgroundColor: BRAND.black,
             color: 'white',
           }}
-          aria-label="Apply Now - opens in new tab"
         >
           APPLY NOW
         </a>
