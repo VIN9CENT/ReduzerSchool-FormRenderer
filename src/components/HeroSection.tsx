@@ -52,7 +52,7 @@ export default function HeroSection() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-[30px] w-full mt-2">
             <Link
-              href="#apply"
+              href="/apply"
               className="flex flex-row justify-center items-center gap-2 w-full sm:w-auto rounded-[8px] bg-[#BB001F] px-8 py-[17px] shadow-[0px_10px_15px_-3px_rgba(187,0,31,0.2),0px_4px_6px_-4px_rgba(187,0,31,0.2)] hover:bg-[#a0001a] transition-colors"
             >
               <span className="font-sans font-semibold text-[18px] leading-[28px] tracking-[1.8px] text-center text-white">
@@ -60,21 +60,14 @@ export default function HeroSection() {
               </span>
               <ArrowRight size={16} className="text-white" />
             </Link>
-
-            <Link
-              href="#curriculum"
-              className="flex flex-col justify-center items-center w-full sm:w-auto rounded-[8px] border border-[#FF383C] py-4 px-8 hover:bg-[#FF383C]/5 transition-colors"
-            >
-              <span className="font-sans font-semibold text-[18px] leading-[28px] tracking-[1.8px] text-center text-[#BB001F]">
-                View Curriculum
-              </span>
-            </Link>
           </div>
         </div>
 
         {/* Feature grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 justify-i .
-        tems-center w-full max-w-[896px]">
+        <div
+          className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 justify-i .
+        tems-center w-full max-w-[896px]"
+        >
           {features.map(({ icon: Icon, label }) => (
             <div key={label} className="flex flex-col items-center gap-4">
               <div className="flex justify-center items-center w-12 h-12 bg-[#ECEEF0] rounded-full">
