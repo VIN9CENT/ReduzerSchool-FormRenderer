@@ -64,7 +64,7 @@ export default function Footer() {
                 <span>+254769267965</span>
               </a>
               <a
-                href="mailto:contact@ReduzerSchool.tech"
+                href="mailto:hello@reduzer.tech"
                 className="flex items-center gap-2 whitespace-nowrap"
               >
                 <MdOutlineMail className="text-red-500 w-5 h-5 shrink-0" />

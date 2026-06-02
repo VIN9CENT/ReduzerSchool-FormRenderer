@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import ApplicationForm from '@/components/ApplicationForm';
 
 export const metadata = {
-  title: 'Apply — Reduzer School',
+  title: 'Apply - Reduzer School',
   description:
     'Apply for the Reduzer School 12-month Software Engineering Bootcamp.',
 };

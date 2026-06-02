@@ -184,7 +184,7 @@ export default function ProblemSection() {
             </div>
 
             <Link
-              href="#apply"
+              href="/apply"
               className="group flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto md:px-8"
             >
               Join Reduzer

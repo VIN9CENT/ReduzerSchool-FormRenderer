@@ -93,7 +93,7 @@ export default function WhyUsSection() {
           </p>
 
           <Link
-            href="#apply"
+            href="/apply"
             className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-8 py-4 font-semibold text-white transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto"
           >
             Start Application

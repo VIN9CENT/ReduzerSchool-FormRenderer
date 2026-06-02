@@ -135,7 +135,7 @@ export default function ProgramOverview() {
 
         <div className="flex justify-center">
           <Link
-            href="#apply"
+            href="/apply"
             className="flex items-center gap-3 bg-[#FF002E] hover:bg-[#e60028] transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
           >
             Apply Now
