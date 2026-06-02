@@ -29,16 +29,15 @@ export default function ProgramOverview() {
 
   return (
     <section id="program" className="w-full py-20 bg-gray-50">
-    
       <div className="bg-black text-center px-6 md:px-16 lg:px-24 py-20 mb-12">
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#FF002E] leading-tight mb-6">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#FF002E] leading-tight mb-6">
           Reduzer Software Engineering <br /> School Program
         </h2>
         <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
-          A one-year immersive program that takes you from foundational
-          concepts to a job-ready software developer through hands-on
-          training, mentorship, and real-world projects. Designed for
-          ambitious learners seeking practical skills and structured growth.
+          A one-year immersive program that takes you from foundational concepts
+          to a job-ready software developer through hands-on training,
+          mentorship, and real-world projects. Designed for ambitious learners
+          seeking practical skills and structured growth.
         </p>
       </div>
 
@@ -57,7 +56,9 @@ export default function ProgramOverview() {
             <p className="text-gray-800 text-lg font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
-            <p className="text-gray-600 text-base font-medium">Mon-Fri  8am-5pm</p>
+            <p className="text-gray-600 text-base font-medium">
+              Mon-Fri 8am-5pm
+            </p>
           </div>
         </div>
 
@@ -114,9 +115,10 @@ export default function ProgramOverview() {
           </button>
 
           {skillsOpen && (
-            <ul 
-            id="skills-content"
-            className="px-10 pb-8 space-y-3 border-t border-gray-100 pt-6">
+            <ul
+              id="skills-content"
+              className="px-10 pb-8 space-y-3 border-t border-gray-100 pt-6"
+            >
               {skills.map((skill, i) => (
                 <li
                   key={i}
@@ -131,7 +133,6 @@ export default function ProgramOverview() {
             </ul>
           )}
         </div>
-
 
         <div className="flex justify-center">
           <Link
