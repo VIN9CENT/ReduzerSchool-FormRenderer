@@ -67,10 +67,7 @@ function strToBase64url(str: string): string {
   const bytes = new TextEncoder().encode(str);
   let binary = '';
   bytes.forEach((b) => (binary += String.fromCharCode(b)));
-  return btoa(binary)
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=/g, '');
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
 async function getAccessToken(email: string, pemKey: string): Promise<string> {
@@ -131,16 +128,32 @@ async function getAccessToken(email: string, pemKey: string): Promise<string> {
     throw new Error(`Token exchange failed: ${text}`);
   }
 
-  const json = await tokenRes.json() as { access_token: string };
+  const json = (await tokenRes.json()) as { access_token: string };
   return json.access_token;
 }
 
 // ─── Validation & sanitization ───────────────────────────────────────────────
 
 const ALLOWED = {
-  occupation: ['Student', 'Employed full time', 'Employed part time', 'Self employed', 'Unemployed', 'Other'],
-  education: ['High school / KCSE', 'Diploma', "Bachelor's degree", "Master's degree or higher", 'Other'],
-  hasTechExperience: ['Yes, I have some experience', 'No, I am completely new to tech'],
+  occupation: [
+    'Student',
+    'Employed full time',
+    'Employed part time',
+    'Self employed',
+    'Unemployed',
+    'Other',
+  ],
+  education: [
+    'High school / KCSE',
+    'Diploma',
+    "Bachelor's degree",
+    "Master's degree or higher",
+    'Other',
+  ],
+  hasTechExperience: [
+    'Yes, I have some experience',
+    'No, I am completely new to tech',
+  ],
   hasLaptop: ['Yes', 'No'],
   learningMode: [
     'Online (fully remote learning)',
@@ -148,7 +161,14 @@ const ALLOWED = {
     'Hybrid (mostly online with an on-site session during the final week)',
     'I need more information before deciding',
   ],
-  heardFrom: ['Instagram', 'Twitter / X', 'WhatsApp', 'From a friend or colleague', 'Google search', 'Other'],
+  heardFrom: [
+    'Instagram',
+    'Twitter / X',
+    'WhatsApp',
+    'From a friend or colleague',
+    'Google search',
+    'Other',
+  ],
 } as const;
 
 // Coerce to string, trim, enforce max length, and neutralise formula injection.
@@ -174,18 +194,28 @@ function serverValidate(b: Record<string, unknown>): string | null {
   if (!str(b.city, 200)) return 'city is required';
   if (!str(b.country, 200)) return 'country is required';
 
-  if (!isAllowed(b.occupation, ALLOWED.occupation)) return 'invalid occupation value';
-  if (b.occupation === 'Other' && !str(b.occupationOther, 200)) return 'occupationOther is required';
+  if (!isAllowed(b.occupation, ALLOWED.occupation))
+    return 'invalid occupation value';
+  if (b.occupation === 'Other' && !str(b.occupationOther, 200))
+    return 'occupationOther is required';
 
-  if (!isAllowed(b.education, ALLOWED.education)) return 'invalid education value';
-  if (b.education === 'Other' && !str(b.educationOther, 200)) return 'educationOther is required';
+  if (!isAllowed(b.education, ALLOWED.education))
+    return 'invalid education value';
+  if (b.education === 'Other' && !str(b.educationOther, 200))
+    return 'educationOther is required';
 
-  if (!isAllowed(b.hasTechExperience, ALLOWED.hasTechExperience)) return 'invalid hasTechExperience value';
-  if (b.hasTechExperience === 'Yes, I have some experience' && !str(b.techExperienceDetails, 2000))
+  if (!isAllowed(b.hasTechExperience, ALLOWED.hasTechExperience))
+    return 'invalid hasTechExperience value';
+  if (
+    b.hasTechExperience === 'Yes, I have some experience' &&
+    !str(b.techExperienceDetails, 2000)
+  )
     return 'techExperienceDetails is required';
 
-  if (!isAllowed(b.hasLaptop, ALLOWED.hasLaptop)) return 'invalid hasLaptop value';
-  if (!isAllowed(b.learningMode, ALLOWED.learningMode)) return 'invalid learningMode value';
+  if (!isAllowed(b.hasLaptop, ALLOWED.hasLaptop))
+    return 'invalid hasLaptop value';
+  if (!isAllowed(b.learningMode, ALLOWED.learningMode))
+    return 'invalid learningMode value';
 
   if (!str(b.whyReduzer)) return 'whyReduzer is required';
   if (!str(b.biggestObstacle)) return 'biggestObstacle is required';
@@ -194,8 +224,10 @@ function serverValidate(b: Record<string, unknown>): string | null {
   if (!str(b.reqChanges)) return 'reqChanges is required';
   if (!str(b.workStyle)) return 'workStyle is required';
 
-  if (!isAllowed(b.heardFrom, ALLOWED.heardFrom)) return 'invalid heardFrom value';
-  if (b.heardFrom === 'Other' && !str(b.heardFromOther, 200)) return 'heardFromOther is required';
+  if (!isAllowed(b.heardFrom, ALLOWED.heardFrom))
+    return 'invalid heardFrom value';
+  if (b.heardFrom === 'Other' && !str(b.heardFromOther, 200))
+    return 'heardFromOther is required';
 
   return null;
 }
@@ -234,7 +266,10 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-type PagesFunction<E> = (ctx: { request: Request; env: E }) => Response | Promise<Response>;
+type PagesFunction<E> = (ctx: {
+  request: Request;
+  env: E;
+}) => Response | Promise<Response>;
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const contentLength = request.headers.get('content-length');
@@ -244,7 +279,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   let raw: Record<string, unknown>;
   try {
-    raw = await request.json() as Record<string, unknown>;
+    raw = (await request.json()) as Record<string, unknown>;
   } catch {
     return json({ error: 'Invalid JSON body' }, 400);
   }
@@ -260,19 +295,44 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     GOOGLE_SPREADSHEET_ID: sheetId,
   } = env;
 
+  // Debug version
+  console.log('Email exists:', !!email);
+  console.log('Key exists:', !!key);
+  console.log('SheetId exists:', !!sheetId);
+
   if (!email || !key || !sheetId) {
-    return json({ error: 'Server misconfiguration: missing environment variables' }, 500);
+    const missing = [];
+    if (!email) missing.push('GOOGLE_SERVICE_ACCOUNT_EMAIL');
+    if (!key) missing.push('GOOGLE_PRIVATE_KEY');
+    if (!sheetId) missing.push('GOOGLE_SPREADSHEET_ID');
+
+    const details = `Missing: ${missing.join(', ')}`;
+    console.error(details);
+
+    return json(
+      {
+        error: `Server misconfiguration: ${details}`,
+      },
+      500
+    );
   }
 
-  const occupation = raw.occupation === 'Other'
-    ? `Other: ${str(raw.occupationOther, 200)}`
-    : str(raw.occupation, 200);
-  const education = raw.education === 'Other'
-    ? `Other: ${str(raw.educationOther, 200)}`
-    : str(raw.education, 200);
-  const heardFrom = raw.heardFrom === 'Other'
-    ? `Other: ${str(raw.heardFromOther, 200)}`
-    : str(raw.heardFrom, 200);
+  // if (!email || !key || !sheetId) {
+  //   return json({ error: 'Server misconfiguration: missing environment variables' }, 500);
+  // }
+
+  const occupation =
+    raw.occupation === 'Other'
+      ? `Other: ${str(raw.occupationOther, 200)}`
+      : str(raw.occupation, 200);
+  const education =
+    raw.education === 'Other'
+      ? `Other: ${str(raw.educationOther, 200)}`
+      : str(raw.education, 200);
+  const heardFrom =
+    raw.heardFrom === 'Other'
+      ? `Other: ${str(raw.heardFromOther, 200)}`
+      : str(raw.heardFrom, 200);
 
   const row = [
     new Date().toISOString(),
@@ -305,6 +365,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('Submit error:', message);
-    return json({ error: 'Failed to save application. Please try again.' }, 500);
+    return json(
+      { error: 'Failed to save application. Please try again.' },
+      500
+    );
   }
 };
