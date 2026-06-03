@@ -1,7 +1,7 @@
 // components/Testimonials.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -28,37 +28,53 @@ const testimonials = [
     initials: 'VO',
     avatar: null,
     quote:
-  'Before joining Reduzer, I often felt unsure about which skills to focus on and how to move beyond tutorials. The mentorship, practical guidance, and emphasis on understanding core concepts helped me develop stronger problem-solving skills and think more like a software engineer. The experience gave me greater confidence in my abilities and a clearer path for my growth in tech. I highly recommend Reduzer to anyone serious about building a strong foundation and advancing their career in software development.',
-},
+      'Before joining Reduzer, I often felt unsure about which skills to focus on and how to move beyond tutorials. The mentorship, practical guidance, and emphasis on understanding core concepts helped me develop stronger problem-solving skills and think more like a software engineer. The experience gave me greater confidence in my abilities and a clearer path for my growth in tech. I highly recommend Reduzer to anyone serious about building a strong foundation and advancing their career in software development.',
+  },
   {
     name: 'Gilbert Tallam',
     cohort: 'Software Engineering · 2025',
     initials: 'GT',
     avatar: null,
     quote:
-      'Reduzer School gave me the structure, mentorship, and hands-on experience I needed to grow as a developer. The real-world projects, supportive community, and practical approach to learning helped me gain confidence and improve my technical skills. I would highly recommend the bootcamp to anyone looking to accelerate their journey into tech.',
+      'Before Reduzer I was teaching myself everything in isolation, with no real feedback and no way to measure my growth. The structure, real projects, and having experienced engineers around me daily changed how I think and build. If you are serious about becoming a developer, this is the environment that will get you there.',
   },
-{
+  {
     name: 'Levi Monda',
     cohort: 'Software Engineering · 2025',
     initials: 'LM',
     avatar: null,
     quote:
-      'Before joining Reduzer, I had the passion to build a career in technology but lacked the practical experience and confidence needed to compete in the industry. Reduzer changed that completely. Through challenging real-world projects, mentorship, and collaboration with talented peers, I gained hands-on experience that transformed the way I learn and solve problems. The program pushed me beyond my comfort zone, teaching me not only technical skills but also discipline, teamwork, communication, and adaptability. Every task felt like working in a real professional environment, preparing me for the expectations of the tech industry. Today, I am a more confident developer, a stronger problem solver, and a more career-ready professional. Reduzer has been more than a learning program and a launchpad for my growth and future success.'}
-
+      'Before joining Reduzer, I had the passion to build a career in technology but lacked the practical experience and confidence needed to compete in the industry. Reduzer changed that completely. Through challenging real-world projects, mentorship, and collaboration with talented peers, I gained hands-on experience that transformed the way I learn and solve problems. The program pushed me beyond my comfort zone, teaching me not only technical skills but also discipline, teamwork, communication, and adaptability. Every task felt like working in a real professional environment, preparing me for the expectations of the tech industry. Today, I am a more confident developer, a stronger problem solver, and a more career-ready professional. Reduzer has been more than a learning program and a launchpad for my growth and future success.',
+  },
 ];
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
+  const paused = useRef(false);
 
   const prev = () =>
     setCurrent((i) => (i - 1 + testimonials.length) % testimonials.length);
   const next = () => setCurrent((i) => (i + 1) % testimonials.length);
 
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (!paused.current) setCurrent((i) => (i + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(id);
+  }, []);
+
   const t = testimonials[current];
 
   return (
-    <section className="flex flex-col items-center gap-12 bg-white px-6 py-20">
+    <section
+      className="flex flex-col items-center gap-12 bg-white px-6 py-20"
+      onMouseEnter={() => {
+        paused.current = true;
+      }}
+      onMouseLeave={() => {
+        paused.current = false;
+      }}
+    >
       {/* Heading */}
       <div className="flex flex-col items-center gap-4 text-center">
         <h2 className="text-3xl font-bold tracking-[-1.44px] text-[#191C1E] sm:text-5xl">
@@ -75,6 +91,7 @@ export default function Testimonials() {
         {/* Prev */}
         <button
           onClick={prev}
+          aria-label="Previous testimonial"
           className="absolute -left-16 hidden h-12 w-12 items-center justify-center rounded-full border border-[#EABCB8]/50 bg-white text-[#565E74] transition hover:border-[#BB001F] hover:text-[#BB001F] sm:flex"
         >
           <ChevronLeft size={20} />
@@ -120,6 +137,7 @@ export default function Testimonials() {
         {/* Next */}
         <button
           onClick={next}
+          aria-label="Next testimonial"
           className="absolute -right-16 hidden h-12 w-12 items-center justify-center rounded-full border border-[#EABCB8]/50 bg-white text-[#565E74] transition hover:border-[#BB001F] hover:text-[#BB001F] sm:flex"
         >
           <ChevronRight size={20} />
