@@ -16,7 +16,9 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(() =>
+    typeof window !== 'undefined' ? window.scrollY > 10 : false
+  );
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
