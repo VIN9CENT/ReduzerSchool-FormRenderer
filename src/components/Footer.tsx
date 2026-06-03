@@ -25,14 +25,14 @@ export default function Footer() {
           {/* BRAND */}
           <div>
             <Link href="/">
-  <Image
-    src="https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png"
-    alt="Reduzer School"
-    width={160}
-    height={32}
-    priority
-  />
-</Link>
+              <Image
+                src="https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png"
+                alt="Reduzer School"
+                width={160}
+                height={32}
+                priority
+              />
+            </Link>
             <p className="mt-5 text-gray-300 text-sm leading-relaxed">
               Innovating Today.
               <br />
@@ -83,7 +83,7 @@ export default function Footer() {
                 className="flex items-center gap-2 whitespace-nowrap"
               >
                 <MdOutlineMail className="text-red-500 w-5 h-5 shrink-0" />
-                <span> Hello@Reduzer.tech</span>
+                <span>hello@reduzer.tech</span>
               </a>
             </div>
           </div>
@@ -156,8 +156,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-
-
-
-
