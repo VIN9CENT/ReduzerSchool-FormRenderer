@@ -73,6 +73,15 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="1d803704-ef37-4292-92d7-3280f6bffa19"
+          data-blockingmode="auto"
+          async
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
