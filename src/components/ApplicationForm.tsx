@@ -825,7 +825,7 @@ export default function ApplicationForm() {
   const [submitError, setSubmitError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [alreadyApplied, setAlreadyApplied] = useState(
-    () => localStorage.getItem('reduzer_school_applied') === 'true'
+    () => typeof window !== 'undefined' && localStorage.getItem('reduzer_school_applied') === 'true'
   );
   const [events, setEvents] = useState<EventEntry[]>(() => [
     { type: 'form_open', ts: new Date().toISOString() },
