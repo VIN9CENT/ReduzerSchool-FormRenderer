@@ -27,10 +27,14 @@
  *   AB Copy Attempts      AC Validation Fails
  */
 
+/// <reference types="@cloudflare/workers-types" />
+
 interface Env {
   GOOGLE_SERVICE_ACCOUNT_EMAIL: string;
   GOOGLE_PRIVATE_KEY: string;
   GOOGLE_SPREADSHEET_ID: string;
+  RECAPTCHA_SECRET_KEY: string;
+  RATE_LIMIT_KV: KVNamespace;
 }
 
 interface FormData {
@@ -57,6 +61,99 @@ interface FormData {
   heardFromOther: string;
   additionalInfo: string;
   eventLog?: string;
+  recaptchaToken?: string;
+}
+
+// ─── Rate Limiting ────────────────────────────────────────────────────────────
+
+const RATE_LIMIT = {
+  maxRequests: 5, // max submissions per window
+  windowSeconds: 600, // 10 minutes
+} as const;
+
+async function checkRateLimit(
+  kv: KVNamespace,
+  ip: string
+): Promise<{ allowed: boolean; remaining: number }> {
+  const key = `rl:${ip}`;
+
+  let count = 0;
+  let isFirstHit = false;
+
+  try {
+    const current = await kv.get(key);
+    if (current === null) {
+      isFirstHit = true;
+      count = 0;
+    } else {
+      count = parseInt(current, 10);
+    }
+  } catch {
+    // If KV is unavailable, fail open so real users aren't blocked
+    return { allowed: true, remaining: RATE_LIMIT.maxRequests };
+  }
+
+  if (count >= RATE_LIMIT.maxRequests) {
+    return { allowed: false, remaining: 0 };
+  }
+
+  try {
+    // Only set TTL on first hit so the window is fixed, not sliding
+    await kv.put(key, String(count + 1), {
+      expirationTtl: isFirstHit ? RATE_LIMIT.windowSeconds : undefined,
+    });
+  } catch {
+    // Non-fatal — still allow the request
+  }
+
+  return { allowed: true, remaining: RATE_LIMIT.maxRequests - count - 1 };
+}
+
+// ─── reCAPTCHA v3 ─────────────────────────────────────────────────────────────
+
+const RECAPTCHA_MIN_SCORE = 0.5;
+const RECAPTCHA_EXPECTED_ACTION = 'submit';
+
+async function verifyRecaptcha(
+  token: string,
+  secret: string
+): Promise<{ ok: boolean; reason?: string }> {
+  let res: Response;
+  try {
+    res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token }),
+    });
+  } catch (err) {
+    return { ok: false, reason: 'Network error contacting reCAPTCHA' };
+  }
+
+  if (!res.ok) {
+    return { ok: false, reason: `reCAPTCHA API returned ${res.status}` };
+  }
+
+  const data = (await res.json()) as {
+    success: boolean;
+    score: number;
+    action: string;
+    'error-codes'?: string[];
+  };
+
+  if (!data.success) {
+    return {
+      ok: false,
+      reason: `reCAPTCHA failed: ${(data['error-codes'] ?? []).join(', ')}`,
+    };
+  }
+  if (data.action !== RECAPTCHA_EXPECTED_ACTION) {
+    return { ok: false, reason: `Unexpected reCAPTCHA action: ${data.action}` };
+  }
+  if (data.score < RECAPTCHA_MIN_SCORE) {
+    return { ok: false, reason: `Score too low: ${data.score}` };
+  }
+
+  return { ok: true };
 }
 
 // ─── JWT / OAuth helpers ──────────────────────────────────────────────────────
@@ -91,7 +188,6 @@ async function getAccessToken(email: string, pemKey: string): Promise<string> {
 
   const signingInput = `${header}.${payload}`;
 
-  // Strip PEM headers and normalise newlines
   const der = Uint8Array.from(
     atob(
       pemKey
@@ -176,11 +272,9 @@ const ALLOWED = {
   ],
 } as const;
 
-// Coerce to string, trim, enforce max length, and neutralise formula injection.
 function str(value: unknown, maxLen = 5000): string {
   if (typeof value !== 'string') return '';
   const trimmed = value.trim().slice(0, maxLen);
-  // Prefix cells that start with a spreadsheet formula character.
   return /^[=+\-@|%\t\r]/.test(trimmed) ? `'${trimmed}` : trimmed;
 }
 
@@ -316,7 +410,7 @@ function analyzeEvents(raw: string): {
     const toMs = (ts: string) => new Date(ts).getTime();
     let startTs: number | null = null;
     let submitTs: number | null = null;
-    const exitTs: Partial<Record<number, number>> = {}; // step N → ts of last step_next(N)
+    const exitTs: Partial<Record<number, number>> = {};
     let copyAttempts = 0;
     let validationFailures = 0;
 
@@ -327,7 +421,7 @@ function analyzeEvents(raw: string): {
           if (startTs === null) startTs = now;
           break;
         case 'step_next':
-          if (startTs === null) startTs = now; // fallback if no form_open
+          if (startTs === null) startTs = now;
           if (typeof e.step === 'number') exitTs[e.step] = now;
           break;
         case 'submit_attempt':
@@ -344,14 +438,13 @@ function analyzeEvents(raw: string): {
       }
     }
 
-    // S1: form_open → step_next(1)   S2: step_next(1) → step_next(2)  etc.
     const x = exitTs;
     const stepSeconds: [number, number, number, number, number] = [
-      startTs && x[1]          ? Math.round((x[1]        - startTs) / 1000) : 0,
-      x[1]    && x[2]          ? Math.round((x[2]        - x[1])    / 1000) : 0,
-      x[2]    && x[3]          ? Math.round((x[3]        - x[2])    / 1000) : 0,
-      x[3]    && x[4]          ? Math.round((x[4]        - x[3])    / 1000) : 0,
-      x[4]    && submitTs      ? Math.round((submitTs    - x[4])    / 1000) : 0,
+      startTs && x[1] ? Math.round((x[1] - startTs) / 1000) : 0,
+      x[1] && x[2] ? Math.round((x[2] - x[1]) / 1000) : 0,
+      x[2] && x[3] ? Math.round((x[3] - x[2]) / 1000) : 0,
+      x[3] && x[4] ? Math.round((x[4] - x[3]) / 1000) : 0,
+      x[4] && submitTs ? Math.round((submitTs - x[4]) / 1000) : 0,
     ];
 
     const sessionSeconds =
@@ -365,11 +458,17 @@ function analyzeEvents(raw: string): {
 
 // ─── Sheets helpers ───────────────────────────────────────────────────────────
 
-async function emailExists(spreadsheetId: string, token: string, applicantEmail: string): Promise<boolean> {
+async function emailExists(
+  spreadsheetId: string,
+  token: string,
+  applicantEmail: string
+): Promise<boolean> {
   const range = encodeURIComponent('Sheet1!C2:C');
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`;
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  if (!res.ok) return false; // fail open — don't block submissions if the read fails
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) return false;
   const data = (await res.json()) as { values?: string[][] };
   const emails = (data.values ?? []).flat().map((v) => v.toLowerCase().trim());
   return emails.includes(applicantEmail.toLowerCase().trim());
@@ -398,14 +497,23 @@ async function appendRow(
   }
 }
 
-// ─── Handler ──────────────────────────────────────────────────────────────────
+// ─── Response helper ──────────────────────────────────────────────────────────
 
-function json(body: unknown, status = 200): Response {
+function json(
+  body: unknown,
+  status = 200,
+  extraHeaders: Record<string, string> = {}
+): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...extraHeaders,
+    },
   });
 }
+
+// ─── Handler ──────────────────────────────────────────────────────────────────
 
 type PagesFunction<E> = (ctx: {
   request: Request;
@@ -413,11 +521,49 @@ type PagesFunction<E> = (ctx: {
 }) => Response | Promise<Response>;
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  // ── 1. Content-length guard ──────────────────────────────────────────────
   const contentLength = request.headers.get('content-length');
   if (contentLength && parseInt(contentLength) > 150_000) {
     return json({ error: 'Request too large' }, 413);
   }
 
+  // ── 2. Rate limiting ─────────────────────────────────────────────────────
+  const ip = request.headers.get('CF-Connecting-IP');
+
+  if (!ip) {
+    console.error('Missing CF-Connecting-IP header');
+    return json(
+      {
+        error: 'Unable to determine client IP address.',
+      },
+      400
+    );
+  }
+  if (!env.RATE_LIMIT_KV) {
+    console.warn(
+      'RATE_LIMIT_KV binding is missing — rate limiting is disabled'
+    );
+  } else {
+    const { allowed, remaining } = await checkRateLimit(env.RATE_LIMIT_KV, ip);
+    if (!allowed) {
+      return json(
+        {
+          error:
+            'Too many submissions from your network. Please try again in 10 minutes.',
+        },
+        429,
+        {
+          'Retry-After': String(RATE_LIMIT.windowSeconds),
+          'X-RateLimit-Limit': String(RATE_LIMIT.maxRequests),
+          'X-RateLimit-Remaining': '0',
+        }
+      );
+    }
+    // Optionally expose remaining in successful responses via a header (non-blocking)
+    void remaining;
+  }
+
+  // ── 3. JSON parse ────────────────────────────────────────────────────────
   let raw: Record<string, unknown>;
   try {
     raw = (await request.json()) as Record<string, unknown>;
@@ -425,25 +571,67 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return json({ error: 'Invalid JSON body' }, 400);
   }
 
+  // ── 4. reCAPTCHA v3 verification ─────────────────────────────────────────
+  if (!env.RECAPTCHA_SECRET_KEY) {
+    console.error('RECAPTCHA_SECRET_KEY is missing');
+    return json(
+      {
+        error: 'Server configuration error. Please try again later.',
+      },
+      500
+    );
+  }
+
+  const recaptchaToken =
+    typeof raw.recaptchaToken === 'string' ? raw.recaptchaToken.trim() : '';
+
+  if (!recaptchaToken) {
+    return json(
+      {
+        error: 'Missing CAPTCHA token. Please refresh and try again.',
+      },
+      400
+    );
+  }
+
+  const captcha = await verifyRecaptcha(
+    recaptchaToken,
+    env.RECAPTCHA_SECRET_KEY
+  );
+
+  if (!captcha.ok) {
+    console.warn(`reCAPTCHA rejected for IP ${ip}: ${captcha.reason}`);
+    return json(
+      {
+        error: 'CAPTCHA verification failed. Please refresh and try again.',
+      },
+      403
+    );
+
+  }
+
+  // ── 5. Field validation ──────────────────────────────────────────────────
   const validationError = serverValidate(raw);
   if (validationError) {
     return json({ error: `Validation failed: ${validationError}` }, 422);
   }
 
+  // ── 6. Environment variable check ────────────────────────────────────────
   const {
-    GOOGLE_SERVICE_ACCOUNT_EMAIL: email,
-    GOOGLE_PRIVATE_KEY: key,
+    GOOGLE_SERVICE_ACCOUNT_EMAIL: gEmail,
+    GOOGLE_PRIVATE_KEY: gKey,
     GOOGLE_SPREADSHEET_ID: sheetId,
   } = env;
 
-  if (!email || !key || !sheetId) {
-    console.error('Submit error: missing environment variables (GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY, or GOOGLE_SPREADSHEET_ID)');
+  if (!gEmail || !gKey || !sheetId) {
+    console.error('Submit error: missing Google environment variables');
     return json(
       { error: 'Something went wrong on our end. Please try again later.' },
       500
     );
   }
 
+  // ── 7. Build row ─────────────────────────────────────────────────────────
   const occupation =
     raw.occupation === 'Other'
       ? `Other: ${str(raw.occupationOther, 200)}`
@@ -461,43 +649,47 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const metrics = analyzeEvents(rawEventLog);
 
   const row = [
-    new Date().toISOString(),
-    str(raw.fullName, 200),
-    str(raw.email, 200),
-    str(raw.phone, 50),
-    str(raw.city, 200),
-    str(raw.country, 200),
-    occupation,
-    education,
-    str(raw.hasTechExperience, 200),
-    str(raw.techExperienceDetails, 2000),
-    str(raw.hasLaptop, 10),
-    str(raw.learningMode, 200),
-    str(raw.whyReduzer, 10_000),
-    str(raw.biggestObstacle, 10_000),
-    str(raw.timeFailed, 10_000),
-    str(raw.ifFallBehind, 10_000),
-    str(raw.reqChanges, 10_000),
-    str(raw.workStyle, 10_000),
-    heardFrom,
-    str(raw.additionalInfo, 10_000),
-    formatEventLog(rawEventLog),                      // U  Event Log
-    String(metrics.sessionSeconds),                   // V  Session (s)
-    String(metrics.stepSeconds[0]),                   // W  S1 (s)
-    String(metrics.stepSeconds[1]),                   // X  S2 (s)
-    String(metrics.stepSeconds[2]),                   // Y  S3 (s)
-    String(metrics.stepSeconds[3]),                   // Z  S4 (s)
-    String(metrics.stepSeconds[4]),                   // AA S5 (s)
-    String(metrics.copyAttempts),                     // AB Copy Attempts
-    String(metrics.validationFailures),               // AC Validation Fails
+    new Date().toISOString(), // A  Timestamp
+    str(raw.fullName, 200), // B  Full Name
+    str(raw.email, 200), // C  Email
+    str(raw.phone, 50), // D  Phone
+    str(raw.city, 200), // E  City
+    str(raw.country, 200), // F  Country
+    occupation, // G  Occupation
+    education, // H  Education
+    str(raw.hasTechExperience, 200), // I  Tech Experience
+    str(raw.techExperienceDetails, 2000), // J  Tech Details
+    str(raw.hasLaptop, 10), // K  Has Laptop
+    str(raw.learningMode, 200), // L  Learning Mode
+    str(raw.whyReduzer, 10_000), // M  Why Reduzer
+    str(raw.biggestObstacle, 10_000), // N  Biggest Obstacle
+    str(raw.timeFailed, 10_000), // O  Time Failed
+    str(raw.ifFallBehind, 10_000), // P  If Fall Behind
+    str(raw.reqChanges, 10_000), // Q  Req Changes
+    str(raw.workStyle, 10_000), // R  Work Style
+    heardFrom, // S  Heard From
+    str(raw.additionalInfo, 10_000), // T  Additional Info
+    formatEventLog(rawEventLog), // U  Event Log
+    String(metrics.sessionSeconds), // V  Session (s)
+    String(metrics.stepSeconds[0]), // W  S1 (s)
+    String(metrics.stepSeconds[1]), // X  S2 (s)
+    String(metrics.stepSeconds[2]), // Y  S3 (s)
+    String(metrics.stepSeconds[3]), // Z  S4 (s)
+    String(metrics.stepSeconds[4]), // AA S5 (s)
+    String(metrics.copyAttempts), // AB Copy Attempts
+    String(metrics.validationFailures), // AC Validation Fails
   ];
 
+  // ── 8. Write to Sheets ───────────────────────────────────────────────────
   try {
-    const token = await getAccessToken(email, key);
+    const token = await getAccessToken(gEmail, gKey);
 
     if (await emailExists(sheetId, token, str(raw.email, 200))) {
       return json(
-        { error: 'An application with this email address has already been submitted. If you believe this is an error, please contact us.' },
+        {
+          error:
+            'An application with this email address has already been submitted. If you believe this is an error, please contact us.',
+        },
         409
       );
     }
