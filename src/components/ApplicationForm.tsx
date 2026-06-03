@@ -118,7 +118,7 @@ function validate(step: number, data: FormData): Errors {
       e.educationOther = 'Please specify';
     if (!data.hasTechExperience)
       e.hasTechExperience = 'Please answer this question';
-    if (data.hasTechExperience === 'yes' && !data.techExperienceDetails.trim())
+    if (data.hasTechExperience === 'Yes, I have some experience' && !data.techExperienceDetails.trim())
       e.techExperienceDetails = 'Please briefly describe your experience';
   }
 
@@ -765,6 +765,31 @@ function Section5({
   );
 }
 
+// ─── Already-applied screen ───────────────────────────────────────────────────
+
+function AlreadyAppliedScreen() {
+  return (
+    <div className="flex flex-col items-center text-center py-12 px-6">
+      <div className="w-16 h-16 rounded-full bg-[#BB001F] flex items-center justify-center mb-6">
+        <Check size={32} strokeWidth={3} className="text-white" />
+      </div>
+      <h2 className="text-2xl font-bold text-[#191C1E] mb-3">
+        Already submitted
+      </h2>
+      <p className="text-gray-500 max-w-sm leading-relaxed mb-8">
+        We already have your application on file. We will review it and get back
+        to you within 3–5 business days.
+      </p>
+      <Link
+        href="/"
+        className="text-sm font-semibold text-[#BB001F] underline underline-offset-2 hover:opacity-75 transition-opacity"
+      >
+        Back to home
+      </Link>
+    </div>
+  );
+}
+
 // ─── Success screen ───────────────────────────────────────────────────────────
 
 function SuccessScreen() {
@@ -799,12 +824,16 @@ export default function ApplicationForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [events, setEvents] = useState<EventEntry[]>([]);
+  const [alreadyApplied, setAlreadyApplied] = useState(
+    () => localStorage.getItem('reduzer_school_applied') === 'true'
+  );
+  const [events, setEvents] = useState<EventEntry[]>(() => [
+    { type: 'form_open', ts: new Date().toISOString() },
+  ]);
   const formRef = useRef<HTMLDivElement>(null);
 
   const logEvent = useCallback((type: string, extras?: Omit<EventEntry, 'type' | 'ts'>) => {
     const entry: EventEntry = { type, ts: new Date().toISOString(), ...extras };
-    console.log('[form-event]', entry);
     setEvents((prev) => [...prev, entry]);
   }, []);
 
@@ -852,6 +881,7 @@ export default function ApplicationForm() {
 
   function handleBack() {
     setErrors({});
+    setSubmitError('');
     logEvent('step_back', { step });
     setStep((s) => s - 1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -876,12 +906,19 @@ export default function ApplicationForm() {
         body: JSON.stringify({ ...data, eventLog: JSON.stringify([...events, { type: 'submit_attempt', ts: new Date().toISOString() }]) }),
       });
 
+      if (res.status === 409) {
+        localStorage.setItem('reduzer_school_applied', 'true');
+        setAlreadyApplied(true);
+        return;
+      }
+
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
         throw new Error(body.error ?? `Server error ${res.status}`);
       }
 
       logEvent('submit_success');
+      localStorage.setItem('reduzer_school_applied', 'true');
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
@@ -897,6 +934,14 @@ export default function ApplicationForm() {
   }
 
   const sectionProps = { data, errors, set };
+
+  if (alreadyApplied) {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+        <AlreadyAppliedScreen />
+      </div>
+    );
+  }
 
   if (submitted) {
     return (
