@@ -25,14 +25,14 @@ export default function Footer() {
           {/* BRAND */}
           <div>
             <Link href="/">
-  <Image
-    src="https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png"
-    alt="Reduzer School"
-    width={160}
-    height={32}
-    priority
-  />
-</Link>
+              <Image
+                src="https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png"
+                alt="Reduzer School"
+                width={160}
+                height={32}
+                priority
+              />
+            </Link>
             <p className="mt-5 text-gray-300 text-sm leading-relaxed">
               Innovating Today.
               <br />
@@ -100,7 +100,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#cookie-policy">Cookie policy</Link>
+                <a
+                  href="https://www.cookiebot.com/en/cookie-declaration/?cbid=1d803704-ef37-4292-92d7-3280f6bffa19"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Cookie policy
+                </a>
               </li>
             </ul>
           </div>
@@ -156,8 +162,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-
-
-
-
