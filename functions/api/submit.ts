@@ -295,6 +295,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     GOOGLE_SPREADSHEET_ID: sheetId,
   } = env;
 
+  // Temporarily log environment variables for debugging (remove in production)
   // Debug version
   console.log('Email exists:', !!email);
   console.log('Key exists:', !!key);
