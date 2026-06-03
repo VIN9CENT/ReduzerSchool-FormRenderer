@@ -12,7 +12,7 @@ const testimonials = [
     initials: 'AO',
     avatar: null,
     quote:
-      'The one-year course was practical, easy to follow, and the instructors were with me every step of the way. I gained real programming skills, grew in confidence, and left ready to solve real-world problems. Reduzer School is the place to be if you are serious about software engineering.',
+      'My time at Reduzer School has been both rewarding and informative, enabling me to build strong programming skills and gain practical software engineering knowledge. The supportive instructors and hands-on training have improved my problem-solving abilities, confidence, and professional growth through various projects. Although I am still completing the course, I would highly recommend Reduzer School to anyone pursuing a career in software engineering.',
   },
   {
     name: 'Dorah Momanyi',
@@ -20,7 +20,7 @@ const testimonials = [
     initials: 'DM',
     avatar: null,
     quote:
-      'Being among the first students at Reduzer was transformative. Through hands-on projects and strong mentorship, I built full-stack applications, sharpened my problem-solving, and walked out with the confidence and skills employers actually want. I highly recommend it to anyone serious about a career in tech.',
+      'Being among the first students at Reduzer School has been an important part of my tech journey. Through hands-on projects, mentorship, and practical learning, I have been developing my frontend and backend development skills while gaining experience building real-world applications. The program has improved my problem-solving abilities, boosted my confidence, and deepened my understanding of software development. I highly recommend Reduzer School to anyone serious about learning technology and growing as a developer.',
   },
   {
     name: 'Vincent Ochieng',
@@ -28,16 +28,24 @@ const testimonials = [
     initials: 'VO',
     avatar: null,
     quote:
-      'Before Reduzer I was stuck in tutorial hell, unsure which skills actually mattered. The mentorship and focus on core concepts completely changed how I think as a developer. I came out with stronger problem-solving skills, real confidence, and a clear path forward in tech.',
-  },
+  'Before joining Reduzer, I often felt unsure about which skills to focus on and how to move beyond tutorials. The mentorship, practical guidance, and emphasis on understanding core concepts helped me develop stronger problem-solving skills and think more like a software engineer. The experience gave me greater confidence in my abilities and a clearer path for my growth in tech. I highly recommend Reduzer to anyone serious about building a strong foundation and advancing their career in software development.',
+},
   {
     name: 'Gilbert Tallam',
     cohort: 'Software Engineering · 2025',
     initials: 'GT',
     avatar: null,
     quote:
-      'Reduzer gave me the structure, mentorship, and hands-on projects I needed to level up fast. The community is genuinely supportive and the learning approach is built for the real world, not just theory. If you want to accelerate your journey into tech, this is where you start.',
+      'Reduzer School gave me the structure, mentorship, and hands-on experience I needed to grow as a developer. The real-world projects, supportive community, and practical approach to learning helped me gain confidence and improve my technical skills. I would highly recommend the bootcamp to anyone looking to accelerate their journey into tech.',
   },
+{
+    name: 'Levi Monda',
+    cohort: 'Software Engineering · 2025',
+    initials: 'LM',
+    avatar: null,
+    quote:
+      'Before joining Reduzer, I had the passion to build a career in technology but lacked the practical experience and confidence needed to compete in the industry. Reduzer changed that completely. Through challenging real-world projects, mentorship, and collaboration with talented peers, I gained hands-on experience that transformed the way I learn and solve problems. The program pushed me beyond my comfort zone, teaching me not only technical skills but also discipline, teamwork, communication, and adaptability. Every task felt like working in a real professional environment, preparing me for the expectations of the tech industry. Today, I am a more confident developer, a stronger problem solver, and a more career-ready professional. Reduzer has been more than a learning program and a launchpad for my growth and future success.'}
+
 ];
 
 export default function Testimonials() {
