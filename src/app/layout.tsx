@@ -17,7 +17,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const siteUrl = 'https://reduzer-school.reduzer.tech/';
+const siteUrl = 'https://dev.reduzer-school.pages.dev/';
 export const metadata: Metadata = {
   title: {
     default: 'Reduzer School',
