@@ -919,18 +919,23 @@ export default function ApplicationForm() {
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
       if (!siteKey) throw new Error('Something went wrong. Please refresh and try again.');
 
-      const recaptchaToken = await new Promise<string>((resolve, reject) => {
-        if (!window.grecaptcha) {
-          reject(new Error('reCAPTCHA has not loaded. Please refresh and try again.'));
-          return;
-        }
-        window.grecaptcha.ready(() => {
-          window.grecaptcha
-            .execute(siteKey, { action: 'submit' })
-            .then(resolve)
-            .catch(() => reject(new Error('reCAPTCHA check failed. Please refresh and try again.')));
-        });
-      });
+      const recaptchaToken = await Promise.race([
+        new Promise<string>((resolve, reject) => {
+          if (!window.grecaptcha) {
+            reject(new Error('reCAPTCHA has not loaded. Please refresh and try again.'));
+            return;
+          }
+          window.grecaptcha.ready(() => {
+            window.grecaptcha
+              .execute(siteKey, { action: 'submit' })
+              .then(resolve)
+              .catch(() => reject(new Error('reCAPTCHA check failed. Please refresh and try again.')));
+          });
+        }),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('reCAPTCHA timed out. Please refresh and try again.')), 10_000)
+        ),
+      ]);
 
       const res = await fetch('/api/submit', {
         method: 'POST',
