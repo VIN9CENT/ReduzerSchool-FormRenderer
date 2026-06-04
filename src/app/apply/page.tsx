@@ -2,18 +2,20 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ApplicationForm from '@/components/ApplicationForm';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? '';
+
 export const metadata = {
-  title: 'Apply - Reduzer School',
+  title: 'Apply – September Intake',
   description:
     'Apply for the Reduzer School 12-month Software Engineering Bootcamp. Limited spots available for the September intake. Start your tech career today.',
   alternates: {
-    canonical: 'https://school.reduzer.tech/apply',
+    canonical: `${siteUrl}/apply`,
   },
   openGraph: {
     title: 'Apply to Reduzer School – September Intake',
     description:
       'Apply for the Reduzer School 12-month Software Engineering Bootcamp. Limited spots available.',
-    url: 'https://school.reduzer.tech/apply',
+    url: `${siteUrl}/apply`,
   },
 };
 

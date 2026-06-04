@@ -10,18 +10,20 @@ import PricingSection from '@/components/PricingSection';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? '';
+
 export const metadata: Metadata = {
   title: 'Launch Your Career in Tech – 12-Month Bootcamp',
   description:
     'Join Reduzer School\'s intensive 12-month bootcamp in Kisii, Kenya. Hands-on training, mentorship, and real-world projects for ambitious learners ready to break into tech.',
   alternates: {
-    canonical:  'https://dev.reduzer-school.pages.dev',
+    canonical: siteUrl,
   },
   openGraph: {
     title: 'Launch Your Career in Tech – 12-Month Bootcamp',
     description:
       'Join Reduzer School\'s intensive 12-month bootcamp in Kisii, Kenya. Hands-on training, mentorship, and real-world projects.',
-    url:  'https://dev.reduzer-school.pages.dev',
+    url: siteUrl,
   },
 };
 
@@ -30,8 +32,8 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
     name: 'Reduzer School',
-    url:  'https://dev.reduzer-school.pages.dev',
-    logo:  'https://dev.reduzer-school.pages.dev/icon.png',
+    url: siteUrl,
+    logo: `${siteUrl}/icon.png`,
     description:
       'Intensive 12-month tech bootcamp with hands-on training, mentorship, and real-world projects based in Kisii, Kenya.',
     address: {
