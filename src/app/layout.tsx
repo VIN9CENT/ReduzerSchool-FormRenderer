@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import Script from 'next/script';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -74,12 +75,12 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <script
+        <Script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
           data-cbid="1d803704-ef37-4292-92d7-3280f6bffa19"
           data-blockingmode="auto"
-          async
+          
         />
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
