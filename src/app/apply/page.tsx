@@ -9,13 +9,13 @@ export const metadata = {
   description:
     'Apply for the Reduzer School 12-month Software Engineering Bootcamp. Limited spots available for the September intake. Start your tech career today.',
   alternates: {
-    canonical: `${siteUrl}/apply`,
+    canonical: 'https://school.reduzer.tech/apply',
   },
   openGraph: {
     title: 'Apply to Reduzer School – September Intake',
     description:
       'Apply for the Reduzer School 12-month Software Engineering Bootcamp. Limited spots available.',
-    url: `${siteUrl}/apply`,
+    url: 'https://school.reduzer.tech/apply',
   },
 };
 

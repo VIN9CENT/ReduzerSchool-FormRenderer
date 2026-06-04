@@ -610,7 +610,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     console.warn(`reCAPTCHA rejected for IP ${ip}: ${captcha.reason}`);
     return json(
       {
-        error: `[DEBUG] reCAPTCHA failed: ${captcha.reason}`,
+        error: 'We could not verify your request. Please refresh and try again.',
+
       },
       403
     );
@@ -637,7 +638,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const missing = [!gEmail && 'GOOGLE_SERVICE_ACCOUNT_EMAIL', !gKey && 'GOOGLE_PRIVATE_KEY', !sheetId && 'GOOGLE_SPREADSHEET_ID'].filter(Boolean).join(', ');
     console.error('Submit error: missing Google environment variables:', missing);
     return json(
-      { error: `[DEBUG] Missing Google env vars: ${missing}` },
+      { error: 'Something went wrong on our end. Please try again later.' },
+
       500
     );
   }
@@ -711,7 +713,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('Submit error:', message);
     return json(
-      { error: `[DEBUG] ${message}` },
+      { error: 'Failed to save application. Please try again.' },
+
       500
     );
   }
