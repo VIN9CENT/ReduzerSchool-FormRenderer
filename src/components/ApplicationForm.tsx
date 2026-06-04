@@ -917,7 +917,7 @@ export default function ApplicationForm() {
 
     try {
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-      if (!siteKey) throw new Error('Something went wrong. Please refresh and try again.');
+      if (!siteKey) throw new Error('[DEBUG] NEXT_PUBLIC_RECAPTCHA_SITE_KEY is not set — rebuild with the env var present.');
 
       const recaptchaToken = await Promise.race([
         new Promise<string>((resolve, reject) => {
