@@ -106,7 +106,9 @@ async function checkRateLimit(
   // Always write with the remaining TTL so subsequent puts never lose the expiry
   const ttlSeconds = Math.max(1, Math.ceil((expiresAt - nowMs) / 1000));
   try {
-    await kv.put(key, `${count + 1}:${expiresAt}`, { expirationTtl: ttlSeconds });
+    await kv.put(key, `${count + 1}:${expiresAt}`, {
+      expirationTtl: ttlSeconds,
+    });
   } catch {
     // Non-fatal — still allow the request
   }
@@ -298,7 +300,10 @@ function serverValidate(b: Record<string, unknown>): string | null {
   if (!phone) return 'phone is required';
   {
     const stripped = phone.replace(/[\s\-().]/g, '');
-    if (!/^(\+?254|0)\d{9}$/.test(stripped) && !/^\+[1-9]\d{6,14}$/.test(stripped))
+    if (
+      !/^(\+?254|0)\d{9}$/.test(stripped) &&
+      !/^\+[1-9]\d{6,14}$/.test(stripped)
+    )
       return 'invalid phone number format';
   }
   if (!str(b.city, 200)) return 'city is required';
@@ -544,7 +549,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!ip) {
     console.warn('Missing CF-Connecting-IP header — rate limiting skipped');
   } else if (!env.RATE_LIMIT_KV) {
-    console.warn('RATE_LIMIT_KV binding is missing — rate limiting is disabled');
+    console.warn(
+      'RATE_LIMIT_KV binding is missing — rate limiting is disabled'
+    );
   } else {
     const { allowed } = await checkRateLimit(env.RATE_LIMIT_KV, ip);
     if (!allowed) {
@@ -613,7 +620,10 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const validationError = serverValidate(raw);
   if (validationError) {
     console.warn(`Validation failed for IP ${ip}: ${validationError}`);
-    return json({ error: 'Please check all required fields and try again.' }, 422);
+    return json(
+      { error: 'Please check all required fields and try again.' },
+      422
+    );
   }
 
   // ── 6. Environment variable check ────────────────────────────────────────
