@@ -621,7 +621,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (validationError) {
     console.warn(`Validation failed for IP ${ip}: ${validationError}`);
     return json(
-      { error: `[DEBUG] Server validation failed: ${validationError}` },
+      { error: 'Please check all required fields and try again.' },
       422
     );
   }
