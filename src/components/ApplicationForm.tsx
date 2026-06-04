@@ -10,6 +10,15 @@ import {
   Loader2,
 } from 'lucide-react';
 
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 interface FormData {
@@ -102,7 +111,14 @@ function validate(step: number, data: FormData): Errors {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       e.email = 'Enter a valid email address';
     }
-    if (!data.phone.trim()) e.phone = 'Phone number is required';
+    if (!data.phone.trim()) {
+      e.phone = 'Phone number is required';
+    } else {
+      const stripped = data.phone.trim().replace(/[\s\-().]/g, '');
+      if (!/^(\+?254|0)\d{9}$/.test(stripped) && !/^\+[1-9]\d{6,14}$/.test(stripped)) {
+        e.phone = 'Enter a valid number (e.g. 0700 000 000 or +254 700 000 000)';
+      }
+    }
     if (!data.city.trim()) e.city = 'City is required';
     if (!data.country.trim()) e.country = 'Country is required';
   }
@@ -900,10 +916,30 @@ export default function ApplicationForm() {
     setSubmitError('');
 
     try {
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (!siteKey) throw new Error('Something went wrong. Please refresh and try again.');
+
+      const recaptchaToken = await new Promise<string>((resolve, reject) => {
+        if (!window.grecaptcha) {
+          reject(new Error('reCAPTCHA has not loaded. Please refresh and try again.'));
+          return;
+        }
+        window.grecaptcha.ready(() => {
+          window.grecaptcha
+            .execute(siteKey, { action: 'submit' })
+            .then(resolve)
+            .catch(() => reject(new Error('reCAPTCHA check failed. Please refresh and try again.')));
+        });
+      });
+
       const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, eventLog: JSON.stringify([...events, { type: 'submit_attempt', ts: new Date().toISOString() }]) }),
+        body: JSON.stringify({
+          ...data,
+          eventLog: JSON.stringify([...events, { type: 'submit_attempt', ts: new Date().toISOString() }]),
+          recaptchaToken,
+        }),
       });
 
       if (res.status === 409) {
@@ -914,7 +950,7 @@ export default function ApplicationForm() {
 
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
-        throw new Error(body.error ?? `Server error ${res.status}`);
+        throw new Error(body.error ?? 'Something went wrong. Please try again.');
       }
 
       logEvent('submit_success');

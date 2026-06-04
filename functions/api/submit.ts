@@ -37,7 +37,7 @@ interface Env {
   RATE_LIMIT_KV: KVNamespace;
 }
 
-interface FormData {
+interface ApplicationFormData {
   fullName: string;
   email: string;
   phone: string;
@@ -76,20 +76,26 @@ async function checkRateLimit(
   ip: string
 ): Promise<{ allowed: boolean; remaining: number }> {
   const key = `rl:${ip}`;
+  const nowMs = Date.now();
+  const windowMs = RATE_LIMIT.windowSeconds * 1000;
 
   let count = 0;
-  let isFirstHit = false;
+  let expiresAt = nowMs + windowMs;
 
   try {
-    const current = await kv.get(key);
-    if (current === null) {
-      isFirstHit = true;
-      count = 0;
-    } else {
-      count = parseInt(current, 10);
+    const stored = await kv.get(key);
+    if (stored !== null) {
+      // Value format: "count:expiresAtMs"
+      const sep = stored.lastIndexOf(':');
+      const storedCount = parseInt(stored.slice(0, sep), 10);
+      const storedExpiry = parseInt(stored.slice(sep + 1), 10);
+      if (nowMs < storedExpiry) {
+        count = storedCount;
+        expiresAt = storedExpiry;
+      }
+      // If window expired, treat as a fresh window (count stays 0)
     }
   } catch {
-    // If KV is unavailable, fail open so real users aren't blocked
     return { allowed: true, remaining: RATE_LIMIT.maxRequests };
   }
 
@@ -97,11 +103,10 @@ async function checkRateLimit(
     return { allowed: false, remaining: 0 };
   }
 
+  // Always write with the remaining TTL so subsequent puts never lose the expiry
+  const ttlSeconds = Math.max(1, Math.ceil((expiresAt - nowMs) / 1000));
   try {
-    // Only set TTL on first hit so the window is fixed, not sliding
-    await kv.put(key, String(count + 1), {
-      expirationTtl: isFirstHit ? RATE_LIMIT.windowSeconds : undefined,
-    });
+    await kv.put(key, `${count + 1}:${expiresAt}`, { expirationTtl: ttlSeconds });
   } catch {
     // Non-fatal — still allow the request
   }
@@ -125,7 +130,7 @@ async function verifyRecaptcha(
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ secret, response: token }),
     });
-  } catch (err) {
+  } catch {
     return { ok: false, reason: 'Network error contacting reCAPTCHA' };
   }
 
@@ -289,7 +294,13 @@ function serverValidate(b: Record<string, unknown>): string | null {
   if (!email) return 'email is required';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'invalid email format';
 
-  if (!str(b.phone, 50)) return 'phone is required';
+  const phone = str(b.phone, 50);
+  if (!phone) return 'phone is required';
+  {
+    const stripped = phone.replace(/[\s\-().]/g, '');
+    if (!/^(\+?254|0)\d{9}$/.test(stripped) && !/^\+[1-9]\d{6,14}$/.test(stripped))
+      return 'invalid phone number format';
+  }
   if (!str(b.city, 200)) return 'city is required';
   if (!str(b.country, 200)) return 'country is required';
 
@@ -528,23 +539,14 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   // ── 2. Rate limiting ─────────────────────────────────────────────────────
-  const ip = request.headers.get('CF-Connecting-IP');
+  const ip = request.headers.get('CF-Connecting-IP') ?? '';
 
   if (!ip) {
-    console.error('Missing CF-Connecting-IP header');
-    return json(
-      {
-        error: 'Unable to determine client IP address.',
-      },
-      400
-    );
-  }
-  if (!env.RATE_LIMIT_KV) {
-    console.warn(
-      'RATE_LIMIT_KV binding is missing — rate limiting is disabled'
-    );
+    console.warn('Missing CF-Connecting-IP header — rate limiting skipped');
+  } else if (!env.RATE_LIMIT_KV) {
+    console.warn('RATE_LIMIT_KV binding is missing — rate limiting is disabled');
   } else {
-    const { allowed, remaining } = await checkRateLimit(env.RATE_LIMIT_KV, ip);
+    const { allowed } = await checkRateLimit(env.RATE_LIMIT_KV, ip);
     if (!allowed) {
       return json(
         {
@@ -559,8 +561,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         }
       );
     }
-    // Optionally expose remaining in successful responses via a header (non-blocking)
-    void remaining;
   }
 
   // ── 3. JSON parse ────────────────────────────────────────────────────────
@@ -568,7 +568,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   try {
     raw = (await request.json()) as Record<string, unknown>;
   } catch {
-    return json({ error: 'Invalid JSON body' }, 400);
+    return json({ error: 'Something went wrong. Please try again.' }, 400);
   }
 
   // ── 4. reCAPTCHA v3 verification ─────────────────────────────────────────
@@ -607,13 +607,13 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       },
       403
     );
-
   }
 
   // ── 5. Field validation ──────────────────────────────────────────────────
   const validationError = serverValidate(raw);
   if (validationError) {
-    return json({ error: `Validation failed: ${validationError}` }, 422);
+    console.warn(`Validation failed for IP ${ip}: ${validationError}`);
+    return json({ error: 'Please check all required fields and try again.' }, 422);
   }
 
   // ── 6. Environment variable check ────────────────────────────────────────
