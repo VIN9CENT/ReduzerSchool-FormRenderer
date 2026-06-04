@@ -583,7 +583,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     console.error('RECAPTCHA_SECRET_KEY is missing');
     return json(
       {
-        error: 'Server configuration error. Please try again later.',
+        error: '[DEBUG] RECAPTCHA_SECRET_KEY env var is not set on the server.',
       },
       500
     );
@@ -610,7 +610,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     console.warn(`reCAPTCHA rejected for IP ${ip}: ${captcha.reason}`);
     return json(
       {
-        error: 'CAPTCHA verification failed. Please refresh and try again.',
+        error: `[DEBUG] reCAPTCHA failed: ${captcha.reason}`,
       },
       403
     );
@@ -621,7 +621,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (validationError) {
     console.warn(`Validation failed for IP ${ip}: ${validationError}`);
     return json(
-      { error: 'Please check all required fields and try again.' },
+      { error: `[DEBUG] Server validation failed: ${validationError}` },
       422
     );
   }
@@ -634,9 +634,10 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   } = env;
 
   if (!gEmail || !gKey || !sheetId) {
-    console.error('Submit error: missing Google environment variables');
+    const missing = [!gEmail && 'GOOGLE_SERVICE_ACCOUNT_EMAIL', !gKey && 'GOOGLE_PRIVATE_KEY', !sheetId && 'GOOGLE_SPREADSHEET_ID'].filter(Boolean).join(', ');
+    console.error('Submit error: missing Google environment variables:', missing);
     return json(
-      { error: 'Something went wrong on our end. Please try again later.' },
+      { error: `[DEBUG] Missing Google env vars: ${missing}` },
       500
     );
   }
@@ -710,7 +711,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('Submit error:', message);
     return json(
-      { error: 'Failed to save application. Please try again.' },
+      { error: `[DEBUG] ${message}` },
       500
     );
   }
