@@ -177,9 +177,7 @@ export default function ProblemSection() {
                 That&apos;s what Reduzer School is here to do
               </h2>
               <p className="leading-relaxed text-gray-300">
-                A program built for Kenyans who are ready to put in the
-                work—designed to give you the depth, duration, and support you
-                actually need to succeed.
+                A program built for people who are ready to put in the work, designed to give you the depth, duration, and support you actually need to succeed.
               </p>
             </div>
 
