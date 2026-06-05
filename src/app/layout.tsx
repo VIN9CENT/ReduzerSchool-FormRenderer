@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Geist_Mono } from 'next/font/google';
+import { getBaseUrl } from '@/lib/url';
+
 import './globals.css';
 import { PHProvider } from '@/components/PHProvider';
 import { Suspense } from 'react';
@@ -20,46 +22,83 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const siteUrl = 'https://school.reduzer.tech/';
+const baseUrl = getBaseUrl();
+
 export const metadata: Metadata = {
   title: {
-    default: 'Reduzer School',
+    default: 'Reduzer School | Tech Bootcamp Kenya',
     template: '%s | Reduzer School',
   },
   description:
-    'Launch your career as a full-stack developer in 12 months. Learn in-demand coding skills, build real projects, and get hired by top tech companies.',
-  metadataBase: new URL(siteUrl || 'https://school.reduzer.tech'),
+    'Reduzer School is a leading coding school in Nyamarambe Town, Kisii County, Kenya. Launch your career in software development in 12 months. Build real projects and get hired by top tech companies.',
+
+  metadataBase: new URL(baseUrl),
+
+  keywords: [
+    'Reduzer School',
+    'tech bootcamp Kenya',
+    'coding school Kisii',
+    'best coding school Kenya',
+    'software development Kenya',
+    'full-stack developer course Kenya',
+    'learn to code Kenya',
+    'web development bootcamp Kenya',
+    'coding school Kenya',
+    'software engineering Kenya',
+    'tech training Kisii',
+    'software training institute',
+    'coding bootcamp for beginners',
+    'career change into tech Kenya',
+    'get hired as a developer Kenya',
+  ],
+
+  authors: [{ name: 'Reduzer School', url: baseUrl }],
+  creator: 'Reduzer School',
+  publisher: 'Reduzer School',
+  category: 'Education',
+
   openGraph: {
     type: 'website',
-    url: siteUrl,
+    url: baseUrl,
     siteName: 'Reduzer School',
-    title: 'Reduzer School',
+    title: 'Reduzer School | Tech Bootcamp Kenya',
     description:
-      'Launch your career as a full-stack developer in 12 months. Learn in-demand coding skills, build real projects, and get hired by top tech companies.',
+      'Reduzer School is a leading coding school in Nyamarambe Town, Kisii County, Kenya. Launch your career in software development in 12 months. Build real projects and get hired by top tech companies.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Reduzer School',
+        alt: 'Reduzer School - Tech Bootcamp Kenya',
       },
     ],
     locale: 'en_US',
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Reduzer School',
+    title: 'Reduzer School | Tech Bootcamp Kenya',
     description:
-      'Launch your career as a full-stack developer in 12 months. Learn in-demand coding skills, build real projects, and get hired by top tech companies.',
+      'Reduzer School is a leading coding school in Nyamarambe Town, Kisii County, Kenya. Launch your career in software development in 12 months. Build real projects and get hired by top tech companies.',
     images: ['/og-image.png'],
     site: '@reduzer_tech',
+    creator: '@reduzer_tech',
   },
+
   alternates: {
     canonical: '/',
   },
+
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -73,6 +112,24 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="1d803704-ef37-4292-92d7-3280f6bffa19"
+          data-blockingmode="auto"
+          data-cfasync="false"
+        />
+        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+          <script
+            src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+            data-cookieconsent="ignore"
+            async
+          />
+        )}
+      </head>
+      <body className="min-h-full flex flex-col">
+        {children}
       <body className="min-h-full flex flex-col">
         <CookiebotScript />
         <Suspense fallback={null}>

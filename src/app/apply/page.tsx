@@ -1,26 +1,29 @@
+import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ApplicationForm from '@/components/ApplicationForm';
 import Script from 'next/script';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? '';
+const domain = process.env.NEXT_PUBLIC_SITE_URL || 'https://reduzer.tech';
+if (!domain) throw new Error('NEXT_PUBLIC_SITE_URL is not set');
 
-export const metadata = {
-  title: 'Apply – September Intake',
+const cleanDomain = domain.replace(/^https?:\/\/|\/$/g, '');
+const baseUrl = `https://${cleanDomain}`;
+
+export const metadata: Metadata = {
+  title: 'Apply – September Intake | Reduzer School',
   description:
-    'Apply for the Reduzer School 12-month Software Engineering Bootcamp. Limited spots available for the September intake. Start your tech career today.',
+    'Apply for the Reduzer School 12-month Software Engineering Bootcamp in Nyamarambe Town, Kisii County, Kenya. Limited spots available for the September intake. Start your tech career today.',
   alternates: {
-    canonical: 'https://school.reduzer.tech/apply',
+    canonical: `${baseUrl}/apply`,
   },
   openGraph: {
     title: 'Apply to Reduzer School – September Intake',
     description:
-      'Apply for the Reduzer School 12-month Software Engineering Bootcamp. Limited spots available.',
-    url: 'https://school.reduzer.tech/apply',
+      'Apply for the Reduzer School 12-month Software Engineering Bootcamp in Nyamarambe Town, Kisii County, Kenya. Limited spots available.',
+    url: `${baseUrl}/apply`,
   },
 };
-
-
 
 export default function ApplyPage() {
   return (

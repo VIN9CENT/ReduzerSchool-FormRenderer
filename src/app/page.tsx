@@ -9,21 +9,25 @@ import Testimonials from '@/components/Testimonials';
 import PricingSection from '@/components/PricingSection';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
+import { getBaseUrl } from '@/lib/url';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? '';
+
+const baseUrl = getBaseUrl();
+
+const currentYear = new Date().getFullYear();
 
 export const metadata: Metadata = {
-  title: 'Launch Your Career in Tech – 12-Month Bootcamp',
+  title: `Launch Your Career in Tech – 12-Month Bootcamp (${currentYear})`,
   description:
-    'Join Reduzer School\'s intensive 12-month bootcamp in Kisii, Kenya. Hands-on training, mentorship, and real-world projects for ambitious learners ready to break into tech.',
+    "Join Reduzer School's intensive 12-month bootcamp in Nyamarambe Town, Kisii County, Kenya. Hands-on training, mentorship, and real-world projects for ambitious learners ready to break into tech.",
   alternates: {
-    canonical: siteUrl,
+    canonical: baseUrl,
   },
   openGraph: {
     title: 'Launch Your Career in Tech – 12-Month Bootcamp',
     description:
-      'Join Reduzer School\'s intensive 12-month bootcamp in Kisii, Kenya. Hands-on training, mentorship, and real-world projects.',
-    url: siteUrl,
+      "Join Reduzer School's intensive 12-month bootcamp in Nyamarambe Town, Kisii County, Kenya. Hands-on training, mentorship, and real-world projects.",
+    url: baseUrl,
   },
 };
 
@@ -32,14 +36,22 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
     name: 'Reduzer School',
-    url: siteUrl,
-    logo: `${siteUrl}/icon.png`,
+    url: baseUrl,
+    logo: `${baseUrl}/icon.png`,
+    telephone: '+254769267965',
     description:
-      'Intensive 12-month tech bootcamp with hands-on training, mentorship, and real-world projects based in Kisii, Kenya.',
+      'Intensive 12-month tech bootcamp with hands-on training, mentorship, and real-world projects based in Nyamarambe Town, Kisii County, Kenya.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'KE',
-      addressLocality: 'Kisii',
+      addressLocality: 'Nyamarambe Town',
+      addressRegion: 'Kisii County',
+      telephone: '+254769267965',
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: -0.8061854881570457,
+        longitude: 34.62956282315392,
+      },
     },
     sameAs: ['https://reduzer.tech'],
     hasCourse: {
@@ -55,6 +67,25 @@ export default function Home() {
     },
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: baseUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Apply',
+        item: `${baseUrl}/apply`,
+      },
+    ],
+  };
+
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -64,7 +95,7 @@ export default function Home() {
         name: 'What is Reduzer School?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Reduzer School is a rigorous, one-year, fully in-person software engineering bootcamp based in Kisii, Kenya. We train ambitious Kenyans from complete beginners to career changers in Frontend, Backend, and Fullstack software development using industry-standard technologies.',
+          text: 'Reduzer School is a rigorous, one-year, fully in-person software engineering bootcamp based in Nyamarambe Town, Kisii County, Kenya. We train ambitious Kenyans from complete beginners to career changers in Frontend, Backend, and Fullstack software development using industry-standard technologies.',
         },
       },
       {
@@ -72,7 +103,7 @@ export default function Home() {
         name: 'What makes Reduzer School different from other programs?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'We are fully in-person, not online or hybrid. We run for a full 52 weeks, are based in Kisii, include real client project work, and are built by a company already operating at the standard we train you to reach.',
+          text: 'We are fully in-person, not online or hybrid. We run for a full 52 weeks, are based in Nyamarambe Town, Kisii County, include real client project work, and are built by a company already operating at the standard we train you to reach.',
         },
       },
       {
@@ -80,7 +111,7 @@ export default function Home() {
         name: 'Is the program online, hybrid, or in-person?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'The program is a face-to-face training (onsite) based in Kisii, Kenya.',
+          text: 'The program is a face-to-face training (onsite) based in Nyamarambe Town, Kisii County, Kenya.',
         },
       },
       {
@@ -131,6 +162,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
         type="application/ld+json"
