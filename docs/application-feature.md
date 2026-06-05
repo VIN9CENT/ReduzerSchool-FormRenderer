@@ -43,7 +43,15 @@ server returns `409`. No form is rendered.
 
 ---
 
-## Frontend — `src/components/ApplicationForm.tsx`
+## Frontend
+
+> The frontend has been refactored into focused single-responsibility modules.
+> See [refactoring.md](./refactoring.md) for the full file structure, team
+> ownership guide, and instructions for adding new fields or steps.
+> The section below describes behaviour that is still accurate regardless of
+> file layout.
+
+### `src/components/ApplicationForm.tsx`
 
 ### State
 
