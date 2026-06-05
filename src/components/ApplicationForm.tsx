@@ -146,7 +146,10 @@ export default function ApplicationForm() {
     const e = FormValidator.validate(5, data);
     if (Object.keys(e).length > 0) {
       setErrors(e);
-      logEvent('validation_failed', { step: 5, field: Object.keys(e).join(',') });
+      logEvent('validation_failed', {
+        step: 5,
+        field: Object.keys(e).join(','),
+      });
       return;
     }
     logEvent('submit_attempt');
@@ -200,7 +203,10 @@ export default function ApplicationForm() {
   }
 
   return (
-    <div ref={formRef} className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+    <div
+      ref={formRef}
+      className="bg-white rounded-2xl border border-gray-200 shadow-sm"
+    >
       <div className="p-6 md:p-8">
         <StepIndicator current={step} />
 
