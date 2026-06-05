@@ -8,7 +8,10 @@ export async function emailExists(
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!res.ok) return false; // fail open — don't block real applicants on a transient error
+  if (!res.ok) {
+    console.warn(`emailExists check failed — HTTP ${res.status}, failing open`);
+    return false;
+  } // fail open — don't block real applicants on a transient error
   const data = (await res.json()) as { values?: string[][] };
   const emails = (data.values ?? []).flat().map((v) => v.toLowerCase().trim());
   return emails.includes(applicantEmail.toLowerCase().trim());
