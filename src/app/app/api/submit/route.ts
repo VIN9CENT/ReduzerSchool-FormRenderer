@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ApplicationSubmissionService } from './ApplicationSubmissionService';
 
-const service = new ApplicationSubmissionService();
-
 export async function POST(req: NextRequest) {
+  const service = new ApplicationSubmissionService();
   const body = await req.json();
 
   if (!body.email || !body.posthog_id) {

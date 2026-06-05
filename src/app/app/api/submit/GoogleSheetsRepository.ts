@@ -1,51 +1,152 @@
-interface SheetRow {
-  timestamp: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  posthog_id: string;
-  occupation: string;
-  education_level: string;
-  has_laptop: string;
-  learning_mode: string;
-  city: string;
-  referral_source: string;
+function toBase64url(buffer: ArrayBuffer): string {
+  return btoa(String.fromCharCode(...new Uint8Array(buffer)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
+}
+
+function strToBase64url(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  bytes.forEach((b) => (binary += String.fromCharCode(b)));
+  return btoa(binary)
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
+}
+
+async function getAccessToken(email: string, pemKey: string): Promise<string> {
+  const now = Math.floor(Date.now() / 1000);
+
+  const header = strToBase64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  const payload = strToBase64url(
+    JSON.stringify({
+      iss: email,
+      scope: 'https://www.googleapis.com/auth/spreadsheets',
+      aud: 'https://oauth2.googleapis.com/token',
+      iat: now,
+      exp: now + 3600,
+    })
+  );
+
+  const signingInput = `${header}.${payload}`;
+
+  const der = Uint8Array.from(
+    atob(
+      pemKey
+        .replace(/-----BEGIN PRIVATE KEY-----/g, '')
+        .replace(/-----END PRIVATE KEY-----/g, '')
+        .replace(/\\n/g, '')
+        .replace(/\s/g, '')
+    ),
+    (c) => c.charCodeAt(0)
+  );
+
+  const key = await crypto.subtle.importKey(
+    'pkcs8',
+    der,
+    { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+
+  const sig = await crypto.subtle.sign(
+    'RSASSA-PKCS1-v1_5',
+    key,
+    new TextEncoder().encode(signingInput)
+  );
+
+  const jwt = `${signingInput}.${toBase64url(sig)}`;
+
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion: jwt,
+    }),
+  });
+
+  if (!tokenRes.ok) {
+    const text = await tokenRes.text();
+    throw new Error(`Token exchange failed: ${text}`);
+  }
+
+  const json = (await tokenRes.json()) as { access_token: string };
+  return json.access_token;
+}
+
+function str(value: unknown, maxLen = 5000): string {
+  if (typeof value !== 'string') return '';
+  const trimmed = value.trim().slice(0, maxLen);
+  return /^[=+\-@|%\t\r]/.test(trimmed) ? `'${trimmed}` : trimmed;
 }
 
 export class GoogleSheetsRepository {
-  private readonly webhookUrl: string;
-
-  constructor() {
-    const url = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-    if (!url) throw new Error('GOOGLE_SHEETS_WEBHOOK_URL is not set');
-    this.webhookUrl = url;
-  }
-
   async insertRow(data: Record<string, unknown>, posthogId: string): Promise<void> {
-    const row: SheetRow = {
-      timestamp: new Date().toISOString(),
-      first_name: String(data.firstName ?? ''),
-      last_name: String(data.lastName ?? ''),
-      email: String(data.email ?? ''),
-      phone: String(data.phone ?? ''),
-      posthog_id: posthogId,
-      occupation: String(data.occupation ?? ''),
-      education_level: String(data.educationLevel ?? ''),
-      has_laptop: String(data.hasLaptop ?? ''),
-      learning_mode: String(data.learningMode ?? ''),
-      city: String(data.city ?? ''),
-      referral_source: String(data.referralSource ?? data.heardFrom ?? ''),
-    };
+    const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+    const key = process.env.GOOGLE_PRIVATE_KEY;
+    const sheetId = process.env.GOOGLE_SPREADSHEET_ID;
 
-    const response = await fetch(this.webhookUrl, {
+    if (!email || !key || !sheetId) {
+      throw new Error('Missing Google Sheets environment variables');
+    }
+
+    const occupation =
+      data.occupation === 'Other'
+        ? `Other: ${str(data.occupationOther, 200)}`
+        : str(data.occupation, 200);
+    const education =
+      data.education === 'Other'
+        ? `Other: ${str(data.educationOther, 200)}`
+        : str(data.education, 200);
+    const heardFrom =
+      data.heardFrom === 'Other'
+        ? `Other: ${str(data.heardFromOther, 200)}`
+        : str(data.heardFrom, 200);
+
+    const row = [
+      new Date().toISOString(),
+      str(data.fullName, 200),
+      str(data.email, 200),
+      str(data.phone, 50),
+      str(data.city, 200),
+      str(data.country, 200),
+      occupation,
+      education,
+      str(data.hasTechExperience, 200),
+      str(data.techExperienceDetails, 2000),
+      str(data.hasLaptop, 10),
+      str(data.learningMode, 200),
+      str(data.whyReduzer, 10_000),
+      str(data.biggestObstacle, 10_000),
+      str(data.timeFailed, 10_000),
+      str(data.ifFallBehind, 10_000),
+      str(data.reqChanges, 10_000),
+      str(data.workStyle, 10_000),
+      heardFrom,
+      str(data.additionalInfo, 10_000),
+      str(data.eventLog, 50_000),
+      posthogId,
+    ];
+
+    const token = await getAccessToken(email, key);
+
+    const range = encodeURIComponent('Sheet1!A:V');
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`;
+
+    const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(row),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ values: [row] }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Google Sheets error: ${response.status}`);
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Sheets API error: ${res.status} ${text}`);
     }
   }
 }
