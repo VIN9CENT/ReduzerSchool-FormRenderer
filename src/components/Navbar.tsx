@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useLandingTracking } from '@/hooks/useLandingTracking';
 
 const navLinks = [
   { label: 'Home', href: '/#home' },
@@ -16,9 +17,8 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [scrolled, setScrolled] = useState(() =>
-    typeof window !== 'undefined' ? window.scrollY > 10 : false
-  );
+  const [scrolled, setScrolled] = useState(false);
+  const { trackCTAClick } = useLandingTracking();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -91,6 +91,7 @@ export default function Navbar() {
 
         <Link
           href="/apply"
+          onClick={() => trackCTAClick('header')}
           className="hidden md:flex items-center justify-center h-9 px-6 rounded-[8px] border border-[#FF002E] text-[13px] font-semibold text-black hover:bg-[#BB001F]/5 transition-colors"
         >
           Apply Now
@@ -133,7 +134,10 @@ export default function Navbar() {
           })}
           <Link
             href="/apply"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              trackCTAClick('header');
+            }}
             className="mt-4 flex items-center justify-center h-10 rounded-[8px] border border-[#FF002E] text-[13px] font-semibold text-black hover:bg-[#BB001F]/5 transition-colors"
           >
             Apply Now

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { PHProvider } from '@/components/PHProvider';
+import { Suspense } from 'react';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -25,9 +27,7 @@ export const metadata: Metadata = {
   },
   description:
     'Launch your career as a full-stack developer in 12 months. Learn in-demand coding skills, build real projects, and get hired by top tech companies.',
-
   metadataBase: new URL(siteUrl || 'https://school.reduzer.tech'),
-
   openGraph: {
     type: 'website',
     url: siteUrl,
@@ -45,7 +45,6 @@ export const metadata: Metadata = {
     ],
     locale: 'en_US',
   },
-
   twitter: {
     card: 'summary_large_image',
     title: 'Reduzer School',
@@ -54,7 +53,6 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
     site: '@reduzer_tech',
   },
-
   alternates: {
     canonical: '/',
   },
@@ -92,7 +90,9 @@ export default function RootLayout({
         )}
       </head>
       <body className="min-h-full flex flex-col">
-        {children}
+        <Suspense fallback={null}>
+          <PHProvider>{children}</PHProvider>
+        </Suspense>
       </body>
     </html>
   );

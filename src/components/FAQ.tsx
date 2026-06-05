@@ -1,6 +1,7 @@
 'use client';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
+import { useLandingTracking } from '@/hooks/useLandingTracking';
 
 const faqs = [
   {
@@ -69,6 +70,7 @@ const faqs = [
   },
 ];
 export default function FAQ() {
+  const { trackFAQClick } = useLandingTracking();
   const [activeId, setActiveId] = useState<number | null>(null);
 
   const toggleFaq = (id: number) => {
@@ -76,8 +78,11 @@ export default function FAQ() {
       setActiveId(null);
     } else {
       setActiveId(id);
+      const faq = faqs.find((f) => f.id === id);
+      if (faq) trackFAQClick(faq.question);
     }
   };
+
   return (
     <section
       id="faq"

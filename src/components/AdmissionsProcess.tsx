@@ -1,4 +1,7 @@
+'use client';
 import { Monitor, Laptop, Heart, Clock, Users, Code } from 'lucide-react';
+import Link from 'next/link'
+import { useLandingTracking } from '@/hooks/useLandingTracking'
 
 const BRAND = {
   red: '#FF002E',
@@ -66,6 +69,8 @@ const steps = [
 ];
 
 export default function AdmissionsProcess() {
+  const { trackCTAClick } = useLandingTracking()
+
   return (
     <section id="apply" style={{ fontFamily: "'Inter', sans-serif" }}>
       {/* HERO SECTION */}
@@ -195,16 +200,19 @@ export default function AdmissionsProcess() {
           Join our program and start your journey into technology today.
         </p>
 
-        <a
-          href="/apply"
-          className="inline-block text-sm md:text-base font-bold px-10 py-3 rounded-xl transition hover:opacity-90"
-          style={{
-            backgroundColor: BRAND.black,
-            color: 'white',
-          }}
-        >
-          APPLY NOW
-        </a>
+  
+<Link
+  href="/apply"
+  onClick={() => trackCTAClick('admission-process')}
+  className="inline-block text-sm md:text-base font-bold px-10 py-3 rounded-xl transition hover:opacity-90"
+  style={{
+    backgroundColor: BRAND.black,
+    color: 'white',
+  }}
+>
+  APPLY NOW
+</Link>
+
       </section>
     </section>
   );

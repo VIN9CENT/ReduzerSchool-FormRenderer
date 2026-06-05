@@ -1,7 +1,14 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  startTransition,
+} from 'react';
 import Link from 'next/link';
+import posthog from 'posthog-js';
 import {
   Check,
   ChevronRight,
@@ -9,6 +16,14 @@ import {
   AlertCircle,
   Loader2,
 } from 'lucide-react';
+import {
+  Occupation,
+  EducationLevel,
+  PriorExperience,
+  LearningMode,
+} from '@/app/apply/types';
+import { useFormTracking } from '@/app/apply/hooks/useFormTracking';
+import { useGritMetrics } from '@/app/apply/hooks/useGritMetrics';
 
 declare global {
   interface Window {
@@ -22,30 +37,25 @@ declare global {
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 interface FormData {
-  // Section 1
   fullName: string;
   email: string;
   phone: string;
   city: string;
   country: string;
-  // Section 2
   occupation: string;
   occupationOther: string;
   education: string;
   educationOther: string;
   hasTechExperience: string;
   techExperienceDetails: string;
-  // Section 3
   hasLaptop: string;
   learningMode: string;
-  // Section 4
   whyReduzer: string;
   biggestObstacle: string;
   timeFailed: string;
   ifFallBehind: string;
   reqChanges: string;
   workStyle: string;
-  // Section 5
   heardFrom: string;
   heardFromOther: string;
   additionalInfo: string;
@@ -95,6 +105,8 @@ const STEPS = [
   'Final Questions',
 ];
 
+const SESSION_KEY = 'reduzer_form_progress';
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function countWords(text: string): number {
@@ -134,7 +146,10 @@ function validate(step: number, data: FormData): Errors {
       e.educationOther = 'Please specify';
     if (!data.hasTechExperience)
       e.hasTechExperience = 'Please answer this question';
-    if (data.hasTechExperience === 'Yes, I have some experience' && !data.techExperienceDetails.trim())
+    if (
+      data.hasTechExperience === 'Yes, I have some experience' &&
+      !data.techExperienceDetails.trim()
+    )
       e.techExperienceDetails = 'Please briefly describe your experience';
   }
 
@@ -232,12 +247,14 @@ function TextInput({
 function Textarea({
   value,
   onChange,
+  onPaste,
   placeholder,
   rows = 4,
   error,
 }: {
   value: string;
   onChange: (v: string) => void;
+  onPaste?: () => void;
   placeholder?: string;
   rows?: number;
   error?: boolean;
@@ -246,6 +263,7 @@ function Textarea({
     <textarea
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      onPaste={onPaste}
       placeholder={placeholder}
       rows={rows}
       className={`w-full px-4 py-3 rounded-lg border text-sm text-gray-900 placeholder-gray-400 outline-none resize-none transition-colors focus:ring-2 focus:ring-[#BB001F]/20 ${
@@ -403,7 +421,6 @@ function Section1({
           error={!!errors.fullName}
         />
       </FieldWrapper>
-
       <FieldWrapper label="Email address" required error={errors.email}>
         <TextInput
           value={data.email}
@@ -413,7 +430,6 @@ function Section1({
           error={!!errors.email}
         />
       </FieldWrapper>
-
       <FieldWrapper label="Phone number" required error={errors.phone}>
         <TextInput
           value={data.phone}
@@ -423,7 +439,6 @@ function Section1({
           error={!!errors.phone}
         />
       </FieldWrapper>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <FieldWrapper label="City" required error={errors.city}>
           <TextInput
@@ -617,10 +632,12 @@ function Section4({
   data,
   errors,
   set,
+  onPaste,
 }: {
   data: FormData;
   errors: Errors;
   set: (k: keyof FormData, v: string) => void;
+  onPaste: (field: 'whyJoin' | 'challenge') => void;
 }) {
   const wc = countWords(data.whyReduzer);
   return (
@@ -634,6 +651,7 @@ function Section4({
         <Textarea
           value={data.whyReduzer}
           onChange={(v) => set('whyReduzer', v)}
+          onPaste={() => onPaste('whyJoin')}
           placeholder="Tell us what motivates you to pursue a career in tech and why Reduzer School specifically..."
           rows={6}
           error={!!errors.whyReduzer}
@@ -653,6 +671,7 @@ function Section4({
         <Textarea
           value={data.biggestObstacle}
           onChange={(v) => set('biggestObstacle', v)}
+          onPaste={() => onPaste('challenge')}
           placeholder="Be honest — this helps us understand how to support you..."
           rows={4}
           error={!!errors.biggestObstacle}
@@ -840,19 +859,102 @@ export default function ApplicationForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  // FIX 1: Track highest step reached to prevent duplicate PostHog events on back navigation
+  const [highestStep, setHighestStep] = useState(1);
+
   const [alreadyApplied, setAlreadyApplied] = useState(
-    () => typeof window !== 'undefined' && localStorage.getItem('reduzer_school_applied') === 'true'
+    () =>
+      typeof window !== 'undefined' &&
+      localStorage.getItem('reduzer_school_applied') === 'true'
   );
   const [events, setEvents] = useState<EventEntry[]>(() => [
     { type: 'form_open', ts: new Date().toISOString() },
   ]);
   const formRef = useRef<HTMLDivElement>(null);
 
-  const logEvent = useCallback((type: string, extras?: Omit<EventEntry, 'type' | 'ts'>) => {
-    const entry: EventEntry = { type, ts: new Date().toISOString(), ...extras };
-    setEvents((prev) => [...prev, entry]);
+  const {
+    posthogId,
+    trackStep2Complete,
+    trackStep3Complete,
+    trackStep4Complete,
+    trackStep5Complete,
+  } = useFormTracking();
+
+  const gritMetrics = useGritMetrics();
+
+  const logEvent = useCallback(
+    (type: string, extras?: Omit<EventEntry, 'type' | 'ts'>) => {
+      const entry: EventEntry = {
+        type,
+        ts: new Date().toISOString(),
+        ...extras,
+      };
+      setEvents((prev) => [...prev, entry]);
+    },
+    []
+  );
+
+  // FIX 4: Restore form progress if mobile browser killed the session
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem(SESSION_KEY);
+    if (!saved) return;
+    try {
+      const {
+        step: savedStep,
+        data: savedData,
+        highestStep: savedHighest,
+      } = JSON.parse(saved) as {
+        step: number;
+        data: FormData;
+        highestStep: number;
+      };
+
+      // Batch all state updates together to avoid cascading re-renders
+      startTransition(() => {
+        setStep(savedStep);
+        setData(savedData);
+        setHighestStep(savedHighest);
+      });
+
+      posthog.capture('form_session_restored', { restored_to_step: savedStep });
+    } catch {
+      sessionStorage.removeItem(SESSION_KEY);
+    }
+  }, []); // Runs once on mount only
+
+  // FIX 4: Save progress to sessionStorage on every step or data change
+  useEffect(() => {
+    if (step === 1) return; // Don't save until they've moved past Step 1
+    sessionStorage.setItem(
+      SESSION_KEY,
+      JSON.stringify({ step, data, highestStep })
+    );
+  }, [step, data, highestStep]);
+
+  // FIX 2: Track tab/browser abandonment
+  useEffect(() => {
+    const handleUnload = () => {
+      if (submitted) return; // Don't fire if they successfully submitted
+      posthog.capture('application_abandoned', {
+        abandoned_on_step: step,
+        highest_step_reached: highestStep,
+      });
+    };
+    window.addEventListener('beforeunload', handleUnload);
+    return () => window.removeEventListener('beforeunload', handleUnload);
+  }, [step, highestStep, submitted]);
+
+  // FIX 3: Flag returning users so duplicate journeys are identifiable in PostHog
+  useEffect(() => {
+    const applied = localStorage.getItem('reduzer_school_applied');
+    if (applied === 'true') {
+      posthog.capture('returning_applicant_detected');
+    }
   }, []);
 
+  // Block copy/cut/paste/contextmenu on the form
   useEffect(() => {
     const el = formRef.current;
     if (!el) return;
@@ -887,10 +989,74 @@ export default function ApplicationForm() {
     if (Object.keys(e).length > 0) {
       setErrors(e);
       logEvent('validation_failed', { step, field: Object.keys(e).join(',') });
+      if (step === 4) gritMetrics.recordValidationError();
       return;
     }
     setErrors({});
     logEvent('step_next', { step });
+
+    // FIX 1: Only fire PostHog tracking the FIRST time a step is completed
+    // Prevents duplicate/conflicting events when user goes back and changes answers
+    const isFirstVisit = step >= highestStep;
+
+    if (step === 2 && isFirstVisit) {
+      const mappedOccupation: Occupation =
+        data.occupation === 'Student'
+          ? 'student'
+          : data.occupation.includes('Employed')
+            ? 'employed_professional'
+            : data.occupation === 'Unemployed'
+              ? 'unemployed'
+              : 'other';
+
+      const mappedEducation: EducationLevel =
+        data.education === 'High school / KCSE'
+          ? 'high_school'
+          : data.education === "Bachelor's degree"
+            ? 'undergraduate'
+            : data.education === "Master's degree or higher"
+              ? 'graduate'
+              : 'other';
+
+      const mappedExperience: PriorExperience = data.hasTechExperience.includes(
+        'Yes'
+      )
+        ? 'basic'
+        : 'none';
+
+      trackStep2Complete({
+        occupation: mappedOccupation,
+        educationLevel: mappedEducation,
+        priorExperience: mappedExperience,
+      });
+    }
+
+    if (step === 3 && isFirstVisit) {
+      // FIX 6: Correctly map all four learning mode options
+      const mappedMode: LearningMode = data.learningMode.includes('Online')
+        ? 'online'
+        : data.learningMode.includes('Physical')
+          ? 'physical_kisii'
+          : data.learningMode.includes('Hybrid')
+            ? 'hybrid'
+            : 'undecided'; // "I need more information before deciding"
+
+      trackStep3Complete({
+        hasLaptop: data.hasLaptop === 'Yes',
+        learningMode: mappedMode,
+        city: data.city,
+      });
+
+      // Start the grit timer exactly when Step 4 appears for the first time
+      gritMetrics.resetTimer();
+    }
+
+    if (step === 4 && isFirstVisit) {
+      trackStep4Complete(gritMetrics.getFinalMetrics());
+    }
+
+    // Update highest step reached
+    setHighestStep((prev) => Math.max(prev, step + 1));
     setStep((s) => s + 1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -907,7 +1073,10 @@ export default function ApplicationForm() {
     const e = validate(5, data);
     if (Object.keys(e).length > 0) {
       setErrors(e);
-      logEvent('validation_failed', { step: 5, field: Object.keys(e).join(',') });
+      logEvent('validation_failed', {
+        step: 5,
+        field: Object.keys(e).join(','),
+      });
       return;
     }
 
@@ -943,8 +1112,16 @@ export default function ApplicationForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
+<<<<<<< HEAD
           eventLog: JSON.stringify([...events, { type: 'submit_attempt', ts: new Date().toISOString() }]),
           recaptchaToken,
+=======
+          posthog_id: posthogId, // THE GOLDEN LINK
+          eventLog: JSON.stringify([
+            ...events,
+            { type: 'submit_attempt', ts: new Date().toISOString() },
+          ]),
+>>>>>>> 4a96798 (feat: implement PostHog analytics tracking)
         }),
       });
 
@@ -955,16 +1132,32 @@ export default function ApplicationForm() {
       }
 
       if (!res.ok) {
+<<<<<<< HEAD
         const body = (await res.json().catch(() => ({}))) as { error?: string };
         throw new Error(body.error ?? 'Something went wrong. Please try again.');
+=======
+        const body = (await res.json().catch(() => ({}))) as {
+          error?: string;
+        };
+        throw new Error(body.error ?? `Server error ${res.status}`);
+>>>>>>> 4a96798 (feat: implement PostHog analytics tracking)
       }
+
+      // FIX 5: trackStep5Complete fires ONLY after confirmed server success
+      trackStep5Complete(data.heardFrom);
 
       logEvent('submit_success');
       localStorage.setItem('reduzer_school_applied', 'true');
+
+      // FIX 4: Clear saved session on successful submission
+      sessionStorage.removeItem(SESSION_KEY);
+
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
-      logEvent('submit_error', { field: err instanceof Error ? err.message : 'unknown' });
+      logEvent('submit_error', {
+        field: err instanceof Error ? err.message : 'unknown',
+      });
       setSubmitError(
         err instanceof Error
           ? err.message
@@ -994,7 +1187,10 @@ export default function ApplicationForm() {
   }
 
   return (
-    <div ref={formRef} className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+    <div
+      ref={formRef}
+      className="bg-white rounded-2xl border border-gray-200 shadow-sm"
+    >
       <div className="p-6 md:p-8">
         <StepIndicator current={step} />
 
@@ -1016,7 +1212,9 @@ export default function ApplicationForm() {
         {step === 1 && <Section1 {...sectionProps} />}
         {step === 2 && <Section2 {...sectionProps} />}
         {step === 3 && <Section3 {...sectionProps} />}
-        {step === 4 && <Section4 {...sectionProps} />}
+        {step === 4 && (
+          <Section4 {...sectionProps} onPaste={gritMetrics.recordPaste} />
+        )}
         {step === 5 && <Section5 {...sectionProps} />}
 
         {submitError && (

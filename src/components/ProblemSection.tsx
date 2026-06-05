@@ -1,7 +1,11 @@
+'use client';
 import Link from 'next/link';
 import { BookOpen, Clock, ArrowRight, DollarSign, Target } from 'lucide-react';
+import { useLandingTracking } from '@/hooks/useLandingTracking'
 
 export default function ProblemSection() {
+  const { trackCTAClick } = useLandingTracking()
+
   return (
     <section className="bg-linear-to-b from-gray-50 to-white px-4 py-12 md:px-8 md:py-20 lg:px-16">
       <div className="mx-auto max-w-6xl font-[Inter,sans-serif]">
@@ -183,6 +187,7 @@ export default function ProblemSection() {
 
             <Link
               href="/apply"
+                onClick={() => trackCTAClick('problem-section')}
               className="group flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-6 py-4 font-semibold transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto md:px-8"
             >
               Join Reduzer

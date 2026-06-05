@@ -19,7 +19,10 @@ export const metadata = {
   },
 };
 
+
+
 export default function ApplyPage() {
+  
   return (
     <main>
       <Navbar />

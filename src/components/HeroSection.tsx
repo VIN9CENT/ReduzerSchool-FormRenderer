@@ -1,4 +1,7 @@
-// Hero section component for the landing page, showcasing the main headline, subheadline, call-to-action buttons, and key features of the bootcamp program. The design includes decorative background elements and is fully responsive for optimal display on various screen sizes.
+'use client'
+
+import { useLandingTracking } from '@/hooks/useLandingTracking';
+import { useScrollDepth } from '@/hooks/useScrollDepth';
 
 import Link from 'next/link';
 import {
@@ -17,6 +20,8 @@ const features = [
 ];
 
 export default function HeroSection() {
+  const { trackCTAClick } = useLandingTracking();
+  useScrollDepth();
   return (
     <section id="home" className="relative w-full overflow-hidden bg-[#F7F9FB]">
       {/* Decorative Background Blobs */}
@@ -53,6 +58,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-[30px] w-full mt-2">
             <Link
               href="/apply"
+              onClick={() => trackCTAClick('hero')}
               className="flex flex-row justify-center items-center gap-2 w-full sm:w-auto rounded-[8px] bg-[#BB001F] px-8 py-[17px] shadow-[0px_10px_15px_-3px_rgba(187,0,31,0.2),0px_4px_6px_-4px_rgba(187,0,31,0.2)] hover:bg-[#a0001a] transition-colors"
             >
               <span className="font-sans font-semibold text-[18px] leading-[28px] tracking-[1.8px] text-center text-white">

@@ -1,7 +1,10 @@
+'use client';
 import Link from 'next/link';
 import { Target, Building2, Users, ArrowRight } from 'lucide-react';
+import { useLandingTracking } from '@/hooks/useLandingTracking';
 
 export default function WhyUsSection() {
+  const {trackCTAClick} = useLandingTracking()
   return (
     <section
       id="about"
@@ -94,6 +97,7 @@ export default function WhyUsSection() {
 
           <Link
             href="/apply"
+            onClick={()=>trackCTAClick('why-us')}
             className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-8 py-4 font-semibold text-white transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto"
           >
             Start Application

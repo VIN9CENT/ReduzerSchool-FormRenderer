@@ -12,9 +12,11 @@ import {
   ChevronDown,
   CalendarDays,
 } from 'lucide-react';
+import { useLandingTracking } from '@/hooks/useLandingTracking';
 
 export default function ProgramOverview() {
   const [skillsOpen, setSkillsOpen] = useState(false);
+    const { trackCTAClick } = useLandingTracking();
 
   const skills = [
     'Build and deploy full-stack web applications from scratch.',
@@ -137,6 +139,7 @@ export default function ProgramOverview() {
         <div className="flex justify-center">
           <Link
             href="/apply"
+             onClick={() => trackCTAClick('program-overview')}
             className="flex items-center gap-3 bg-[#FF002E] hover:bg-[#e60028] transition-colors duration-200 text-white font-bold text-lg px-14 py-5 rounded-full"
           >
             Apply Now

@@ -1,6 +1,9 @@
+'use client';
 import Link from 'next/link';
+import { useLandingTracking } from '@/hooks/useLandingTracking';
 
 export default function PricingSection() {
+  const { trackCTAClick } = useLandingTracking();
   return (
     <section
       id="pricing"
@@ -101,6 +104,7 @@ export default function PricingSection() {
           <div className="p-6 md:p-8">
             <Link
               href="/apply"
+              onClick={() => trackCTAClick('pricing')}
               className="w-full block text-center bg-[#d92b2b] hover:bg-[#b81f1f] active:scale-[0.98] text-white font-black text-base md:text-lg tracking-widest uppercase py-5 rounded-xl shadow-md transition-all duration-200"
             >
               Apply Now
