@@ -610,7 +610,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     console.warn(`reCAPTCHA rejected for IP ${ip}: ${captcha.reason}`);
     return json(
       {
-        error: 'We could not verify your request. Please refresh and try again.',
+        error: 'CAPTCHA verification failed. Please refresh and try again.',
 
       },
       403

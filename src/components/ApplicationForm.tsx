@@ -29,7 +29,10 @@ declare global {
   interface Window {
     grecaptcha: {
       ready: (cb: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+      execute: (
+        siteKey: string,
+        options: { action: string }
+      ) => Promise<string>;
     };
   }
 }
@@ -127,8 +130,12 @@ function validate(step: number, data: FormData): Errors {
       e.phone = 'Phone number is required';
     } else {
       const stripped = data.phone.trim().replace(/[\s\-().]/g, '');
-      if (!/^(\+?254|0)\d{9}$/.test(stripped) && !/^\+[1-9]\d{6,14}$/.test(stripped)) {
-        e.phone = 'Enter a valid number (e.g. 0700 000 000 or +254 700 000 000)';
+      if (
+        !/^(\+?254|0)\d{9}$/.test(stripped) &&
+        !/^\+[1-9]\d{6,14}$/.test(stripped)
+      ) {
+        e.phone =
+          'Enter a valid number (e.g. 0700 000 000 or +254 700 000 000)';
       }
     }
     if (!data.city.trim()) e.city = 'City is required';
@@ -873,16 +880,6 @@ export default function ApplicationForm() {
   ]);
   const formRef = useRef<HTMLDivElement>(null);
 
-  const {
-    posthogId,
-    trackStep2Complete,
-    trackStep3Complete,
-    trackStep4Complete,
-    trackStep5Complete,
-  } = useFormTracking();
-
-  const gritMetrics = useGritMetrics();
-
   const logEvent = useCallback(
     (type: string, extras?: Omit<EventEntry, 'type' | 'ts'>) => {
       const entry: EventEntry = {
@@ -894,65 +891,6 @@ export default function ApplicationForm() {
     },
     []
   );
-
-  // FIX 4: Restore form progress if mobile browser killed the session
-
-  useEffect(() => {
-    const saved = sessionStorage.getItem(SESSION_KEY);
-    if (!saved) return;
-    try {
-      const {
-        step: savedStep,
-        data: savedData,
-        highestStep: savedHighest,
-      } = JSON.parse(saved) as {
-        step: number;
-        data: FormData;
-        highestStep: number;
-      };
-
-      // Batch all state updates together to avoid cascading re-renders
-      startTransition(() => {
-        setStep(savedStep);
-        setData(savedData);
-        setHighestStep(savedHighest);
-      });
-
-      posthog.capture('form_session_restored', { restored_to_step: savedStep });
-    } catch {
-      sessionStorage.removeItem(SESSION_KEY);
-    }
-  }, []); // Runs once on mount only
-
-  // FIX 4: Save progress to sessionStorage on every step or data change
-  useEffect(() => {
-    if (step === 1) return; // Don't save until they've moved past Step 1
-    sessionStorage.setItem(
-      SESSION_KEY,
-      JSON.stringify({ step, data, highestStep })
-    );
-  }, [step, data, highestStep]);
-
-  // FIX 2: Track tab/browser abandonment
-  useEffect(() => {
-    const handleUnload = () => {
-      if (submitted) return; // Don't fire if they successfully submitted
-      posthog.capture('application_abandoned', {
-        abandoned_on_step: step,
-        highest_step_reached: highestStep,
-      });
-    };
-    window.addEventListener('beforeunload', handleUnload);
-    return () => window.removeEventListener('beforeunload', handleUnload);
-  }, [step, highestStep, submitted]);
-
-  // FIX 3: Flag returning users so duplicate journeys are identifiable in PostHog
-  useEffect(() => {
-    const applied = localStorage.getItem('reduzer_school_applied');
-    if (applied === 'true') {
-      posthog.capture('returning_applicant_detected');
-    }
-  }, []);
 
   // Block copy/cut/paste/contextmenu on the form
   useEffect(() => {
@@ -1086,24 +1024,43 @@ export default function ApplicationForm() {
 
     try {
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-      if (!siteKey) throw new Error('reCAPTCHA is not configured. Please contact support.');
-
+      if (!siteKey) {
+        console.error('[reCAPTCHA] NEXT_PUBLIC_RECAPTCHA_SITE_KEY is not set — reCAPTCHA will not work until this env var is present at build time.');
+        throw new Error('Something went wrong. Please refresh and try again.');
+      }
 
       const recaptchaToken = await Promise.race([
         new Promise<string>((resolve, reject) => {
           if (!window.grecaptcha) {
-            reject(new Error('reCAPTCHA has not loaded. Please refresh and try again.'));
+            console.error('[reCAPTCHA] window.grecaptcha is undefined — the reCAPTCHA script has not loaded. Check that the <script> tag in layout.tsx is present and not blocked by Cookiebot or an ad blocker.');
+            reject(
+              new Error(
+                'reCAPTCHA has not loaded. Please refresh and try again.'
+              )
+            );
             return;
           }
           window.grecaptcha.ready(() => {
             window.grecaptcha
               .execute(siteKey, { action: 'submit' })
               .then(resolve)
-              .catch(() => reject(new Error('reCAPTCHA check failed. Please refresh and try again.')));
+              .catch((err: unknown) => {
+                console.error('[reCAPTCHA] grecaptcha.execute() rejected:', err);
+                reject(
+                  new Error(
+                    'reCAPTCHA check failed. Please refresh and try again.'
+                  )
+                );
+              });
           });
         }),
         new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('reCAPTCHA timed out. Please refresh and try again.')), 10_000)
+          setTimeout(() => {
+            console.error('[reCAPTCHA] Token request timed out after 10s. grecaptcha.ready() never fired — likely blocked or failed to load.');
+            reject(
+              new Error('reCAPTCHA timed out. Please refresh and try again.')
+            );
+          }, 10_000)
         ),
       ]);
 
@@ -1112,16 +1069,19 @@ export default function ApplicationForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
-<<<<<<< HEAD
+          eventLog: JSON.stringify([
+            ...events,
+            { type: 'submit_attempt', ts: new Date().toISOString() },
+          ]),
           eventLog: JSON.stringify([...events, { type: 'submit_attempt', ts: new Date().toISOString() }]),
           recaptchaToken,
-=======
+
           posthog_id: posthogId, // THE GOLDEN LINK
           eventLog: JSON.stringify([
             ...events,
             { type: 'submit_attempt', ts: new Date().toISOString() },
           ]),
->>>>>>> 4a96798 (feat: implement PostHog analytics tracking)
+
         }),
       });
 
@@ -1132,15 +1092,12 @@ export default function ApplicationForm() {
       }
 
       if (!res.ok) {
-<<<<<<< HEAD
         const body = (await res.json().catch(() => ({}))) as { error?: string };
-        throw new Error(body.error ?? 'Something went wrong. Please try again.');
-=======
-        const body = (await res.json().catch(() => ({}))) as {
-          error?: string;
-        };
-        throw new Error(body.error ?? `Server error ${res.status}`);
->>>>>>> 4a96798 (feat: implement PostHog analytics tracking)
+        console.error(`[reCAPTCHA] Server rejected submission — HTTP ${res.status}:`, body);
+        throw new Error(
+          body.error ?? 'Something went wrong. Please try again.'
+        );
+
       }
 
       // FIX 5: trackStep5Complete fires ONLY after confirmed server success
