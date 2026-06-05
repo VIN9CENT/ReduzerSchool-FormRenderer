@@ -30,18 +30,22 @@ export default function ProgramOverview() {
   ];
 
   return (
-    <section id="program" className="w-full py-20 bg-gray-50">
-      <div className="bg-black text-center px-6 md:px-16 lg:px-24 py-20 mb-12">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#FF002E] leading-tight mb-6">
-          Reduzer Software Engineering <br /> School Program
-        </h2>
-        <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
-          A one-year immersive program that takes you from foundational concepts
-          to a job-ready software developer through hands-on training,
-          mentorship, and real-world projects. Designed for ambitious learners
-          seeking practical skills and structured growth.
-        </p>
-      </div>
+    <section
+      id="program"
+      className="bg-white w-full py-20 px-6 md:px-16 lg:px-24"
+    >
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-black text-center px-8 py-20 rounded-3xl mb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#FF002E] leading-tight mb-6">
+            Reduzer Software Engineering <br /> School Program
+          </h2>
+          <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+            A one-year immersive program designed to transform ambitious
+            learners into engineering professionals. Learn how to design, build,
+            test, deploy, and maintain production-grade systems through rigorous
+            training, mentorship, and real-world projects.
+          </p>
+        </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -58,9 +62,7 @@ export default function ProgramOverview() {
             <p className="text-gray-800 text-lg font-bold uppercase tracking-widest mb-2">
               Schedule
             </p>
-            <p className="text-gray-600 text-base font-medium">
-              Mon-Fri 8am-5pm
-            </p>
+            <p className="text-white text-base font-medium">Mon-Fri 8am-5pm</p>
           </div>
         </div>
 
