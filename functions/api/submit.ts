@@ -1,3 +1,32 @@
+/**
+ * Cloudflare Pages Function — POST /api/submit
+ *
+ * Required environment variables (set in Cloudflare Pages → Settings → Environment Variables):
+ *   GOOGLE_SERVICE_ACCOUNT_EMAIL  — e.g. my-sa@my-project.iam.gserviceaccount.com
+ *   GOOGLE_PRIVATE_KEY            — the full PEM private key from the service account JSON
+ *                                   (copy the entire "private_key" value, including -----BEGIN/END-----)
+ *   GOOGLE_SPREADSHEET_ID         — the ID from the Google Sheets URL
+ *                                   https://docs.google.com/spreadsheets/d/<ID>/edit
+ *
+ * Google Sheets setup:
+ *   1. Create a Google Cloud project and enable the Google Sheets API.
+ *   2. Create a Service Account, download the JSON key.
+ *   3. Share your spreadsheet with the service account email (Editor access).
+ *   4. Add a header row to Sheet1 matching the columns below (row 1).
+ *
+ * Expected columns (A→AC):
+ *   A  Timestamp          B  Full Name          C  Email
+ *   D  Phone              E  City               F  Country
+ *   G  Occupation         H  Education          I  Has Tech Experience
+ *   J  Tech Exp Details   K  Has Laptop         L  Learning Mode
+ *   M  Why Reduzer        N  Biggest Obstacle   O  Time Failed
+ *   P  If Fall Behind     Q  Req Changes        R  Work Style
+ *   S  Heard From         T  Additional Info    U  Event Log
+ *   V  Session (s)        W  S1 (s)             X  S2 (s)
+ *   Y  S3 (s)             Z  S4 (s)             AA S5 (s)
+ *   AB Copy Attempts      AC Validation Fails
+ */
+
 /// <reference types="@cloudflare/workers-types" />
 
 import { checkRateLimit, RATE_LIMIT } from './_lib/RateLimiter';
@@ -92,7 +121,11 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   // 6. Environment variable check
-  const { GOOGLE_SERVICE_ACCOUNT_EMAIL: gEmail, GOOGLE_PRIVATE_KEY: gKey, GOOGLE_SPREADSHEET_ID: sheetId } = env;
+  const {
+    GOOGLE_SERVICE_ACCOUNT_EMAIL: gEmail,
+    GOOGLE_PRIVATE_KEY: gKey,
+    GOOGLE_SPREADSHEET_ID: sheetId,
+  } = env;
   if (!gEmail || !gKey || !sheetId) {
     const missing = [
       !gEmail && 'GOOGLE_SERVICE_ACCOUNT_EMAIL',
