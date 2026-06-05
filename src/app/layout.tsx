@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { PHProvider } from '@/components/PHProvider';
-import { Suspense } from 'react';
+import CookiebotScript from '@/components/CookiebotScript';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -72,27 +71,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="1d803704-ef37-4292-92d7-3280f6bffa19"
-          data-blockingmode="auto"
-          data-cfasync="false"
-        />
-        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
-          <script
-            src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-            data-cookieconsent="ignore"
-            async
-          />
-        )}
-      </head>
+      
       <body className="min-h-full flex flex-col">
-        <Suspense fallback={null}>
-          <PHProvider>{children}</PHProvider>
-        </Suspense>
+        <CookiebotScript/>
+        {children}
       </body>
     </html>
   );
