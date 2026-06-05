@@ -1,9 +1,6 @@
 'use client';
 
-import posthog, {
-  type AutocaptureConfig,
-  type PostHogConfig,
-} from 'posthog-js';
+import posthog, { type PostHogConfig } from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import { Suspense, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -29,6 +26,8 @@ function initPostHog() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if ((posthog as any).__loaded) return;
 
+  // Debug logging removed for security. Enable with NEXT_PUBLIC_ALLOW_POSTHOG_DEBUG=true when needed.
+
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
     api_host:
       process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://psthgeu.reduzer.tech',
@@ -42,12 +41,9 @@ function initPostHog() {
     // Performance metrics
     capture_performance: true,
 
-    // Only autocapture links and buttons
-    // Denylist prevents double-counting custom cta_clicked events
-    autocapture: {
-      element_allowlist: ['a', 'button'],
-      css_selector_denylist: ['[data-cta-location]', 'nav a'],
-    } as AutocaptureConfig,
+    // Keep analytics limited to explicit, reviewed capture calls.
+    autocapture: false,
+    autocapture_opt_out: true,
 
     // Disable session recording in production to reduce PII exposure on the application form.
     disable_session_recording: process.env.NODE_ENV === 'production',
@@ -79,13 +75,11 @@ function initPostHog() {
       ph.register({ environment: env });
 
       if (process.env.NODE_ENV === 'development') {
-        ph.debug();
-        console.info(
-          '[Reduzer Analytics] PostHog initialized. ID:',
-          ph.get_distinct_id(),
-          '| ENV:',
-          env
-        );
+        try {
+          ph.debug();
+        } catch {
+          /* ignore */
+        }
       }
     },
   } as Partial<PostHogConfig>);
@@ -97,6 +91,7 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
 
     const handleAccept = () => {
       const cookiebot = window.Cookiebot;
+
       if (cookiebot?.consent?.statistics) {
         initPostHog();
       }
