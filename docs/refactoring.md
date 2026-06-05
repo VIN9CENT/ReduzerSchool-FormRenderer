@@ -219,6 +219,38 @@ User clicks Submit
 
 ---
 
+## Backend — `functions/api/submit.ts`
+
+The Cloudflare Pages Function was 722 lines with seven distinct concerns living
+in one file. It has been split into a thin handler plus six focused modules
+under `functions/api/_lib/`. Cloudflare Pages ignores any directory prefixed
+with `_`, so none of the lib files are exposed as HTTP endpoints.
+
+### File map
+
+| File | Owns | Changes when |
+|------|------|--------------|
+| `submit.ts` | Request pipeline — rate limit → reCAPTCHA → validate → build row → write | Rarely; only if the pipeline order changes |
+| `_lib/ServerValidator.ts` | `ALLOWED` option lists + `serverValidate()` | A field is added, removed, or its allowed values change |
+| `_lib/RowBuilder.ts` | `buildRow()` — maps payload to the 29-column Sheet row | A column is added or renamed |
+| `_lib/SheetsClient.ts` | `emailExists()` + `appendRow()` — Sheets API calls | The Sheet range or API behaviour changes |
+| `_lib/GoogleAuthService.ts` | JWT build + OAuth token exchange | Never — stable Google Auth spec |
+| `_lib/RecaptchaVerifier.ts` | Token verification against Google | Score threshold or action string changes |
+| `_lib/RateLimiter.ts` | KV-based sliding-window rate limit | Rate limit config changes |
+| `_lib/EventLogProcessor.ts` | `formatEventLog()` + `analyzeEvents()` | A new event type is added to the frontend log |
+
+### Adding a new form field (backend checklist)
+
+1. **`ServerValidator.ts`** — add the field to `ALLOWED` if it is a radio, or
+   add a `str()` check to `serverValidate()` if it is free text.
+2. **`RowBuilder.ts`** — add one line to the array returned by `buildRow()` and
+   update the column comment (e.g. `// AD New Field`).
+3. Update the Sheet header row in Google Sheets to match.
+
+No other files need to change.
+
+---
+
 ## What Did Not Change
 
 - The form's visual design, all Tailwind classes, and user-facing behaviour are
