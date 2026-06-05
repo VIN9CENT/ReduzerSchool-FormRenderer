@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ApplicationForm from '@/components/ApplicationForm';
+import Script from 'next/script';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? '';
 
@@ -22,9 +23,12 @@ export const metadata = {
 
 
 export default function ApplyPage() {
-  
   return (
     <main>
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+        strategy="beforeInteractive"
+      />
       <Navbar />
       <section className="bg-[#F7F9FB] min-h-screen py-16 px-6">
         <div className="max-w-2xl mx-auto">

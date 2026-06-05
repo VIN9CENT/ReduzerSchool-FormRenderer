@@ -12,43 +12,26 @@ declare global {
 export class FormSubmissionService {
   private static async getRecaptchaToken(): Promise<string> {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    if (!siteKey) {
-      console.error('[reCAPTCHA] NEXT_PUBLIC_RECAPTCHA_SITE_KEY is not set.');
-      throw new Error('Something went wrong. Please refresh and try again.');
-    }
+    if (!siteKey || !window.grecaptcha) return '';
 
-    return Promise.race([
-      new Promise<string>((resolve, reject) => {
-        if (!window.grecaptcha) {
-          console.error(
-            '[reCAPTCHA] window.grecaptcha is undefined — script not loaded.'
-          );
-          reject(
-            new Error('reCAPTCHA has not loaded. Please refresh and try again.')
-          );
-          return;
-        }
-        window.grecaptcha.ready(() => {
-          window.grecaptcha
-            .execute(siteKey, { action: 'submit' })
-            .then(resolve)
-            .catch((err: unknown) => {
-              console.error('[reCAPTCHA] grecaptcha.execute() rejected:', err);
-              reject(
-                new Error('reCAPTCHA check failed. Please refresh and try again.')
-              );
-            });
-        });
-      }),
-      new Promise<never>((_, reject) =>
-        setTimeout(() => {
-          console.error('[reCAPTCHA] Token request timed out after 10s.');
-          reject(
-            new Error('reCAPTCHA timed out. Please refresh and try again.')
-          );
-        }, 10_000)
-      ),
-    ]);
+    try {
+      return await Promise.race([
+        new Promise<string>((resolve, reject) => {
+          window.grecaptcha.ready(() => {
+            window.grecaptcha
+              .execute(siteKey, { action: 'submit' })
+              .then(resolve)
+              .catch(reject);
+          });
+        }),
+        new Promise<string>((_, reject) =>
+          setTimeout(() => reject(new Error('timeout')), 10_000)
+        ),
+      ]);
+    } catch (err) {
+      console.error('[reCAPTCHA] token request failed:', err);
+      return '';
+    }
   }
 
   static async submit(
