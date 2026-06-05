@@ -10,7 +10,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await service.submit(body);
+    const { alreadyApplied } = await service.submit(body);
+    if (alreadyApplied) {
+      return NextResponse.json({ error: 'Already applied' }, { status: 409 });
+    }
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Submission failed:', error);

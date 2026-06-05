@@ -83,14 +83,36 @@ function str(value: unknown, maxLen = 5000): string {
 }
 
 export class GoogleSheetsRepository {
-  async insertRow(data: Record<string, unknown>, posthogId: string): Promise<void> {
+  private async getCredentials() {
     const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
     const key = process.env.GOOGLE_PRIVATE_KEY;
     const sheetId = process.env.GOOGLE_SPREADSHEET_ID;
+    if (!email || !key || !sheetId) throw new Error('Missing Google Sheets environment variables');
+    return { email, key, sheetId };
+  }
 
-    if (!email || !key || !sheetId) {
-      throw new Error('Missing Google Sheets environment variables');
+  async emailExists(email: string): Promise<boolean> {
+    const creds = await this.getCredentials();
+    const token = await getAccessToken(creds.email, creds.key);
+    const range = encodeURIComponent('Sheet1!C:C');
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${creds.sheetId}/values/${range}`;
+
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`emailExists check failed: ${res.status} ${text}`);
     }
+
+    const json = (await res.json()) as { values?: string[][] };
+    const emails = (json.values ?? []).flat().map((e) => e.toLowerCase().trim());
+    return emails.includes(email.toLowerCase().trim());
+  }
+
+  async insertRow(data: Record<string, unknown>, posthogId: string): Promise<void> {
+    const { email, key, sheetId } = await this.getCredentials();
 
     const occupation =
       data.occupation === 'Other'

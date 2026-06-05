@@ -11,23 +11,10 @@ export function useFormTracking() {
 
   const posthogId = ph?.get_distinct_id?.() ?? posthog.get_distinct_id() ?? '';
 
-  // Called when the user transitions between steps
-  const trackStepComplete = useCallback(
-    (
-      fromStep: number,
-      formData: Partial<ApplicationFormData>,
-      extraProps?: Record<string, unknown>
-    ) => {
-      posthog.capture('application_step_completed', {
-        from_step: fromStep,
-        // We only pass non-PII behavioral signals to PostHog
-        ...extraProps,
-      });
-    },
-    []
-  );
+  const trackStep1Complete = useCallback(() => {
+    posthog.capture('application_step_completed', { from_step: 1 });
+  }, []);
 
-  // Step 2 specific: classify the persona and set person properties
   const trackStep2Complete = useCallback(
     (
       formData: Pick<
@@ -37,7 +24,6 @@ export function useFormTracking() {
     ) => {
       const persona: Persona = classifyPersona(formData);
 
-      // setPersonProperties links the persona to ALL this user's future events
       posthog.setPersonProperties(
         {
           persona,
@@ -45,7 +31,6 @@ export function useFormTracking() {
           education_level: formData.educationLevel,
           prior_experience: formData.priorExperience,
         },
-        // "set_once" properties won't be overwritten on future visits
         {
           first_persona_seen: persona,
         }
@@ -62,7 +47,6 @@ export function useFormTracking() {
     []
   );
 
-  // Step 3 specific: logistics data
   const trackStep3Complete = useCallback(
     (
       formData: Pick<ApplicationFormData, 'hasLaptop' | 'learningMode' | 'city'>
@@ -71,14 +55,12 @@ export function useFormTracking() {
         from_step: 3,
         has_laptop: formData.hasLaptop,
         learning_mode: formData.learningMode,
-        // City is behavioral context, not PII — used to detect the "Kisii Dealbreaker"
         city_reported: formData.city,
       });
     },
     []
   );
 
-  // Step 4 specific: the Grit Metric event
   const trackStep4Complete = useCallback(
     (gritMetrics: {
       timeOnPageSeconds: number;
@@ -86,7 +68,6 @@ export function useFormTracking() {
       hasPastedInChallenge: boolean;
       validationErrorCount: number;
     }) => {
-      // Classify the candidate based on grit signals
       const gritLabel =
         gritMetrics.timeOnPageSeconds > 120 &&
         !gritMetrics.hasPastedInWhyJoin &&
@@ -112,7 +93,6 @@ export function useFormTracking() {
     []
   );
 
-  // Step 5 specific: referral source attribution
   const trackStep5Complete = useCallback((referralSource: string) => {
     posthog.capture('application_step_completed', {
       from_step: 5,
@@ -122,7 +102,7 @@ export function useFormTracking() {
 
   return {
     posthogId,
-    trackStepComplete,
+    trackStep1Complete,
     trackStep2Complete,
     trackStep3Complete,
     trackStep4Complete,

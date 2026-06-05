@@ -36,6 +36,7 @@ export default function ApplicationForm() {
 
   const {
     posthogId,
+    trackStep1Complete,
     trackStep2Complete,
     trackStep3Complete,
     trackStep4Complete,
@@ -43,7 +44,13 @@ export default function ApplicationForm() {
   } = useFormTracking();
 
   const gritMetrics = useGritMetrics();
+  const { resetTimer } = gritMetrics;
   const formRef = useRef<HTMLDivElement>(null);
+
+  // Reset grit timer whenever step 4 is entered (covers session restore and normal flow)
+  useEffect(() => {
+    if (step === 4) resetTimer();
+  }, [step, resetTimer]);
 
   // Block copy / cut / paste / right-click on the form container
   useEffect(() => {
@@ -80,6 +87,10 @@ export default function ApplicationForm() {
 
     const isFirstVisit = step >= highestStep;
 
+    if (step === 1 && isFirstVisit) {
+      trackStep1Complete();
+    }
+
     if (step === 2 && isFirstVisit) {
       const mappedOccupation: Occupation =
         data.occupation === 'Student' ? 'student'
@@ -112,7 +123,6 @@ export default function ApplicationForm() {
         learningMode: mappedMode,
         city: data.city,
       });
-      gritMetrics.resetTimer();
     }
 
     if (step === 4 && isFirstVisit) {

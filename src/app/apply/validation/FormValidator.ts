@@ -1,7 +1,15 @@
 import { FormData, FormErrors } from '../formTypes';
+import { EMAIL_RE, PHONE_STRIP_RE, PHONE_KE_RE, PHONE_INTL_RE } from './patterns';
 
 function countWords(text: string): number {
   return text.trim() ? text.trim().split(/\s+/).length : 0;
+}
+
+function minWords(value: string, min: number): string | undefined {
+  if (!value.trim()) return 'This field is required';
+  const wc = countWords(value);
+  if (wc < min) return `Minimum ${min} words required (${wc} so far)`;
+  return undefined;
 }
 
 export class FormValidator {
@@ -10,17 +18,14 @@ export class FormValidator {
     if (!data.fullName.trim()) e.fullName = 'Full name is required';
     if (!data.email.trim()) {
       e.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    } else if (!EMAIL_RE.test(data.email)) {
       e.email = 'Enter a valid email address';
     }
     if (!data.phone.trim()) {
       e.phone = 'Phone number is required';
     } else {
-      const stripped = data.phone.trim().replace(/[\s\-().]/g, '');
-      if (
-        !/^(\+?254|0)\d{9}$/.test(stripped) &&
-        !/^\+[1-9]\d{6,14}$/.test(stripped)
-      ) {
+      const stripped = data.phone.trim().replace(PHONE_STRIP_RE, '');
+      if (!PHONE_KE_RE.test(stripped) && !PHONE_INTL_RE.test(stripped)) {
         e.phone = 'Enter a valid number (e.g. 0700 000 000 or +254 700 000 000)';
       }
     }
@@ -55,17 +60,25 @@ export class FormValidator {
 
   static validateStep4(data: FormData): FormErrors {
     const e: FormErrors = {};
-    const wc = countWords(data.whyReduzer);
-    if (!data.whyReduzer.trim()) {
-      e.whyReduzer = 'This field is required';
-    } else if (wc < 100) {
-      e.whyReduzer = `Minimum 100 words required (${wc} so far)`;
-    }
-    if (!data.biggestObstacle.trim()) e.biggestObstacle = 'This field is required';
-    if (!data.timeFailed.trim()) e.timeFailed = 'This field is required';
-    if (!data.ifFallBehind.trim()) e.ifFallBehind = 'This field is required';
-    if (!data.reqChanges.trim()) e.reqChanges = 'This field is required';
-    if (!data.workStyle.trim()) e.workStyle = 'This field is required';
+
+    const whyErr = minWords(data.whyReduzer, 100);
+    if (whyErr) e.whyReduzer = whyErr;
+
+    const boErr = minWords(data.biggestObstacle, 30);
+    if (boErr) e.biggestObstacle = boErr;
+
+    const tfErr = minWords(data.timeFailed, 30);
+    if (tfErr) e.timeFailed = tfErr;
+
+    const ifbErr = minWords(data.ifFallBehind, 30);
+    if (ifbErr) e.ifFallBehind = ifbErr;
+
+    const rcErr = minWords(data.reqChanges, 30);
+    if (rcErr) e.reqChanges = rcErr;
+
+    const wsErr = minWords(data.workStyle, 30);
+    if (wsErr) e.workStyle = wsErr;
+
     return e;
   }
 
