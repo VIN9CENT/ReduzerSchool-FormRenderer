@@ -26,9 +26,7 @@ function initPostHog(setReady: (ready: boolean) => void) {
   }
 
   if (!POSTHOG_API_KEY) {
-    console.warn(
-      'Missing NEXT_PUBLIC_POSTHOG_KEY, skipping PostHog initialization.'
-    );
+    console.warn('[PH] Missing API key, skipping PostHog initialization.');
     return;
   }
 
@@ -78,9 +76,7 @@ function PostHogPageView({ ready }: { ready: boolean }) {
       url = `${url}?${searchParams.toString()}`;
     }
 
-    posthog.capture('$pageview', {
-      $current_url: url,
-    });
+    posthog.capture('$pageview', { $current_url: url });
   }, [pathname, searchParams, ready]);
 
   return null;
@@ -96,75 +92,59 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    // If consent already granted before React hydrated (most common case on
+    // returning visitors on the deployed site — fixes the timing bug)
+    if (window.Cookiebot?.consent?.statistics) {
+      initPostHogWithState();
+      return;
+    }
+
     const handleAccept = () => {
-      const cookiebot = window.Cookiebot;
-
-      console.log(
-        '[PH] handleAccept; statistics=',
-        cookiebot?.consent?.statistics
-      );
-
-      if (cookiebot?.consent?.statistics) {
+      console.log('[PH] CookiebotOnAccept; statistics=', window.Cookiebot?.consent?.statistics);
+      if (window.Cookiebot?.consent?.statistics) {
         initPostHogWithState();
       }
     };
 
     const handleDecline = () => {
-      const posthogClient = posthog as {
-        __loaded?: boolean;
-        opt_out_capturing?: () => void;
-      };
-
-      console.log('[PH] handleDecline; posthogLoaded=', posthogClient.__loaded);
-
-      if (posthogClient.__loaded) {
-        posthogClient.opt_out_capturing?.();
-      }
+      const ph = posthog as { __loaded?: boolean; opt_out_capturing?: () => void };
+      console.log('[PH] CookiebotOnDecline; loaded=', ph.__loaded);
+      if (ph.__loaded) ph.opt_out_capturing?.();
     };
 
     const handleChange = () => {
-      const cookiebot = window.Cookiebot;
-      const posthogClient = posthog as {
-        __loaded?: boolean;
-        opt_out_capturing?: () => void;
-      };
-
-      if (cookiebot?.consent?.statistics) {
-        // User enabled statistics consent
-        if (!posthogClient.__loaded) {
-          initPostHogWithState();
-        }
+      const ph = posthog as { __loaded?: boolean; opt_out_capturing?: () => void };
+      if (window.Cookiebot?.consent?.statistics) {
+        if (!ph.__loaded) initPostHogWithState();
       } else {
-        // User disabled/revoked statistics consent
-        if (posthogClient.__loaded) {
-          posthogClient.opt_out_capturing?.();
-        }
+        if (ph.__loaded) ph.opt_out_capturing?.();
       }
     };
-
-    if (window.Cookiebot?.consent?.statistics) {
-      initPostHogWithState();
-    }
 
     window.addEventListener('CookiebotOnAccept', handleAccept);
     window.addEventListener('CookiebotOnDecline', handleDecline);
     window.addEventListener('CookiebotOnChange', handleChange);
 
+    // Polling safety net for first-time visitors where the banner
+    // resolves after useEffect runs but the event is missed
+    let attempts = 0;
     const pollInterval = setInterval(() => {
+      attempts++;
       if (window.Cookiebot?.consent?.statistics) {
+        console.log('[PH] Poll caught consent at attempt', attempts);
         initPostHogWithState();
+        clearInterval(pollInterval);
+      } else if (attempts >= 20) {
+        // Give up after 20 seconds
         clearInterval(pollInterval);
       }
     }, 1000);
-
-    const pollTimeout = setTimeout(() => clearInterval(pollInterval), 10000);
 
     return () => {
       window.removeEventListener('CookiebotOnAccept', handleAccept);
       window.removeEventListener('CookiebotOnDecline', handleDecline);
       window.removeEventListener('CookiebotOnChange', handleChange);
       clearInterval(pollInterval);
-      clearTimeout(pollTimeout);
     };
   }, [initPostHogWithState]);
 
