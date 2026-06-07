@@ -4,13 +4,9 @@ import { getBaseUrl } from '@/lib/url';
 import type { ReactNode } from 'react';
 
 import './globals.css';
-import dynamic from 'next/dynamic';
+import { PHProviderWrapper } from '@/components/PHProviderWrapper';
 import CookiebotScript from '@/components/CookiebotScript';
 
-const PHProvider = dynamic(
-  () => import('@/components/PHProvider').then((mod) => mod.PHProvider),
-  { ssr: false }
-);
 
 const inter = Inter({
   variable: '--font-inter',
@@ -128,7 +124,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         <CookiebotScript />
-        <PHProvider>{children}</PHProvider>
+        <PHProviderWrapper>{children}</PHProviderWrapper>
       </body>
     </html>
   );
