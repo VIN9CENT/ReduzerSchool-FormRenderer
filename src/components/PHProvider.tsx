@@ -5,7 +5,6 @@ import { PostHogProvider } from 'posthog-js/react';
 import { Suspense, useEffect} from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-
 function PostHogPageView({ ready }: { ready: boolean }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,6 +23,10 @@ function PostHogPageView({ ready }: { ready: boolean }) {
   return null;
 }
 
+const POSTHOG_API_KEY =
+  process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN || 'phc_y4TaBFcnzsx2WX4846wjqyKmtEsw4L6rrNFRnY5m6uAH';
+const POSTHOG_API_HOST =
+  process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://psthgeu.reduzer.tech';
 
 function getEnvironment() {
   if (typeof window === 'undefined') return 'server';
@@ -39,14 +42,13 @@ function initPostHog() {
   if (typeof window === 'undefined') return;
   if (posthogInitialized) return;
 
-  if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+  if (!POSTHOG_API_KEY) {
     console.warn('[PostHog] Missing API key');
     return;
   }
 
-  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
-    api_host:
-      process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://psthgeu.reduzer.tech',
+  posthog.init(POSTHOG_API_KEY, {
+    api_host: POSTHOG_API_HOST,
 
     capture_pageview: false,
     capture_utmparams: true,
