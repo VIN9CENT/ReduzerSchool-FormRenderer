@@ -142,7 +142,7 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
         applyConsent();
         clearInterval(poll);
       }
-      if (attempts >= 20) clearInterval(poll); // give up after 10s
+      if (attempts >= 20) clearInterval(poll); 
     }, 500);
     events.forEach((event) => window.addEventListener(event, applyConsent));
 
