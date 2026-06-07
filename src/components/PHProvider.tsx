@@ -2,42 +2,65 @@
 
 import posthog, { type PostHogConfig } from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useEffect} from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-const POSTHOG_API_KEY =
-  process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN ||
-  process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const POSTHOG_API_HOST =
-  process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://psthgeu.reduzer.tech';
+
+function PostHogPageView({ ready }: { ready: boolean }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (!ready || !pathname) return;
+
+    const url =
+      window.location.origin +
+      pathname +
+      (searchParams?.toString() ? `?${searchParams.toString()}` : '');
+
+    posthog.capture('$pageview', { $current_url: url });
+  }, [pathname, searchParams, ready]);
+
+  return null;
+}
+
 
 function getEnvironment() {
-  if (typeof window === 'undefined') return 'development';
+  if (typeof window === 'undefined') return 'server';
   if (window.location.hostname === 'school.reduzer.tech') return 'production';
   if (window.location.hostname.includes('pages.dev')) return 'staging';
   return 'development';
 }
 
-function initPostHog(setReady: (ready: boolean) => void) {
-  const phInternal = posthog as unknown as { __loaded?: boolean };
-  if (phInternal.__loaded) {
-    setReady(true);
+
+let posthogInitialized = false;
+
+function initPostHog() {
+  if (typeof window === 'undefined') return;
+  if (posthogInitialized) return;
+
+  if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+    console.warn('[PostHog] Missing API key');
     return;
   }
 
-  if (!POSTHOG_API_KEY) {
-    console.warn('[PH] Missing API key, skipping PostHog initialization.');
-    return;
-  }
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+    api_host:
+      process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://psthgeu.reduzer.tech',
 
-  posthog.init(POSTHOG_API_KEY, {
-    api_host: POSTHOG_API_HOST,
     capture_pageview: false,
     capture_utmparams: true,
     capture_performance: true,
-    autocapture: false,
-    autocapture_opt_out: true,
+
+    autocapture: {
+      element_allowlist: ['a', 'button'],
+      css_selector_denylist: ['[data-cta-location]', 'nav a'],
+    },
+
+    persistence: 'localStorage+cookie',
+
     disable_session_recording: process.env.NODE_ENV === 'production',
+
     session_recording: {
       maskAllInputs: true,
       maskInputOptions: {
@@ -47,111 +70,83 @@ function initPostHog(setReady: (ready: boolean) => void) {
         textarea: true,
       },
     },
+
     mask_all_element_attributes: true,
-    persistence: 'localStorage+cookie',
+
     loaded: (ph) => {
-      ph.register({ environment: getEnvironment() });
+      ph.register({
+        environment: getEnvironment(),
+      });
+
+   
+      ph.opt_out_capturing();
+
       if (process.env.NODE_ENV === 'development') {
-        try {
-          ph.debug();
-        } catch {
-          /* ignore */
-        }
+        ph.debug();
+        console.info(
+          '[PostHog] initialized:',
+          ph.get_distinct_id(),
+          getEnvironment()
+        );
       }
     },
   } as Partial<PostHogConfig>);
 
-  setReady(true);
+  posthogInitialized = true;
 }
 
-function PostHogPageView({ ready }: { ready: boolean }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    if (!ready || !pathname) return;
+function applyConsent() {
+  const cb = window.Cookiebot;
 
-    let url = window.origin + pathname;
-    if (searchParams?.toString()) {
-      url = `${url}?${searchParams.toString()}`;
-    }
+  if (!cb) return;
 
-    posthog.capture('$pageview', { $current_url: url });
-  }, [pathname, searchParams, ready]);
+  const hasConsent = cb.consent?.statistics;
 
-  return null;
+  if (!posthogInitialized) {
+    initPostHog();
+  }
+
+  if (hasConsent) {
+    posthog.opt_in_capturing();
+  } else {
+    posthog.opt_out_capturing();
+  }
 }
+
 
 export function PHProvider({ children }: { children: React.ReactNode }) {
-  const [posthogReady, setPosthogReady] = useState(false);
 
-  const initPostHogWithState = useCallback(() => {
-    initPostHog(setPosthogReady);
-  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // If consent already granted before React hydrated (most common case on
-    // returning visitors on the deployed site — fixes the timing bug)
-    if (window.Cookiebot?.consent?.statistics) {
-      initPostHogWithState();
-      return;
-    }
+  
+    initPostHog();
 
-    const handleAccept = () => {
-      console.log('[PH] CookiebotOnAccept; statistics=', window.Cookiebot?.consent?.statistics);
-      if (window.Cookiebot?.consent?.statistics) {
-        initPostHogWithState();
-      }
-    };
+    applyConsent();
 
-    const handleDecline = () => {
-      const ph = posthog as { __loaded?: boolean; opt_out_capturing?: () => void };
-      console.log('[PH] CookiebotOnDecline; loaded=', ph.__loaded);
-      if (ph.__loaded) ph.opt_out_capturing?.();
-    };
+    
+    const events = [
+      'CookiebotOnAccept',
+      'CookiebotOnDecline',
+      'CookiebotOnLoad',
+      'CookiebotOnChange',
+    ];
 
-    const handleChange = () => {
-      const ph = posthog as { __loaded?: boolean; opt_out_capturing?: () => void };
-      if (window.Cookiebot?.consent?.statistics) {
-        if (!ph.__loaded) initPostHogWithState();
-      } else {
-        if (ph.__loaded) ph.opt_out_capturing?.();
-      }
-    };
-
-    window.addEventListener('CookiebotOnAccept', handleAccept);
-    window.addEventListener('CookiebotOnDecline', handleDecline);
-    window.addEventListener('CookiebotOnChange', handleChange);
-
-    // Polling safety net for first-time visitors where the banner
-    // resolves after useEffect runs but the event is missed
-    let attempts = 0;
-    const pollInterval = setInterval(() => {
-      attempts++;
-      if (window.Cookiebot?.consent?.statistics) {
-        console.log('[PH] Poll caught consent at attempt', attempts);
-        initPostHogWithState();
-        clearInterval(pollInterval);
-      } else if (attempts >= 20) {
-        // Give up after 20 seconds
-        clearInterval(pollInterval);
-      }
-    }, 1000);
+    events.forEach((event) => window.addEventListener(event, applyConsent));
 
     return () => {
-      window.removeEventListener('CookiebotOnAccept', handleAccept);
-      window.removeEventListener('CookiebotOnDecline', handleDecline);
-      window.removeEventListener('CookiebotOnChange', handleChange);
-      clearInterval(pollInterval);
+      events.forEach((event) =>
+        window.removeEventListener(event, applyConsent)
+      );
     };
-  }, [initPostHogWithState]);
+  }, []);
 
   return (
     <PostHogProvider client={posthog}>
       <Suspense fallback={null}>
-        <PostHogPageView ready={posthogReady} />
+        <PostHogPageView ready={true} />
       </Suspense>
       {children}
     </PostHogProvider>

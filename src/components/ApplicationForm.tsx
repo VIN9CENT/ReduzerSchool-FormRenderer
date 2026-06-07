@@ -1,8 +1,19 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, AlertCircle, Loader2, Check } from 'lucide-react';
-import { Occupation, EducationLevel, PriorExperience, LearningMode } from '@/app/apply/types';
+import {
+  ChevronRight,
+  ChevronLeft,
+  AlertCircle,
+  Loader2,
+  Check,
+} from 'lucide-react';
+import {
+  Occupation,
+  EducationLevel,
+  PriorExperience,
+  LearningMode,
+} from '@/app/apply/types';
 import { useFormTracking } from '@/app/apply/hooks/useFormTracking';
 import { useGritMetrics } from '@/app/apply/hooks/useGritMetrics';
 import { useFormState } from '@/app/apply/hooks/useFormState';
@@ -21,14 +32,21 @@ import { STEPS } from '@/app/apply/formTypes';
 
 export default function ApplicationForm() {
   const {
-    step, setStep,
+    step,
+    setStep,
     data,
-    errors, setErrors,
-    submitting, setSubmitting,
-    submitError, setSubmitError,
-    submitted, setSubmitted,
-    highestStep, setHighestStep,
-    alreadyApplied, setAlreadyApplied,
+    errors,
+    setErrors,
+    submitting,
+    setSubmitting,
+    submitError,
+    setSubmitError,
+    submitted,
+    setSubmitted,
+    highestStep,
+    setHighestStep,
+    alreadyApplied,
+    setAlreadyApplied,
     events,
     setField,
     logEvent,
@@ -79,7 +97,9 @@ export default function ApplicationForm() {
     if (Object.keys(e).length > 0) {
       setErrors(e);
       logEvent('validation_failed', { step, field: Object.keys(e).join(',') });
-      if (step === 4) gritMetrics.recordValidationError();
+      if (step === 4 && gritMetrics.recordValidationError) {
+        gritMetrics.recordValidationError();
+      }
       return;
     }
     setErrors({});
@@ -93,16 +113,24 @@ export default function ApplicationForm() {
 
     if (step === 2 && isFirstVisit) {
       const mappedOccupation: Occupation =
-        data.occupation === 'Student' ? 'student'
-          : data.occupation.includes('Employed') ? 'employed_professional'
-          : data.occupation === 'Unemployed' ? 'unemployed'
-          : 'other';
+        data.occupation === 'Student'
+          ? 'student'
+          : data.occupation.includes('Employed')
+            ? 'employed_professional'
+            : data.occupation === 'Unemployed'
+              ? 'unemployed'
+              : 'other';
       const mappedEducation: EducationLevel =
-        data.education === 'High school / KCSE' ? 'high_school'
-          : data.education === "Bachelor's degree" ? 'undergraduate'
-          : data.education === "Master's degree or higher" ? 'graduate'
-          : 'other';
-      const mappedExperience: PriorExperience = data.hasTechExperience.includes('Yes')
+        data.education === 'High school / KCSE'
+          ? 'high_school'
+          : data.education === "Bachelor's degree"
+            ? 'undergraduate'
+            : data.education === "Master's degree or higher"
+              ? 'graduate'
+              : 'other';
+      const mappedExperience: PriorExperience = data.hasTechExperience.includes(
+        'Yes'
+      )
         ? 'basic'
         : 'none';
       trackStep2Complete({
@@ -113,11 +141,13 @@ export default function ApplicationForm() {
     }
 
     if (step === 3 && isFirstVisit) {
-      const mappedMode: LearningMode =
-        data.learningMode.includes('Online') ? 'online'
-          : data.learningMode.includes('Physical') ? 'physical_kisii'
-          : data.learningMode.includes('Hybrid') ? 'hybrid'
-          : 'undecided';
+      const mappedMode: LearningMode = data.learningMode.includes('Online')
+        ? 'online'
+        : data.learningMode.includes('Physical')
+          ? 'physical_kisii'
+          : data.learningMode.includes('Hybrid')
+            ? 'hybrid'
+            : 'undecided';
       trackStep3Complete({
         hasLaptop: data.hasLaptop === 'Yes',
         learningMode: mappedMode,
@@ -177,7 +207,9 @@ export default function ApplicationForm() {
         field: err instanceof Error ? err.message : 'unknown',
       });
       setSubmitError(
-        err instanceof Error ? err.message : 'Something went wrong. Please try again.'
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try again.'
       );
     } finally {
       setSubmitting(false);
