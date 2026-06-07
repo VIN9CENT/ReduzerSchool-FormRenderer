@@ -2,14 +2,15 @@
 
 import posthog, { type PostHogConfig } from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-function PostHogPageView() {
+function PostHogPageView({ ready }: { ready: boolean }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    if (!ready) return;
     if (pathname) {
       let url = window.origin + pathname;
       if (searchParams?.toString()) {
@@ -17,14 +18,21 @@ function PostHogPageView() {
       }
       posthog.capture('$pageview', { $current_url: url });
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, ready]);
 
   return null;
 }
 
-function initPostHog() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if ((posthog as any).__loaded) return;
+function initPostHog(setReady: (ready: boolean) => void) {
+  console.log('[PH] initPostHog called');
+  const phInternal = posthog as unknown as { __loaded?: boolean };
+  if (phInternal.__loaded) {
+    console.log('[PH] posthog already loaded');
+    setReady(true);
+    return;
+  }
+
+  // Debug logging removed for security. Enable with NEXT_PUBLIC_ALLOW_POSTHOG_DEBUG=true when needed.
 
   // Debug logging removed for security. Enable with NEXT_PUBLIC_ALLOW_POSTHOG_DEBUG=true when needed.
 
@@ -81,19 +89,31 @@ function initPostHog() {
           /* ignore */
         }
       }
+      console.log('[PH] posthog loaded, env=', env);
     },
   } as Partial<PostHogConfig>);
+  setReady(true);
 }
 
 export function PHProvider({ children }: { children: React.ReactNode }) {
+  const [posthogReady, setPosthogReady] = useState(false);
+
+  const initPostHogWithState = useCallback(() => {
+    initPostHog(setPosthogReady);
+  }, [setPosthogReady]);
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const handleAccept = () => {
       const cookiebot = window.Cookiebot;
 
+      console.log(
+        '[PH] handleAccept; statistics=',
+        cookiebot?.consent?.statistics
+      );
+
       if (cookiebot?.consent?.statistics) {
-        initPostHog();
+        initPostHogWithState();
       }
     };
 
@@ -102,6 +122,8 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
         __loaded?: boolean;
         opt_out_capturing?: () => void;
       };
+
+      console.log('[PH] handleDecline; posthogLoaded=', posthogClient.__loaded);
 
       if (posthogClient.__loaded) {
         posthogClient.opt_out_capturing?.();
@@ -119,12 +141,12 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener('CookiebotOnAccept', handleAccept);
       window.removeEventListener('CookiebotOnDecline', handleDecline);
     };
-  }, []);
+  }, [initPostHogWithState]);
   return (
     <PostHogProvider client={posthog}>
       {/* Suspense required by Next.js App Router for useSearchParams() */}
       <Suspense fallback={null}>
-        <PostHogPageView />
+        <PostHogPageView ready={posthogReady} />
       </Suspense>
       {children}
     </PostHogProvider>
