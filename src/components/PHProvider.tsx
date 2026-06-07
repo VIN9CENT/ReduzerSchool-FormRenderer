@@ -133,7 +133,15 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
       'CookiebotOnLoad',
       'CookiebotOnChange',
     ];
-
+    let attempts = 0;
+    const poll = setInterval(() => {
+      attempts++;
+      if (window.Cookiebot?.consent !== undefined) {
+        applyConsent();
+        clearInterval(poll);
+      }
+      if (attempts >= 20) clearInterval(poll); // give up after 10s
+    }, 500);
     events.forEach((event) => window.addEventListener(event, applyConsent));
 
     return () => {
