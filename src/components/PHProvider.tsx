@@ -106,6 +106,12 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
 
     const handleAccept = () => {
       const cookiebot = window.Cookiebot;
+
+      console.log(
+        '[PH] handleAccept; statistics=',
+        cookiebot?.consent?.statistics
+      );
+
       if (cookiebot?.consent?.statistics) {
         initPostHogWithState();
       }
@@ -116,6 +122,9 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
         __loaded?: boolean;
         opt_out_capturing?: () => void;
       };
+
+      console.log('[PH] handleDecline; posthogLoaded=', posthogClient.__loaded);
+
       if (posthogClient.__loaded) {
         posthogClient.opt_out_capturing?.();
       }
