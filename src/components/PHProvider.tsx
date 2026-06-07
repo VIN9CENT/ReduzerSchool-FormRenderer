@@ -48,6 +48,12 @@ function getEnvironment() {
 let posthogInitialized = false;
 
 function initPostHog() {
+  console.log(
+    '[PostHog Debug] initPostHog called, initialized:',
+    posthogInitialized
+  );
+  if (typeof window === 'undefined') return;
+  if (posthogInitialized) return;
   if (typeof window === 'undefined') return;
   if (posthogInitialized) return;
 
@@ -113,6 +119,10 @@ function initPostHog() {
 // ─── Consent Handler ──────────────────────────────────────────────────────────
 
 function applyConsent() {
+  console.log(
+    '[PostHog Debug] applyConsent called, Cookiebot:',
+    window.Cookiebot?.consent
+  );
   const cb = window.Cookiebot;
 
   // Cookiebot not loaded yet — polling will retry
