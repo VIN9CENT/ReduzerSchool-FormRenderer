@@ -106,12 +106,6 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
 
     const handleAccept = () => {
       const cookiebot = window.Cookiebot;
-
-      console.log(
-        '[PH] handleAccept; statistics=',
-        cookiebot?.consent?.statistics
-      );
-
       if (cookiebot?.consent?.statistics) {
         initPostHogWithState();
       }
@@ -122,24 +116,38 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
         __loaded?: boolean;
         opt_out_capturing?: () => void;
       };
-
-      console.log('[PH] handleDecline; posthogLoaded=', posthogClient.__loaded);
-
       if (posthogClient.__loaded) {
         posthogClient.opt_out_capturing?.();
       }
     };
 
-    // Case 1: Returning visitor — Cookiebot already has consent stored
-    handleAccept();
+    // Case 1: Cookiebot already ran before this effect mounted
+    // This covers returning visitors AND first visits where Cookiebot
+    // fires before React hydration completes (common on Cloudflare Pages)
+    if (window.Cookiebot?.consent?.statistics) {
+      initPostHogWithState();
+    }
 
-    // Case 2: First visit — wait for Cookiebot consent event
+    // Case 2: Cookiebot hasn't fired yet — attach listeners
     window.addEventListener('CookiebotOnAccept', handleAccept);
     window.addEventListener('CookiebotOnDecline', handleDecline);
+
+    // Case 3: Cookiebot script hasn't loaded yet at all
+    // Poll for it as a fallback (handles slow CDN on staging)
+    const pollInterval = setInterval(() => {
+      if (window.Cookiebot?.consent?.statistics) {
+        initPostHogWithState();
+        clearInterval(pollInterval);
+      }
+    }, 500);
+
+    const pollTimeout = setTimeout(() => clearInterval(pollInterval), 10000);
 
     return () => {
       window.removeEventListener('CookiebotOnAccept', handleAccept);
       window.removeEventListener('CookiebotOnDecline', handleDecline);
+      clearInterval(pollInterval);
+      clearTimeout(pollTimeout);
     };
   }, [initPostHogWithState]);
   return (
