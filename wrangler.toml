@@ -1,0 +1,35 @@
+name = "reduzer-school"
+type = "javascript"
+account_id = ""
+workers_dev = false
+routes = []
+zone_id = ""
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "reduzer-school-production"
+vars = { ENVIRONMENT = "production" }
+
+[env.staging]
+name = "reduzer-school-staging"
+vars = { ENVIRONMENT = "staging" }
+
+[build]
+command = "npm run build"
+cwd = "./"
+watch_paths = ["src/**/*.tsx", "src/**/*.ts"]
+
+[[build.upload.rules]]
+type = "CompiledContentType"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+[[build.upload.rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+[[build.upload.rules]]
+type = "CompiledContentType"
+globs = ["**/*.svg"]
+fallthrough = true
