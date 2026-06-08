@@ -2,7 +2,7 @@
 
 import posthog, { type PostHogConfig } from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
-import { Suspense, useEffect} from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 
@@ -24,14 +24,12 @@ function PostHogPageView({ ready }: { ready: boolean }) {
   return null;
 }
 
-
 function getEnvironment() {
   if (typeof window === 'undefined') return 'server';
   if (window.location.hostname === 'school.reduzer.tech') return 'production';
   if (window.location.hostname.includes('pages.dev')) return 'staging';
   return 'development';
 }
-
 
 let posthogInitialized = false;
 
@@ -79,7 +77,6 @@ function initPostHog() {
         environment: getEnvironment(),
       });
 
-   
       ph.opt_out_capturing();
 
       if (process.env.NODE_ENV === 'development') {
@@ -98,43 +95,34 @@ function initPostHog() {
 }
 
 
-function applyConsent() {
-  const cb = window.Cookiebot;
-
-  if (!cb) return;
-
-  const hasConsent = cb.consent?.statistics;
-
-  if (!posthogInitialized) {
-    initPostHog();
-  }
-
-  if (hasConsent) {
-    posthog.opt_in_capturing();
-  } else {
-    posthog.opt_out_capturing();
-  }
-}
-
-
-export function PHProvider({ children }: { children: React.ReactNode }) {
-
-
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-  
     initPostHog();
+
+    function applyConsent() {
+      const cb = window.Cookiebot;
+
+      if (!posthogInitialized) initPostHog();
+
+      if (cb?.consent?.statistics) {
+        posthog.opt_in_capturing();
+        setPosthogReady(true);
+      } else {
+        posthog.opt_out_capturing();
+        setPosthogReady(false);
+      }
+    }
 
     applyConsent();
 
-    
     const events = [
       'CookiebotOnAccept',
       'CookiebotOnDecline',
       'CookiebotOnLoad',
       'CookiebotOnChange',
     ];
+
     let attempts = 0;
     const poll = setInterval(() => {
       attempts++;
@@ -142,8 +130,9 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
         applyConsent();
         clearInterval(poll);
       }
-      if (attempts >= 20) clearInterval(poll); 
+      if (attempts >= 20) clearInterval(poll);
     }, 500);
+
     events.forEach((event) => window.addEventListener(event, applyConsent));
 
     return () => {
