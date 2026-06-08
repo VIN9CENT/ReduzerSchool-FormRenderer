@@ -15,7 +15,6 @@ export default function CookiebotScript() {
       id="Cookiebot"
       src="https://consent.cookiebot.com/uc.js"
       data-cbid={cookiebotId}
-      data-blockingmode="auto"
       data-cfasync="false"
     />
   );
