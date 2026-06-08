@@ -90,7 +90,7 @@ function initPostHog() {
           getEnvironment()
         );
       }
-      console.log('[PH] posthog loaded, env=', env);
+      console.log('[PH] posthog loaded, env=', getEnvironment());
     },
   } as Partial<PostHogConfig>);
 
