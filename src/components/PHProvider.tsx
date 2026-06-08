@@ -2,83 +2,44 @@
 
 import posthog, { type PostHogConfig } from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-
-// ─── Page View Tracker ────────────────────────────────────────────────────────
-
-function PostHogPageView({ ready }: { ready: boolean }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    if (!ready || !pathname) return;
-
-    const url =
-      window.location.origin +
-      pathname +
-      (searchParams?.toString() ? `?${searchParams.toString()}` : '');
-
-    posthog.capture('$pageview', { $current_url: url });
-  }, [pathname, searchParams, ready]);
-
-  return null;
-}
-
-// ─── Config ───────────────────────────────────────────────────────────────────
 
 const POSTHOG_API_KEY =
   process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN ||
-  'phc_y4TaBFcnzsx2WX4846wjqyKmtEsw4L6rrNFRnY5m6uAH';
-
+  process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const POSTHOG_API_HOST =
   process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://psthgeu.reduzer.tech';
 
-// ─── Environment Detection ────────────────────────────────────────────────────
-
 function getEnvironment() {
-  if (typeof window === 'undefined') return 'server';
+  if (typeof window === 'undefined') return 'development';
   if (window.location.hostname === 'school.reduzer.tech') return 'production';
   if (window.location.hostname.includes('pages.dev')) return 'staging';
   return 'development';
 }
 
-// ─── PostHog Init ─────────────────────────────────────────────────────────────
-
-let posthogInitialized = false;
-
-function initPostHog() {
-  console.log(
-    '[PostHog Debug] initPostHog called, initialized:',
-    posthogInitialized
-  );
-  if (typeof window === 'undefined') return;
-  if (posthogInitialized) return;
-  if (typeof window === 'undefined') return;
-  if (posthogInitialized) return;
+function initPostHog(setReady: (ready: boolean) => void) {
+  const phInternal = posthog as unknown as { __loaded?: boolean };
+  if (phInternal.__loaded) {
+    setReady(true);
+    return;
+  }
 
   if (!POSTHOG_API_KEY) {
-    console.warn('[PostHog] Missing API key');
+    console.warn(
+      'Missing NEXT_PUBLIC_POSTHOG_KEY, skipping PostHog initialization.'
+    );
     return;
   }
 
   posthog.init(POSTHOG_API_KEY, {
     api_host: POSTHOG_API_HOST,
-
     capture_pageview: false,
     capture_utmparams: true,
     capture_performance: true,
-
-    autocapture: {
-      element_allowlist: ['a', 'button'],
-      css_selector_denylist: ['[data-cta-location]', 'nav a'],
-    },
-
-    persistence: 'localStorage+cookie',
-
-    // Session recording: disabled in production, masked everywhere
+    autocapture: false,
+    autocapture_opt_out: true,
     disable_session_recording: process.env.NODE_ENV === 'production',
-
     session_recording: {
       maskAllInputs: true,
       maskInputOptions: {
@@ -88,116 +49,98 @@ function initPostHog() {
         textarea: true,
       },
     },
-
     mask_all_element_attributes: true,
-
+    persistence: 'localStorage+cookie',
     loaded: (ph) => {
-      // Register environment super-property
-      ph.register({
-        environment: getEnvironment(),
-      });
-
-      // DO NOT call opt_out_capturing() here.
-      // applyConsent() is the sole controller of opt-in/opt-out state.
-      // Calling opt_out here would race against applyConsent() and win,
-      // leaving PostHog permanently opted out even when consent is given.
-
+      ph.register({ environment: getEnvironment() });
       if (process.env.NODE_ENV === 'development') {
-        ph.debug();
-        console.info(
-          '[PostHog] initialized:',
-          ph.get_distinct_id(),
-          getEnvironment()
-        );
+        try {
+          ph.debug();
+        } catch {
+          /* ignore */
+        }
       }
     },
   } as Partial<PostHogConfig>);
 
-  posthogInitialized = true;
+  setReady(true);
 }
 
-// ─── Consent Handler ──────────────────────────────────────────────────────────
+function PostHogPageView({ ready }: { ready: boolean }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-function applyConsent() {
-  console.log(
-    '[PostHog Debug] applyConsent called, Cookiebot:',
-    window.Cookiebot?.consent
-  );
-  const cb = window.Cookiebot;
+  useEffect(() => {
+    if (!ready || !pathname) return;
 
-  // Cookiebot not loaded yet — polling will retry
-  if (!cb || cb.consent === undefined) return;
-
-  // Initialize PostHog if not already done
-  if (!posthogInitialized) {
-    initPostHog();
-  }
-
-  const hasConsent = cb.consent?.statistics;
-
-  // Delay slightly to ensure posthog.init()'s `loaded` callback has
-  // fired before we set opt-in/opt-out state. Without this, opt_out
-  // inside `loaded` would overwrite the opt_in we set here.
-  setTimeout(() => {
-    if (hasConsent) {
-      posthog.opt_in_capturing();
-      if (process.env.NODE_ENV === 'development') {
-        console.info('[PostHog] opted IN (statistics consent granted)');
-      }
-    } else {
-      posthog.opt_out_capturing();
-      if (process.env.NODE_ENV === 'development') {
-        console.info('[PostHog] opted OUT (statistics consent not granted)');
-      }
+    let url = window.origin + pathname;
+    if (searchParams?.toString()) {
+      url = `${url}?${searchParams.toString()}`;
     }
-  }, 150);
-}
 
-// ─── Provider ─────────────────────────────────────────────────────────────────
+    posthog.capture('$pageview', {
+      $current_url: url,
+    });
+  }, [pathname, searchParams, ready]);
+
+  return null;
+}
 
 export function PHProvider({ children }: { children: React.ReactNode }) {
+  const [posthogReady, setPosthogReady] = useState(false);
+
+  const initPostHogWithState = useCallback(() => {
+    initPostHog(setPosthogReady);
+  }, []);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Initialize PostHog immediately
-    initPostHog();
-
-    // Apply consent state based on current Cookiebot status
-    applyConsent();
-
-    // Poll until Cookiebot is ready (handles slow-loading consent banner)
-    let attempts = 0;
-    const poll = setInterval(() => {
-      attempts++;
-      if (window.Cookiebot?.consent !== undefined) {
-        applyConsent();
-        clearInterval(poll);
+    const handleAccept = () => {
+      const cookiebot = window.Cookiebot;
+      if (cookiebot?.consent?.statistics) {
+        initPostHogWithState();
       }
-      if (attempts >= 20) clearInterval(poll); // give up after ~10s
+    };
+
+    const handleDecline = () => {
+      const posthogClient = posthog as {
+        __loaded?: boolean;
+        opt_out_capturing?: () => void;
+      };
+      if (posthogClient.__loaded) {
+        posthogClient.opt_out_capturing?.();
+      }
+    };
+
+    if (window.Cookiebot?.consent?.statistics) {
+      initPostHogWithState();
+    }
+
+    window.addEventListener('CookiebotOnAccept', handleAccept);
+    window.addEventListener('CookiebotOnDecline', handleDecline);
+
+    const pollInterval = setInterval(() => {
+      if (window.Cookiebot?.consent?.statistics) {
+        initPostHogWithState();
+        clearInterval(pollInterval);
+      }
     }, 500);
 
-    // Re-apply consent on any Cookiebot consent change event
-    const events = [
-      'CookiebotOnAccept',
-      'CookiebotOnDecline',
-      'CookiebotOnLoad',
-      'CookiebotOnChange',
-    ];
-    events.forEach((event) => window.addEventListener(event, applyConsent));
+    const pollTimeout = setTimeout(() => clearInterval(pollInterval), 10000);
 
-    // Cleanup — clear both the interval and event listeners
     return () => {
-      clearInterval(poll);
-      events.forEach((event) =>
-        window.removeEventListener(event, applyConsent)
-      );
+      window.removeEventListener('CookiebotOnAccept', handleAccept);
+      window.removeEventListener('CookiebotOnDecline', handleDecline);
+      clearInterval(pollInterval);
+      clearTimeout(pollTimeout);
     };
-  }, []);
+  }, [initPostHogWithState]);
 
   return (
     <PostHogProvider client={posthog}>
       <Suspense fallback={null}>
-        <PostHogPageView ready={posthogInitialized} />
+        <PostHogPageView ready={posthogReady} />
       </Suspense>
       {children}
     </PostHogProvider>

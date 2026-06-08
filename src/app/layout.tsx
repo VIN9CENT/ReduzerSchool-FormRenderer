@@ -4,9 +4,9 @@ import { getBaseUrl } from '@/lib/url';
 import type { ReactNode } from 'react';
 
 import './globals.css';
-import { PHProviderWrapper } from '@/components/PHProviderWrapper';
+import { PHProvider } from '@/components/PHProvider';
+import { Suspense } from 'react';
 import CookiebotScript from '@/components/CookiebotScript';
-
 
 const inter = Inter({
   variable: '--font-inter',
@@ -124,7 +124,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         <CookiebotScript />
-        <PHProviderWrapper>{children}</PHProviderWrapper>
+        <Suspense fallback={null}>
+          <PHProvider>{children}</PHProvider>
+        </Suspense>
       </body>
     </html>
   );
