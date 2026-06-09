@@ -121,7 +121,7 @@ export default function Footer() {
             <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
             <ul className="space-y-8 text-sm text-gray-200">
               <li>
-                <Link href="https://school.reduzer.tech/#apply">Admission</Link>
+                <Link href="https://school.reduzer.tech/apply">Admission</Link>
               </li>
             </ul>
           </div>
