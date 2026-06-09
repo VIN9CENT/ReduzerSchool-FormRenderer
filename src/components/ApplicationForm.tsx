@@ -1,4 +1,5 @@
 'use client';
+import posthog from 'posthog-js';
 
 import { useRef, useEffect } from 'react';
 import {
@@ -64,6 +65,10 @@ export default function ApplicationForm() {
   const gritMetrics = useGritMetrics();
   const { resetTimer } = gritMetrics;
   const formRef = useRef<HTMLDivElement>(null);
+  // Track funnel entry once on mount
+  useEffect(() => {
+    posthog.capture('funnel_started');
+  }, []);
 
   // Reset grit timer whenever step 4 is entered (covers session restore and normal flow)
   useEffect(() => {
