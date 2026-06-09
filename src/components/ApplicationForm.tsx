@@ -187,6 +187,7 @@ export default function ApplicationForm() {
       });
       return;
     }
+    trackStep5Complete(data.heardFrom);
     logEvent('submit_attempt');
     setSubmitting(true);
     setSubmitError('');
@@ -201,7 +202,7 @@ export default function ApplicationForm() {
         setAlreadyApplied(true);
         return;
       }
-      trackStep5Complete(data.heardFrom);
+
       logEvent('submit_success');
       localStorage.setItem('reduzer_school_applied', 'true');
       FormSession.clear();
