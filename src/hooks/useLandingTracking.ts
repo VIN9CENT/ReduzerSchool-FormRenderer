@@ -33,27 +33,23 @@ export function useLandingTracking() {
 
 function classifyFAQ(
   question: string
-): 'cost' | 'location' | 'housing' | 'other' {
+): 'what_is_reduzer' | 'differentiation' | 'format' | 'curriculum' | 'projects' | 'career' | 'requirements' | 'other' {
   const q = question.toLowerCase();
-  if (
-    q.includes('cost') ||
-    q.includes('fee') ||
-    q.includes('price') ||
-    q.includes('pay')
-  )
-    return 'cost';
-  if (
-    q.includes('location') ||
-    q.includes('kisii') ||
-    q.includes('nairobi') ||
-    q.includes('where')
-  )
-    return 'location';
-  if (
-    q.includes('housing') ||
-    q.includes('accommodation') ||
-    q.includes('stay')
-  )
-    return 'housing';
+
+  if (q.includes('what is reduzer'))
+    return 'what_is_reduzer';
+  if (q.includes('different') || q.includes('unique') || q.includes('makes'))
+    return 'differentiation';
+  if (q.includes('online') || q.includes('hybrid') || q.includes('in-person') || q.includes('remote') || q.includes('global'))
+    return 'format';
+  if (q.includes('technolog') || q.includes('learn') || q.includes('curriculum') || q.includes('project'))
+    return 'curriculum';
+  if (q.includes('real project') || q.includes('work on'))
+    return 'projects';
+  if (q.includes('job') || q.includes('career') || q.includes('graduating') || q.includes('graduate'))
+    return 'career';
+  if (q.includes('require') || q.includes('join') || q.includes('qualify') || q.includes('eligible'))
+    return 'requirements';
+
   return 'other';
 }
