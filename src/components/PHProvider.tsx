@@ -33,12 +33,12 @@ let posthogInitialized = false;
 function initPostHog() {
   if (typeof window === 'undefined') return;
   if (posthogInitialized) return;
-  if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+  if (!process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN) {
     console.warn('[PostHog] Missing API key');
     return;
   }
 
-  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN, {
     api_host:
       process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://psthgeu.reduzer.tech',
     defaults: '2026-01-30',
