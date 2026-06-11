@@ -28,17 +28,16 @@ export function Step3Logistics({ data, errors, set }: Props) {
       </FieldWrapper>
 
       <FieldWrapper
-        label="What is your preferred mode of learning?"
+        label="Can you attend in person in Kisii, Monday to Friday, 8am to 5pm, for the full programme?"
         required
         error={errors.learningMode}
       >
         <RadioGroup
           name="learningMode"
           options={[
-            'Online (fully remote learning)',
-            'Physical (on-site learning in Kisii)',
-            'Hybrid (mostly online with an on-site session during the final week)',
-            'I need more information before deciding',
+            'Yes, I can attend in person for the full programme',
+            'I need to confirm logistics before enrolment',
+            'No, I cannot commit to full-time in-person study',
           ]}
           value={data.learningMode}
           onChange={(v) => set('learningMode', v)}

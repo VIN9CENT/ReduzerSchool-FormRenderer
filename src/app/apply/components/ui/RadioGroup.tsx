@@ -20,7 +20,7 @@ export function RadioGroup({ name, options, value, onChange, error }: Props) {
             key={opt}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all select-none ${
               selected
-                ? 'border-[#BB001F] bg-[#BB001F]/5'
+                ? 'border-red bg-red/5'
                 : 'border-gray-200 bg-white hover:border-gray-300'
             }`}
           >
@@ -34,12 +34,12 @@ export function RadioGroup({ name, options, value, onChange, error }: Props) {
             />
             <span
               className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-                selected ? 'border-[#BB001F]' : 'border-gray-300'
+                selected ? 'border-red' : 'border-gray-300'
               }`}
             >
-              {selected && <span className="w-2 h-2 rounded-full bg-[#BB001F] block" />}
+              {selected && <span className="w-2 h-2 rounded-full bg-red block" />}
             </span>
-            <span className={`text-sm font-medium ${selected ? 'text-[#BB001F]' : 'text-gray-700'}`}>
+            <span className={`text-sm font-medium ${selected ? 'text-red' : 'text-gray-700'}`}>
               {opt}
             </span>
           </label>

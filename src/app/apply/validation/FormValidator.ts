@@ -54,7 +54,7 @@ export class FormValidator {
   static validateStep3(data: FormData): FormErrors {
     const e: FormErrors = {};
     if (!data.hasLaptop) e.hasLaptop = 'Please answer this question';
-    if (!data.learningMode) e.learningMode = 'Please select your preferred mode';
+    if (!data.learningMode) e.learningMode = 'Please answer this question';
     return e;
   }
 

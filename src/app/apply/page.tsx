@@ -13,14 +13,14 @@ const baseUrl = `https://${cleanDomain}`;
 export const metadata: Metadata = {
   title: 'Apply – September Intake | Reduzer School',
   description:
-    'Apply for the Reduzer School 12-month Software Engineering Bootcamp in Nyamarambe Town, Kisii County, Kenya. Limited spots available for the September intake. Start your tech career today.',
+    'Apply for Reduzer School, a one-year, in-person software engineering programme in Kisii focused on product-quality full-stack work. 30 seats for the September intake.',
   alternates: {
     canonical: `${baseUrl}/apply`,
   },
   openGraph: {
     title: 'Apply to Reduzer School – September Intake',
     description:
-      'Apply for the Reduzer School 12-month Software Engineering Bootcamp in Nyamarambe Town, Kisii County, Kenya. Limited spots available.',
+      'Apply for Reduzer School, a one-year, in-person software engineering programme in Kisii focused on product-quality full-stack work. 30 seats for the September intake.',
     url: `${baseUrl}/apply`,
   },
 };
@@ -36,15 +36,16 @@ export default function ApplyPage() {
       <section className="bg-[#F7F9FB] min-h-screen py-16 px-6">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#BB001F] mb-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red mb-3">
               September Intake
             </p>
             <h1 className="text-3xl md:text-4xl font-bold text-[#191C1E] leading-tight mb-3">
               Apply to Reduzer School
             </h1>
             <p className="text-gray-500 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-              Complete all five sections honestly. There are no right or wrong
-              answers, we want to understand who you are and what drives you.
+              Answer plainly. We are looking at how you think, what you have
+              tried, how you handle difficult work, and whether this programme
+              realistically fits your life.
             </p>
           </div>
           <ApplicationForm />

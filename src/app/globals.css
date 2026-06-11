@@ -2,10 +2,25 @@
 
 @theme {
   --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --color-bg: #ffffff;
+  --color-fg: #0a0a0a;
+  --color-ink: #1a1a1a;
+  --color-muted: #3f3f3f;
+  --color-soft: #6b6b6b;
+  --color-line: #e5e5e5;
+  --color-line-soft: #efefef;
+  --color-surface: #f7f7f5;
+  --color-red: #ff002e;
+  --color-pink1: #ff3d5e;
+  --color-pink2: #ff7a92;
+  --color-pink3: #ffb3c0;
+  --color-pink4: #ffd8de;
+
   --color-faq-white: rgba(0, 0, 0, 0.02);
   --color-faq-white-1: rgba(255, 255, 255, 1);
   --shadow-3xl: 0 4px 4px rgba(0, 0, 0, 0.25);
-  --color-red: #ff002e;
 }
 
 html {

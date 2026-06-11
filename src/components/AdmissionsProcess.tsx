@@ -1,219 +1,72 @@
 'use client';
-import { Monitor, Laptop, Heart, Clock, Users, Code } from 'lucide-react';
-import Link from 'next/link'
-import { useLandingTracking } from '@/hooks/useLandingTracking'
-
-const BRAND = {
-  red: '#FF002E',
-  black: '#000000',
-};
-
-const requirements = [
-  {
-    icon: <Monitor size={28} aria-hidden="true" />,
-    title: "Basic Computer Literacy",
-    desc: "Ability to navigate computer basics",
-  },
-  {
-    icon: <Laptop size={28} aria-hidden="true" />,
-    title: "Laptop",
-    desc: "Personal device required",
-  },
-  {
-    icon: <Heart size={28} aria-hidden="true" />,
-    title: 'Passion For Learning',
-    desc: 'A drive to grow in technology',
-  },
-  {
-    icon: <Clock size={28} aria-hidden="true" />,
-    title: 'Commitment',
-    desc: 'Dedicated time for learning',
-  },
-  {
-    icon: <Users size={28} aria-hidden="true" />,
-    title: 'Teamwork',
-    desc: 'Collaborate with class peers',
-  },
-  {
-    icon: <Code size={28} aria-hidden="true" />,
-    title: "No Prior Coding Experience",
-    desc: "Beginners are welcome",
-  },
-];
-
-const whoCanApply = [
-  { num: '1', label: 'High School Students' },
-  { num: '2', label: 'University Students' },
-  { num: '3', label: 'Fresh Graduates' },
-  { num: '4', label: 'Self-Taught Learners' },
-  { num: '5', label: 'Aspiring Developers' },
-];
+import { T } from '@/lib/theme';
 
 const steps = [
   {
-    title: 'Submit Application',
-    desc: 'Fill out the online form and tell us about yourself.',
+    title: 'You apply.',
+    desc: 'The application takes about 15 minutes. Tell us who you are, why this programme matters, and what you have already tried to learn or build on your own. We read every application ourselves.',
   },
   {
-    title: 'Interview / Assessment',
-    desc: 'Attend a brief interview or skill check.',
+    title: 'You interview and sit an assessment.',
+    desc: 'We pay attention to how you think, how you communicate, how you reason through unclear work, and how you respond when something is difficult at first. We are looking for aptitude, effort, and drive far more than a head start.',
   },
   {
-    title: 'Admission Decision',
-    desc: 'Receive your result within 3–5 business days.',
+    title: 'We answer within 3 to 5 business days.',
+    desc: 'A clear yes or a clear no. If the answer is no, we tell you why, because a reason is more useful than silence.',
   },
   {
-    title: 'Confirm Enrollment',
-    desc: 'Pay fees and confirm your spot in the program.',
+    title: 'You confirm your seat and arrange payment.',
+    desc: 'A small deposit holds your place and counts toward your first month. The remaining fee is structured before enrolment, so the cost is clear before the year starts.',
   },
 ];
 
 export default function AdmissionsProcess() {
-  const { trackCTAClick } = useLandingTracking()
-
   return (
-    <section id="apply" style={{ fontFamily: "'Inter', sans-serif" }}>
-      {/* HERO SECTION */}
-      <section className="bg-white text-center py-20 px-6">
-        <p
-          className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] mb-3"
-          style={{ color: BRAND.red }}
-        >
-          Admission Requirements
+    <section
+      id="admissions"
+      className="bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16"
+      style={{ fontFamily: "'Inter', sans-serif" }}
+    >
+      <div className="mx-auto max-w-3xl">
+        <p className="mb-4 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-red">
+          Admissions
         </p>
 
-        <h2 className="text-3xl md:text-5xl font-bold leading-tight text-black mb-5">
-          Start your journey to becoming a <br />
-          <span style={{ color: BRAND.red }}>Software Engineer</span>
+        <h2 className="mb-12 text-3xl font-bold leading-tight text-black md:text-4xl lg:text-5xl">
+          Getting in starts with how you think.
         </h2>
 
-        <p className="text-sm md:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed mb-8">
-          We welcome motivated learners ready to learn, build projects, and grow
-          their careers in tech.
-        </p>
-
-      </section>
-
-      {/* WHAT YOU'LL NEED */}
-      <section className="bg-gray-50 py-20 px-6">
-        <h3 className="text-center text-2xl md:text-4xl font-bold text-black mb-14">
-          What you&apos;ll need
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {requirements.map((item, i) => (
-            <div
-              key={i}
-              className="flex flex-col gap-4 p-8 min-h-[210px] bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition"
-            >
-              <div style={{ color: BRAND.red }}>{item.icon}</div>
-
-              <h4 className="font-semibold text-xl text-black">{item.title}</h4>
-
-              <p className="text-gray-500 text-sm md:text-base leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* WHO CAN APPLY */}
-      <section className="bg-white py-20 px-6">
-        <h3 className="text-center text-2xl md:text-4xl font-bold text-black mb-14">
-          Who can apply?
-        </h3>
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-5 max-w-6xl mx-auto">
-          {whoCanApply.map((item, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center justify-center border border-gray-200 rounded-2xl p-6 min-h-[170px] shadow-sm hover:shadow-md transition"
-            >
-              <span
-                className="text-3xl md:text-4xl font-bold"
-                style={{ color: BRAND.red }}
-                aria-hidden="true"
-              >
-                {item.num}
-              </span>
-
-              <p className="text-sm md:text-base text-gray-700 text-center mt-3 leading-snug font-medium">
-                {item.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* APPLICATION PROCESS */}
-      <section className="bg-gray-50 py-20 px-6">
-        <h3 className="text-center text-2xl md:text-4xl font-bold text-black mb-14">
-          Application Process
-        </h3>
-
-        <ol className="relative max-w-3xl mx-auto">
+        <ol className="relative mb-14">
           {steps.map((step, i) => (
-            <li key={i} className="flex gap-5 mb-10 items-start">
+            <li key={step.title} className="flex gap-5 items-start">
               <div className="flex flex-col items-center self-stretch">
                 <div
-                  className="w-10 h-10 rounded-full text-white flex items-center justify-center font-semibold text-sm shrink-0"
-                  style={{ backgroundColor: BRAND.red }}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white"
+                  style={{ backgroundColor: T.red }}
                   aria-hidden="true"
                 >
                   {i + 1}
                 </div>
-
                 {i < steps.length - 1 && (
                   <div
-                    className="w-0.5 flex-1 mt-2 rounded-full"
-                    style={{ backgroundColor: '#fca5a5' }}
+                    className="mt-2 w-0.5 flex-1 rounded-full"
+                    style={{ backgroundColor: T.pink3 }}
                   />
                 )}
               </div>
 
-              {/* CONTENT */}
-              <div className="pt-1 pb-4">
-                <h4 className="font-semibold text-lg md:text-xl text-black mb-2">
-                  {step.title}
-                </h4>
-
-                <p className="text-sm md:text-base text-gray-500 leading-relaxed">
+              <div className="pb-10 pt-1">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold text-black">
+                  Step {i + 1}: {step.title}
+                </h3>
+                <p className="text-sm md:text-base leading-relaxed text-gray-600">
                   {step.desc}
                 </p>
               </div>
             </li>
           ))}
         </ol>
-      </section>
-
-      {/* FOOTER CTA */}
-      <section
-        className="text-white text-center py-20 px-6"
-        style={{ backgroundColor: BRAND.red }}
-      >
-        <h3 className="text-2xl md:text-4xl font-bold leading-tight mb-4">
-          Ready to build your future?
-        </h3>
-
-        <p className="text-sm md:text-lg max-w-xl mx-auto leading-relaxed opacity-90 mb-8">
-          Join our program and start your journey into technology today.
-        </p>
-
-  
-<Link
-  href="/apply"
-  onClick={() => trackCTAClick('admission-process')}
-  className="inline-block text-sm md:text-base font-bold px-10 py-3 rounded-xl transition hover:opacity-90"
-  style={{
-    backgroundColor: BRAND.black,
-    color: 'white',
-  }}
->
-  APPLY NOW
-</Link>
-
-      </section>
+      </div>
     </section>
   );
 }

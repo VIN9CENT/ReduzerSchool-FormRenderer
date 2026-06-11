@@ -14,7 +14,7 @@ export type EducationLevel =
 
 export type PriorExperience = 'none' | 'basic' | 'intermediate' | 'advanced'
 
-export type LearningMode = 'physical_kisii' | 'online' | 'hybrid' | 'undecided'
+export type LearningMode = 'physical_kisii' | 'undecided'
 
 // The persona we assign based on Step 2 answers
 export type Persona = 'Alex' | 'Sandra' | 'Faith' | 'Unknown'

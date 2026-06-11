@@ -1,114 +1,87 @@
 'use client';
-import Link from 'next/link';
-import { Target, Building2, Users, ArrowRight } from 'lucide-react';
-import { useLandingTracking } from '@/hooks/useLandingTracking';
+import { Eye, ShieldCheck, Clock3, MessageSquare, Bot, ClipboardList } from 'lucide-react';
+
+const standards = [
+  {
+    icon: ClipboardList,
+    title: 'Product decisions must be clear.',
+    body: 'Students learn to define the persona, map the user journey, write user stories, model the data, choose KPIs, and explain why the work should exist before they build it.',
+  },
+  {
+    icon: Eye,
+    title: 'Work must be visible.',
+    body: 'Students learn to plan work, show progress, close out tasks, and raise blockers early. Reduzer expects the same visibility from engineers working on real delivery.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Code must be safe and deployable.',
+    body: 'Work is checked for structure, edge cases, security, tests, environment setup, staging readiness, and whether another developer can understand and continue it.',
+  },
+  {
+    icon: Clock3,
+    title: 'Delivery must be predictable.',
+    body: 'Students practise estimating work, finishing what they commit to, handling carry-over, and communicating delays before the deadline is missed.',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Handover is part of the work.',
+    body: 'Reduzer engineers are expected to give clear updates, ask specific questions, explain blockers, document decisions, and hand work over without leaving the next person guessing.',
+  },
+  {
+    icon: Bot,
+    title: 'Reduzer tools support the standard.',
+    body: 'The LMS, Code Labs, Reduzer AI, visible tests, saved drafts, and progress tracking help students practise the habits Reduzer expects in delivery.',
+  },
+];
 
 export default function WhyUsSection() {
-  const {trackCTAClick} = useLandingTracking()
   return (
     <section
-      id="about"
+      id="standards"
       className="relative bg-gray-50 px-4 py-12 md:px-8 md:py-20 lg:px-16 font-[Inter,sans-serif]"
     >
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div
-          className="h-full w-full"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        ></div>
-      </div>
-
       <div className="relative mx-auto max-w-6xl">
-        <div className="mb-12 text-center md:mb-16">
-          <h1 className="mb-4 text-3xl font-bold text-black md:text-4xl lg:text-5xl">
-            Why Reduzer School
-          </h1>
-
-          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600 md:text-base">
-            We&apos;re not just another coding bootcamp. Reduzer School is built
-            differently because we know what it takes to get hired—and
-            we&apos;re here to make sure you get there.
+        <div className="mb-12 md:mb-16">
+          <p className="mb-4 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-red">
+            Why Reduzer built this
+          </p>
+          <h2 className="text-3xl font-bold leading-tight text-black md:text-4xl lg:text-5xl">
+            Students train against the same product and engineering standards
+            Reduzer uses in delivery.
+          </h2>
+          <p className="mt-5 max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
+            Reduzer Technologies runs managed engineering delivery from Kisii.
+            Our engineers work inside client workflows, and Reduzer stays
+            responsible for daily visibility, review, QA, escalation,
+            continuity, and handover. The school is built around one question:
+            what must a beginner be able to do before Reduzer can trust them
+            with client work?
+          </p>
+          <p className="mt-5 max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
+            We know what real teams notice: unclear requirements, weak user
+            flows, poor data models, stale tickets, unsafe deployments, missing
+            security checks, vague updates, and work that needs too much rework.
+            Students train against those expectations from the start.
           </p>
         </div>
 
-        {/* 3 Feature Cards Grid */}
-        <div className="mb-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:gap-10">
-          {/* Card 1: Beyond Teaching */}
-          <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:p-8">
-            <div className="mb-4 inline-flex rounded-lg bg-red-50 p-3">
-              <Target className="h-6 w-6 text-red-600" strokeWidth={2} />
+        <div className="grid gap-6 md:grid-cols-2 md:gap-8">
+          {standards.map(({ icon: Icon, title, body }) => (
+            <div
+              key={title}
+              className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:p-8"
+            >
+              <div className="mb-5 inline-flex rounded-lg bg-red/5 p-3">
+                <Icon className="h-6 w-6 text-red" strokeWidth={2} />
+              </div>
+
+              <h3 className="mb-3 text-xl font-bold leading-snug text-gray-900">
+                {title}
+              </h3>
+
+              <p className="leading-relaxed text-gray-600">{body}</p>
             </div>
-
-            <h2 className="mb-3 text-xl font-bold text-gray-900">
-              Beyond Teaching
-            </h2>
-
-            <p className="text-sm leading-relaxed text-gray-600">
-              Most programs stop at teaching. Reduzer School goes further with
-              career support, portfolio building, interview preparation, and
-              access to real opportunities—because getting hired matters just as
-              much as learning the skills.
-            </p>
-          </div>
-
-          {/* Card 2: Industry-Backed */}
-          <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:p-8">
-            <div className="mb-4 inline-flex rounded-lg bg-red-50 p-3">
-              <Building2 className="h-6 w-6 text-red-600" strokeWidth={2} />
-            </div>
-
-            <h2 className="mb-3 text-xl font-bold text-gray-900">
-              Industry-Backed
-            </h2>
-
-            <p className="text-sm leading-relaxed text-gray-600">
-              Reduzer School is built by the same team behind Reduzer
-              Technologies, a company already placing Kenyan engineers with
-              global companies. We didn&apos;t guess at what the industry needs.
-              We already know.
-            </p>
-          </div>
-
-          {/* Card 3: Full Year Immersive */}
-          <div className="rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md md:col-span-2 lg:col-span-1 md:p-8">
-            <div className="mb-4 inline-flex rounded-lg bg-red-50 p-3">
-              <Users className="h-6 w-6 text-red-600" strokeWidth={2} />
-            </div>
-
-            <h2 className="mb-3 text-xl font-bold text-gray-900">
-              Full Year Immersive
-            </h2>
-
-            <p className="text-sm leading-relaxed text-gray-600">
-              A full year of immersive, in-person software engineering training
-              with real projects, mentorship, career support, and honest
-              expectations—built for serious learners ready to create better
-              opportunities for themselves.
-            </p>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between lg:justify-end">
-          <p className="text-center text-sm font-medium uppercase tracking-wide text-gray-500 md:text-left lg:hidden">
-            Ready to transform your career?
-          </p>
-
-          <Link
-            href="/apply"
-            onClick={()=>trackCTAClick('why-us')}
-            className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-8 py-4 font-semibold text-white transition-all hover:bg-red-700 hover:shadow-lg active:scale-95 md:w-auto"
-          >
-            Start Application
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
-
-        <div className="mt-8 text-center">
-          <p className="text-xs text-gray-400">
-            NEXT COHORT STARTS SEPTEMBER 2026 • LIMITED SLOTS AVAILABLE
-          </p>
+          ))}
         </div>
       </div>
     </section>

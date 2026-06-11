@@ -3,7 +3,7 @@
 import posthog from 'posthog-js';
 import { useCallback } from 'react';
 
-export type CTALocation = 'header' | 'hero' | 'footer' | 'pricing'|'problem-section'|'admission-process'|'program-overview'|'why-us';
+export type CTALocation = 'header' | 'hero' | 'footer' | 'pricing'|'problem-section'|'admission-process'|'program-overview'|'why-us'|'final-cta';
 
 export function useLandingTracking() {
   const trackCTAClick = useCallback((location: CTALocation) => {

@@ -60,7 +60,7 @@ export function Step5FinalQuestions({ data, errors, set }: Props) {
         <Textarea
           value={data.additionalInfo}
           onChange={(v) => set('additionalInfo', v)}
-          placeholder="Any additional context, circumstances, or information you'd like to share..."
+          placeholder="Anything practical we should understand before reviewing your application..."
           rows={4}
         />
       </FieldWrapper>

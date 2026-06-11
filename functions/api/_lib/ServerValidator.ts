@@ -20,10 +20,9 @@ export const ALLOWED = {
   ],
   hasLaptop: ['Yes', 'No'],
   learningMode: [
-    'Online (fully remote learning)',
-    'Physical (on-site learning in Kisii)',
-    'Hybrid (mostly online with an on-site session during the final week)',
-    'I need more information before deciding',
+    'Yes, I can attend in person for the full year',
+    'I need to confirm logistics before enrolment',
+    'No, I cannot commit to full-time in-person study',
   ],
   heardFrom: [
     'Instagram',

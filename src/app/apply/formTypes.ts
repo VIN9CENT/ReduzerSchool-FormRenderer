@@ -60,7 +60,7 @@ export const INITIAL_FORM_DATA: FormData = {
 export const STEPS = [
   'Personal Info',
   'Background',
-  'Logistics',
+  'Commitment',
   'Mindset',
   'Final Questions',
 ];

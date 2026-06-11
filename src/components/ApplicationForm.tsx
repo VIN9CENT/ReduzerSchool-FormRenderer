@@ -146,13 +146,9 @@ export default function ApplicationForm() {
     }
 
     if (step === 3 && isFirstVisit) {
-      const mappedMode: LearningMode = data.learningMode.includes('Online')
-        ? 'online'
-        : data.learningMode.includes('Physical')
-          ? 'physical_kisii'
-          : data.learningMode.includes('Hybrid')
-            ? 'hybrid'
-            : 'undecided';
+      const mappedMode: LearningMode = data.learningMode.startsWith('Yes')
+        ? 'physical_kisii'
+        : 'undecided';
       trackStep3Complete({
         hasLaptop: data.hasLaptop === 'Yes',
         learningMode: mappedMode,
@@ -252,13 +248,13 @@ export default function ApplicationForm() {
           <h2 className="text-xl font-bold text-[#191C1E]">
             {step === 1 && 'Personal Information'}
             {step === 2 && 'Background'}
-            {step === 3 && 'Logistics'}
-            {step === 4 && 'Mindset & Problem Solving'}
+            {step === 3 && 'Commitment'}
+            {step === 4 && 'Mindset and Problem Solving'}
             {step === 5 && 'Final Questions'}
           </h2>
           <p className="text-xs text-gray-400 mt-0.5">
             {step === 4
-              ? 'Answer honestly — these are about your character, not technical skills.'
+              ? 'Answer plainly. We are looking for ownership, not polished answers.'
               : 'All fields marked * are required.'}
           </p>
         </div>
@@ -294,7 +290,7 @@ export default function ApplicationForm() {
           {step < STEPS.length ? (
             <button
               onClick={handleNext}
-              className="flex items-center gap-1.5 px-6 py-2.5 rounded-lg bg-[#BB001F] text-white text-sm font-semibold hover:bg-[#a0001a] transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-6 py-2.5 rounded-lg bg-red text-white text-sm font-semibold hover:bg-red/90 transition-colors shadow-sm"
             >
               Next
               <ChevronRight size={16} />
@@ -303,7 +299,7 @@ export default function ApplicationForm() {
             <button
               onClick={handleSubmit}
               disabled={submitting}
-              className="flex items-center gap-2 px-7 py-2.5 rounded-lg bg-[#BB001F] text-white text-sm font-semibold hover:bg-[#a0001a] transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-7 py-2.5 rounded-lg bg-red text-white text-sm font-semibold hover:bg-red/90 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {submitting ? (
                 <>
@@ -312,7 +308,7 @@ export default function ApplicationForm() {
                 </>
               ) : (
                 <>
-                  Submit Application
+                  Submit application
                   <Check size={16} />
                 </>
               )}

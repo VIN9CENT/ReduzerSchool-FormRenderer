@@ -37,7 +37,7 @@ export function Step4Mindset({ data, errors, set, onPaste }: Props) {
           value={data.whyReduzer}
           onChange={(v) => set('whyReduzer', v)}
           onPaste={() => onPaste('whyJoin')}
-          placeholder="Tell us what motivates you to pursue a career in tech and why Reduzer School specifically..."
+          placeholder="Tell us why this programme fits you now, what you have already tried to learn or build, and why Reduzer School specifically..."
           rows={6}
           error={!!errors.whyReduzer}
         />
@@ -45,7 +45,7 @@ export function Step4Mindset({ data, errors, set, onPaste }: Props) {
       </FieldWrapper>
 
       <FieldWrapper
-        label="What is the biggest obstacle standing between you and a career in tech right now?"
+        label="What is the biggest obstacle standing between you and software engineering right now?"
         hint="Minimum 30 words"
         required
         error={errors.biggestObstacle}
@@ -54,7 +54,7 @@ export function Step4Mindset({ data, errors, set, onPaste }: Props) {
           value={data.biggestObstacle}
           onChange={(v) => set('biggestObstacle', v)}
           onPaste={() => onPaste('challenge')}
-          placeholder="Be honest — this helps us understand how to support you..."
+          placeholder="Be specific. Name the obstacle, what you have tried, and what still gets in the way..."
           rows={4}
           error={!!errors.biggestObstacle}
         />
@@ -70,7 +70,7 @@ export function Step4Mindset({ data, errors, set, onPaste }: Props) {
         <Textarea
           value={data.timeFailed}
           onChange={(v) => set('timeFailed', v)}
-          placeholder="Describe the situation, what happened, and how you responded..."
+          placeholder="Describe what happened, what you owned, and what changed after..."
           rows={4}
           error={!!errors.timeFailed}
         />
@@ -78,7 +78,7 @@ export function Step4Mindset({ data, errors, set, onPaste }: Props) {
       </FieldWrapper>
 
       <FieldWrapper
-        label="If you fall behind in the program, what will you do?"
+        label="If you fall behind in the programme, what will you do?"
         hint="Minimum 30 words"
         required
         error={errors.ifFallBehind}
@@ -86,7 +86,7 @@ export function Step4Mindset({ data, errors, set, onPaste }: Props) {
         <Textarea
           value={data.ifFallBehind}
           onChange={(v) => set('ifFallBehind', v)}
-          placeholder="Describe your approach to catching up and managing setbacks..."
+          placeholder="Tell us what you would do first, who you would tell, and how you would recover the work..."
           rows={3}
           error={!!errors.ifFallBehind}
         />
@@ -102,7 +102,7 @@ export function Step4Mindset({ data, errors, set, onPaste }: Props) {
         <Textarea
           value={data.reqChanges}
           onChange={(v) => set('reqChanges', v)}
-          placeholder="Describe your thought process and approach..."
+          placeholder="Describe what you would clarify, what you would change first, and who you would update..."
           rows={3}
           error={!!errors.reqChanges}
         />

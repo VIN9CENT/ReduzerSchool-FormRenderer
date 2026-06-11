@@ -5,18 +5,19 @@ import { MdOutlineMail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
 import Link from 'next/link';
 import Image from 'next/image';
+import { LOGO } from '@/lib/theme';
 
 export default function Footer() {
   return (
     <footer className="bg-black text-white px-6 md:px-10 py-12">
       <div className="max-w-5xl mx-auto px-6 md:px-10">
         {/* TOP TEXT */}
-        <div className="text-center mb-16 px-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light">
-            Join The <span className="text-red-500">Success !</span>
-          </h2>
-          <p className="text-gray-300 mt-4 text-base sm:text-lg md:text-xl lg:text-2xl">
-            Start your journey with us today
+        <div className="text-center mb-16 px-4 max-w-3xl mx-auto">
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+            Reduzer School is the in-person training ground for the kind of
+            product and engineering work Reduzer Technologies expects. Students
+            learn to think through users, data, code, security, deployment,
+            analytics, communication, and handover as one delivery discipline.
           </p>
         </div>
 
@@ -26,7 +27,7 @@ export default function Footer() {
           <div>
             <Link href="/">
               <Image
-                src="https://brand-assets.reduzer.tech/horizontal/transparent/reduzer.png"
+                src={`${LOGO}/horizontal/transparent/reduzer.png`}
                 alt="Reduzer School"
                 width={160}
                 height={32}
@@ -34,9 +35,9 @@ export default function Footer() {
               />
             </Link>
             <p className="mt-5 text-gray-300 text-sm leading-relaxed">
-              Innovating Today.
+              Product-quality software engineering
               <br />
-              Transforming Tomorrow
+              from Kisii.
             </p>
 
             {/* SOCIALS */}
@@ -63,10 +64,10 @@ export default function Footer() {
           {/* CONTACT */}
           <div>
             <h2 className="text-sm font-bold uppercase">Contact</h2>
-            <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
+            <div className="w-28 border-b border-red mt-4 mb-8"></div>
             <div className="space-y-8 text-sm">
               <a href="tel:+254769267965" className="flex items-center gap-4 ">
-                <FiPhoneCall className="text-red-500 w-5 h-5 shrink-0" />
+                <FiPhoneCall className="text-red w-5 h-5 shrink-0" />
                 <span>+254769267965</span>
               </a>
               <a
@@ -75,15 +76,15 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 "
               >
-                <FaWhatsapp className="text-red-500 w-5 h-5 shrink-0" />
+                <FaWhatsapp className="text-red w-5 h-5 shrink-0" />
                 <span>+254769267965</span>
               </a>
               <a
-                href="mailto:hello@reduzer.tech"
+                href="mailto:hello@school.reduzer.tech"
                 className="flex items-center gap-2 whitespace-nowrap"
               >
-                <MdOutlineMail className="text-red-500 w-5 h-5 shrink-0" />
-                <span>hello@reduzer.tech</span>
+                <MdOutlineMail className="text-red w-5 h-5 shrink-0" />
+                <span>hello@school.reduzer.tech</span>
               </a>
             </div>
           </div>
@@ -91,7 +92,7 @@ export default function Footer() {
           {/* LEGALS */}
           <div>
             <h2 className="text-sm font-bold uppercase">Legals</h2>
-            <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
+            <div className="w-28 border-b border-red mt-4 mb-8"></div>
             <ul className="space-y-8 text-sm text-gray-200">
               <li>
                 <Link href="https://reduzer.tech/privacy-policy">
@@ -117,11 +118,35 @@ export default function Footer() {
 
           {/* PROGRAM */}
           <div>
-            <h2 className="text-sm font-bold uppercase">Program</h2>
-            <div className="w-28 border-b border-red-500 mt-4 mb-8"></div>
-            <ul className="space-y-8 text-sm text-gray-200">
+            <h2 className="text-sm font-bold uppercase">Programme</h2>
+            <div className="w-28 border-b border-red mt-4 mb-8"></div>
+            <ul className="space-y-4 text-sm text-gray-200">
               <li>
-                <Link href="https://school.reduzer.tech/apply">Admission</Link>
+                <Link href="/#fit">Fit</Link>
+              </li>
+              <li>
+                <Link href="/#outcomes">Outcomes</Link>
+              </li>
+              <li>
+                <Link href="/#program">Programme</Link>
+              </li>
+              <li>
+                <Link href="/#why-kisii">Why Kisii</Link>
+              </li>
+              <li>
+                <Link href="/#how-it-works">Workflow</Link>
+              </li>
+              <li>
+                <Link href="/#parents">Parents</Link>
+              </li>
+              <li>
+                <Link href="/#admissions">Admissions</Link>
+              </li>
+              <li>
+                <Link href="/#cost">Cost</Link>
+              </li>
+              <li>
+                <Link href="/#faq">FAQ</Link>
               </li>
             </ul>
           </div>
@@ -154,7 +179,15 @@ export default function Footer() {
       <div className="border-b border-gray-600 mt-10"></div>
 
       {/* COPYRIGHT */}
-      <p className="text-sm text-gray-300 mt-10 ">© 2026 Reduzer School.</p>
+      <div className="mt-10 flex flex-col gap-2">
+        <p className="text-sm text-gray-300">
+          Kisii · September 2026 · 30 seats · hello@school.reduzer.tech · +254
+          769 267 965
+        </p>
+        <p className="text-sm text-gray-300">
+          © Reduzer Technologies · reduzer.tech
+        </p>
+      </div>
     </footer>
   );
 }

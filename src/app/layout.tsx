@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Geist_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { getBaseUrl } from '@/lib/url';
 import type { ReactNode } from 'react';
 
@@ -13,8 +13,8 @@ const inter = Inter({
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const jetbrainsMono = JetBrains_Mono({
+  variable: '--font-jetbrains-mono',
   subsets: ['latin'],
 });
 
@@ -27,30 +27,30 @@ const baseUrl = getBaseUrl();
 
 export const metadata: Metadata = {
   title: {
-    default: 'Reduzer School | Tech Bootcamp Kenya',
+    default: 'Reduzer School | One-Year Software Engineering Programme',
     template: '%s | Reduzer School',
   },
   description:
-    'Reduzer School is a leading coding school in Nyamarambe Town, Kisii County, Kenya. Launch your career in software development in 12 months. Build real projects and get hired by top tech companies.',
+    'Reduzer School is a one-year, in-person software engineering programme in Kisii. Students learn product thinking, full-stack development, security, deployment, and delivery habits.',
 
   metadataBase: new URL(baseUrl),
 
   keywords: [
     'Reduzer School',
-    'tech bootcamp Kenya',
+    'software engineering programme Kenya',
     'coding school Kisii',
     'best coding school Kenya',
     'software development Kenya',
     'full-stack developer course Kenya',
     'learn to code Kenya',
-    'web development bootcamp Kenya',
+    'web development course Kenya',
     'coding school Kenya',
     'software engineering Kenya',
     'tech training Kisii',
     'software training institute',
-    'coding bootcamp for beginners',
+    'coding programme for beginners',
     'career change into tech Kenya',
-    'get hired as a developer Kenya',
+    'software engineering training Kenya',
   ],
 
   authors: [{ name: 'Reduzer School', url: baseUrl }],
@@ -62,15 +62,15 @@ export const metadata: Metadata = {
     type: 'website',
     url: baseUrl,
     siteName: 'Reduzer School',
-    title: 'Reduzer School | Tech Bootcamp Kenya',
+    title: 'Reduzer School | One-Year Software Engineering Programme',
     description:
-      'Reduzer School is a leading coding school in Nyamarambe Town, Kisii County, Kenya. Launch your career in software development in 12 months. Build real projects and get hired by top tech companies.',
+      'Reduzer School is a one-year, in-person software engineering programme in Kisii. Students learn product thinking, full-stack development, security, deployment, and delivery habits.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Reduzer School - Tech Bootcamp Kenya',
+        alt: 'Reduzer School one-year software engineering programme',
       },
     ],
     locale: 'en_US',
@@ -78,9 +78,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: 'summary_large_image',
-    title: 'Reduzer School | Tech Bootcamp Kenya',
+    title: 'Reduzer School | One-Year Software Engineering Programme',
     description:
-      'Reduzer School is a leading coding school in Nyamarambe Town, Kisii County, Kenya. Launch your career in software development in 12 months. Build real projects and get hired by top tech companies.',
+      'Reduzer School is a one-year, in-person software engineering programme in Kisii. Students learn product thinking, full-stack development, security, deployment, and delivery habits.',
     images: ['/og-image.png'],
     site: '@reduzer_tech',
     creator: '@reduzer_tech',
@@ -111,7 +111,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
         {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (

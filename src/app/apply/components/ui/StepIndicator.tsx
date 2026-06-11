@@ -11,11 +11,11 @@ export function StepIndicator({ current }: { current: number }) {
         <p className="text-sm font-semibold text-gray-700">
           Step {current} of {STEPS.length}
         </p>
-        <p className="text-sm font-semibold text-[#BB001F]">{STEPS[current - 1]}</p>
+        <p className="text-sm font-semibold text-red">{STEPS[current - 1]}</p>
       </div>
       <div className="w-full bg-gray-200 rounded-full h-1.5 mb-8 sm:hidden">
         <div
-          className="bg-[#BB001F] h-1.5 rounded-full transition-all duration-300"
+          className="bg-red h-1.5 rounded-full transition-all duration-300"
           style={{ width: `${(current / STEPS.length) * 100}%` }}
         />
       </div>
@@ -32,9 +32,9 @@ export function StepIndicator({ current }: { current: number }) {
                 <div
                   className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
                     done
-                      ? 'bg-[#BB001F] text-white'
+                      ? 'bg-red text-white'
                       : active
-                        ? 'bg-[#BB001F] text-white ring-4 ring-[#BB001F]/20'
+                        ? 'bg-red text-white ring-4 ring-red/20'
                         : 'bg-white border-2 border-gray-200 text-gray-400'
                   }`}
                 >
@@ -42,7 +42,7 @@ export function StepIndicator({ current }: { current: number }) {
                 </div>
                 <span
                   className={`text-[11px] font-semibold whitespace-nowrap ${
-                    active ? 'text-[#BB001F]' : done ? 'text-gray-500' : 'text-gray-400'
+                    active ? 'text-red' : done ? 'text-gray-500' : 'text-gray-400'
                   }`}
                 >
                   {label}
@@ -51,7 +51,7 @@ export function StepIndicator({ current }: { current: number }) {
               {i < STEPS.length - 1 && (
                 <div
                   className={`h-0.5 flex-1 mx-2 mb-5 rounded-full transition-colors ${
-                    step < current ? 'bg-[#BB001F]' : 'bg-gray-200'
+                    step < current ? 'bg-red' : 'bg-gray-200'
                   }`}
                 />
               )}
