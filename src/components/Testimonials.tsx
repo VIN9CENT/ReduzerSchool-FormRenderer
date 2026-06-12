@@ -13,9 +13,9 @@ export default function Testimonials() {
         </h2>
 
         <p className="mb-10 text-base md:text-lg leading-relaxed text-gray-600">
-          We are not publishing placement claims before there are graduates. The
-          first cohort started in 2025 and graduates in August 2026. What we can
-          show now is a student account from inside the programme.
+          Placement claims will wait until there are graduates. The first cohort
+          started in 2025 and graduates in August 2026. What we can show now is
+          a student account from inside the programme.
         </p>
 
         <blockquote className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">

@@ -43,7 +43,7 @@ export default function WhyUsSection() {
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-12 md:mb-16">
           <p className="mb-4 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-red">
-            Why Reduzer built this
+            Why Reduzer runs this
           </p>
           <h2 className="text-3xl font-bold leading-tight text-black md:text-4xl lg:text-5xl">
             Students train against the same product and engineering standards
@@ -51,11 +51,11 @@ export default function WhyUsSection() {
           </h2>
           <p className="mt-5 max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
             Reduzer Technologies runs managed engineering delivery from Kisii.
-            Our engineers work inside client workflows, and Reduzer stays
-            responsible for daily visibility, review, QA, escalation,
-            continuity, and handover. The school is built around one question:
-            what must a beginner be able to do before Reduzer can trust them
-            with client work?
+            Our engineers work inside client workflows for global companies,
+            and Reduzer stays responsible for daily visibility, review, QA,
+            escalation, continuity, and handover. The programme is run with one
+            question in mind: what must a beginner be able to do before Reduzer
+            can trust them with client work?
           </p>
           <p className="mt-5 max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
             We know what real teams notice: unclear requirements, weak user

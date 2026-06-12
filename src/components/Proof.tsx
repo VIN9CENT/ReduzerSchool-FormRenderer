@@ -11,6 +11,11 @@ import {
 
 const outcomes = [
   {
+    icon: FileText,
+    title: 'Clear next step in tech',
+    body: 'A clearer sense of where they fit next: front-end, back-end, data analysis, QA, or another product role. Students should know how to approach a new project, ask the right first questions, and start with a plan instead of feeling lost.',
+  },
+  {
     icon: BarChart3,
     title: 'Product thinking',
     body: 'Personas, user journeys, user stories, ERD diagrams, KPIs, and analytics events that show the student can define the work before writing code.',
@@ -34,11 +39,6 @@ const outcomes = [
     icon: GitPullRequest,
     title: 'Engineering workflow',
     body: 'GitHub repositories, branches, pull requests, review comments, tests, documentation, fixes, and clear status updates.',
-  },
-  {
-    icon: FileText,
-    title: 'Capstone dossier',
-    body: 'A final product with source code, live demo, README, architecture notes, API documentation, test evidence, deployment link, and technical presentation.',
   },
 ];
 
@@ -90,9 +90,7 @@ export default function Proof() {
             />
             <span>
               Students who meet the standard through residency and capstone work
-              are considered for the Reduzer engineering pipeline. If that is
-              not where they land, they still leave with product work, delivery
-              habits, and a clearer account of what they are ready to do next.
+              are considered for the Reduzer engineering pipeline.
             </span>
           </p>
         </div>

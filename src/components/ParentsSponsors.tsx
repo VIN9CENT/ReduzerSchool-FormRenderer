@@ -3,8 +3,8 @@ import { Eye, PhoneCall, ShieldCheck, Wallet } from 'lucide-react';
 const assurances = [
   {
     icon: Eye,
-    title: 'They should not have to guess if the year is working.',
-    body: 'Progress is visible in lessons completed, Code Labs attempted and passed, assessments, project submissions, tests, deployments, feedback resolved, and instructor observation.',
+    title: 'Parents and sponsors receive monthly progress updates.',
+    body: 'The update shows how the student is doing through lessons completed, Code Labs attempted and passed, assessments, project submissions, tests, deployments, feedback resolved, and instructor observation.',
   },
   {
     icon: ShieldCheck,
@@ -14,7 +14,7 @@ const assurances = [
   {
     icon: Wallet,
     title: 'The money decision should be clear.',
-    body: 'The fee is KSh 20,000 per month, KSh 240,000 for the year. A small deposit holds the seat and counts toward the first month.',
+    body: 'Total tuition is KSh 240,000 for the year. A KSh 60,000 deposit confirms the seat and counts toward the total, leaving KSh 180,000 to be paid across the remaining months.',
   },
   {
     icon: PhoneCall,
@@ -72,8 +72,8 @@ export default function ParentsSponsors() {
             Admissions contact: +254 769 267 965 · hello@school.reduzer.tech
           </p>
           <p className="mt-2 text-sm leading-relaxed text-gray-300 md:text-base">
-            Use this for sponsor questions, funded seat conversations, payment
-            planning, and practical questions about the Kisii commitment.
+            Use this for sponsor questions, payment planning, and practical
+            questions about the Kisii commitment.
           </p>
         </div>
       </div>

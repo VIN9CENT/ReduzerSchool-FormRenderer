@@ -10,7 +10,7 @@ interface PersonaInputs {
  * Classifies the applicant into a persona based on Step 2 answers.
  * 
  * Sandra: Mid-level professional, employed, upskilling
- * Alex:   Student or recent grad, self-funded, in tutorial hell
+ * Alex:   Student or recent grad, paying personally, in tutorial hell
  * Faith:  Unemployed, career-starter, high-grit
  */
 export function classifyPersona({ 

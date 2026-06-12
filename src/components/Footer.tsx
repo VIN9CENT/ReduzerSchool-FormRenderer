@@ -1,192 +1,181 @@
 'use client';
 
-import { FaXTwitter, FaWhatsapp, FaLinkedinIn } from 'react-icons/fa6';
-import { MdOutlineMail } from 'react-icons/md';
-import { FiPhoneCall } from 'react-icons/fi';
-import Link from 'next/link';
+import { FaLinkedinIn, FaWhatsapp, FaXTwitter } from 'react-icons/fa6';
+import { Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { LOGO } from '@/lib/theme';
+
+const programmeLinks = [
+  { label: 'Fit and readiness', href: '/#fit' },
+  { label: 'Outcomes', href: '/#outcomes' },
+  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'Programme', href: '/#program' },
+  { label: 'Why Kisii', href: '/#why-kisii' },
+  { label: 'Cost', href: '/#cost' },
+];
+
+const admissionsLinks = [
+  { label: 'Parents and sponsors', href: '/#parents' },
+  { label: 'Admissions process', href: '/#admissions' },
+  { label: 'Apply for September 2026', href: '/apply' },
+  { label: 'FAQ', href: '/#faq' },
+];
+
+const legalLinks = [
+  { label: 'Privacy policy', href: 'https://reduzer.tech/privacy-policy' },
+  { label: 'Terms of service', href: 'https://reduzer.tech/terms-of-service' },
+  {
+    label: 'Cookie policy',
+    href: 'https://www.cookiebot.com/en/cookie-declaration/?cbid=1d803704-ef37-4292-92d7-3280f6bffa19',
+  },
+];
+
+const linkClass =
+  'text-sm leading-relaxed text-white/70 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red';
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white px-6 md:px-10 py-12">
-      <div className="max-w-5xl mx-auto px-6 md:px-10">
-        {/* TOP TEXT */}
-        <div className="text-center mb-16 px-4 max-w-3xl mx-auto">
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
-            Reduzer School is the in-person training ground for the kind of
-            product and engineering work Reduzer Technologies expects. Students
-            learn to think through users, data, code, security, deployment,
-            analytics, communication, and handover as one delivery discipline.
+    <footer className="border-t border-white/10 bg-black text-white">
+      <div className="mx-auto max-w-6xl px-6 py-10 md:px-8 md:py-12">
+        <div className="mb-10 max-w-3xl">
+          <p className="text-base leading-relaxed text-white/70 md:text-lg">
+            Reduzer School is a one-year, in-person software engineering
+            programme in Kisii. The September 2026 intake has 30 seats.
           </p>
         </div>
 
-        {/* MAIN GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          {/* BRAND */}
+        <div className="grid gap-10 md:grid-cols-[1.25fr_1fr_0.9fr_1.1fr]">
           <div>
-            <Link href="/">
+            <Link
+              href="/"
+              className="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red"
+            >
               <Image
                 src={`${LOGO}/horizontal/transparent/reduzer.png`}
                 alt="Reduzer School"
                 width={160}
                 height={32}
-                priority
               />
             </Link>
-            <p className="mt-5 text-gray-300 text-sm leading-relaxed">
-              Product-quality software engineering
-              <br />
-              from Kisii.
+
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/65">
+              Product-quality software engineering from Kisii.
             </p>
 
-            {/* SOCIALS */}
-            <div className="flex gap-6 mt-6">
+            <div className="mt-6 flex gap-4">
               <a
                 href="https://x.com/reduzer_tech"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="X / Twitter"
+                aria-label="Reduzer Technologies on X"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-white/40 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red"
               >
-                <FaXTwitter className="text-2xl " />
+                <FaXTwitter className="h-4 w-4" />
               </a>
               <a
                 href="https://www.linkedin.com/company/reduzer-technologies"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label=" In / LinkedIn"
+                aria-label="Reduzer Technologies on LinkedIn"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-white/40 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red"
               >
-                <FaLinkedinIn className="text-2xl" />
+                <FaLinkedinIn className="h-4 w-4" />
               </a>
             </div>
           </div>
 
-          {/* CONTACT */}
+          <nav aria-label="Footer programme navigation">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">
+              Programme
+            </h2>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+              {programmeLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={linkClass}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Footer admissions navigation">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">
+              Admissions
+            </h2>
+            <ul className="mt-4 grid gap-3">
+              {admissionsLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={linkClass}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           <div>
-            <h2 className="text-sm font-bold uppercase">Contact</h2>
-            <div className="w-28 border-b border-red mt-4 mb-8"></div>
-            <div className="space-y-8 text-sm">
-              <a href="tel:+254769267965" className="flex items-center gap-4 ">
-                <FiPhoneCall className="text-red w-5 h-5 shrink-0" />
-                <span>+254769267965</span>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">
+              Contact admissions
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-white/65">
+              Parents and sponsors can confirm fees, intake dates, seat
+              availability, expectations, and support arrangements before
+              committing.
+            </p>
+
+            <div className="mt-5 grid gap-3 text-sm">
+              <a
+                href="tel:+254769267965"
+                className={`${linkClass} inline-flex items-center gap-3`}
+              >
+                <Phone className="h-4 w-4 shrink-0 text-red" strokeWidth={2.4} />
+                <span>Call +254 769 267 965</span>
               </a>
               <a
                 href="https://wa.me/254769267965"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 "
+                className={`${linkClass} inline-flex items-center gap-3`}
               >
-                <FaWhatsapp className="text-red w-5 h-5 shrink-0" />
-                <span>+254769267965</span>
+                <FaWhatsapp className="h-4 w-4 shrink-0 text-red" />
+                <span>Message admissions on WhatsApp</span>
               </a>
               <a
                 href="mailto:hello@school.reduzer.tech"
-                className="flex items-center gap-2 whitespace-nowrap"
+                className={`${linkClass} inline-flex items-center gap-3 break-all`}
               >
-                <MdOutlineMail className="text-red w-5 h-5 shrink-0" />
-                <span>hello@school.reduzer.tech</span>
+                <Mail className="h-4 w-4 shrink-0 text-red" strokeWidth={2.4} />
+                <span>Email hello@school.reduzer.tech</span>
               </a>
             </div>
           </div>
-
-          {/* LEGALS */}
-          <div>
-            <h2 className="text-sm font-bold uppercase">Legals</h2>
-            <div className="w-28 border-b border-red mt-4 mb-8"></div>
-            <ul className="space-y-8 text-sm text-gray-200">
-              <li>
-                <Link href="https://reduzer.tech/privacy-policy">
-                  Privacy policy
-                </Link>
-              </li>
-              <li>
-                <Link href="https://reduzer.tech/terms-of-service">
-                  Terms of services
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://www.cookiebot.com/en/cookie-declaration/?cbid=1d803704-ef37-4292-92d7-3280f6bffa19"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Cookie policy
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* PROGRAM */}
-          <div>
-            <h2 className="text-sm font-bold uppercase">Programme</h2>
-            <div className="w-28 border-b border-red mt-4 mb-8"></div>
-            <ul className="space-y-4 text-sm text-gray-200">
-              <li>
-                <Link href="/#fit">Fit</Link>
-              </li>
-              <li>
-                <Link href="/#outcomes">Outcomes</Link>
-              </li>
-              <li>
-                <Link href="/#program">Programme</Link>
-              </li>
-              <li>
-                <Link href="/#why-kisii">Why Kisii</Link>
-              </li>
-              <li>
-                <Link href="/#how-it-works">Workflow</Link>
-              </li>
-              <li>
-                <Link href="/#parents">Parents</Link>
-              </li>
-              <li>
-                <Link href="/#admissions">Admissions</Link>
-              </li>
-              <li>
-                <Link href="/#cost">Cost</Link>
-              </li>
-              <li>
-                <Link href="/#faq">FAQ</Link>
-              </li>
-            </ul>
-          </div>
         </div>
 
-        {/* BUTTONS */}
-        <a
-          href="https://wa.me/+254769267965"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Chat on WhatsApp"
-          style={{
-            position: 'fixed',
-            bottom: '24px',
-            right: '24px',
-            backgroundColor: '#25D366',
-            borderRadius: '50%',
-            width: '46px',
-            height: '46px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FaWhatsapp style={{ fontSize: '28px', color: 'white' }} />
-        </a>
-      </div>
+        <div className="mt-10 flex flex-col gap-5 border-t border-white/15 pt-6 text-sm text-white/55 md:flex-row md:items-center md:justify-between">
+          <p>© 2026 Reduzer Technologies</p>
 
-      {/* LINE */}
-      <div className="border-b border-gray-600 mt-10"></div>
-
-      {/* COPYRIGHT */}
-      <div className="mt-10 flex flex-col gap-2">
-        <p className="text-sm text-gray-300">
-          Kisii · September 2026 · 30 seats · hello@school.reduzer.tech · +254
-          769 267 965
-        </p>
-        <p className="text-sm text-gray-300">
-          © Reduzer Technologies · reduzer.tech
-        </p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <p>Kisii · September 2026 intake · 30 seats</p>
+            <nav aria-label="Footer legal navigation">
+              <ul className="flex flex-wrap gap-x-4 gap-y-2">
+                {legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/55 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
       </div>
     </footer>
   );

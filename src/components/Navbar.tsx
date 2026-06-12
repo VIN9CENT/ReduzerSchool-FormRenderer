@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useLandingTracking } from '@/hooks/useLandingTracking';
@@ -11,8 +12,8 @@ const navLinks = [
   { label: 'Fit', href: '/#fit' },
   { label: 'Outcomes', href: '/#outcomes' },
   { label: 'Programme', href: '/#program' },
-  { label: 'Parents', href: '/#parents' },
   { label: 'Cost', href: '/#cost' },
+  { label: 'Parents', href: '/#parents' },
   { label: 'Admissions', href: '/#admissions' },
 ];
 
@@ -21,6 +22,9 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
   const { trackCTAClick } = useLandingTracking();
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+  const solidNav = !isHomePage || scrolled || open;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -55,12 +59,16 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white shadow-[0_2px_20px_rgba(0,0,0,0.08)] border-b border-gray-200' : 'bg-transparent border-b border-transparent'}`}
+      className={`${isHomePage ? 'fixed' : 'sticky'} top-0 z-50 w-full transition-all duration-300 ${
+        solidNav
+          ? 'border-b border-gray-200 bg-white shadow-[0_2px_20px_rgba(0,0,0,0.08)]'
+          : 'border-b border-white/10 bg-black/10 backdrop-blur-[2px]'
+      }`}
     >
-      <div className="flex flex-row justify-between items-center w-full max-w-[1280px] mx-auto px-6 h-20 md:px-8">
+      <div className="mx-auto flex h-20 w-full max-w-7xl flex-row items-center justify-between px-6 md:px-8">
         <Link href="/">
           <Image
-            src={`${LOGO}/horizontal/white/reduzer.png`}
+            src={`${LOGO}/horizontal/${solidNav ? 'white' : 'transparent'}/reduzer.png`}
             alt="Reduzer School"
             width={160}
             height={32}
@@ -77,12 +85,22 @@ export default function Navbar() {
                 key={label}
                 href={href}
                 className={`relative text-[16px] font-medium transition-colors ${
-                  isActive ? 'text-red' : 'text-[#374151] hover:text-red'
+                  solidNav
+                    ? isActive
+                      ? 'text-red'
+                      : 'text-[#374151] hover:text-red'
+                    : isActive
+                      ? 'text-white'
+                      : 'text-white/80 hover:text-white'
                 }`}
               >
                 {label}
                 {isActive && (
-                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-red rounded-full" />
+                  <span
+                    className={`absolute -bottom-1 left-0 h-[2px] w-full rounded-full ${
+                      solidNav ? 'bg-red' : 'bg-white'
+                    }`}
+                  />
                 )}
               </Link>
             );
@@ -92,7 +110,11 @@ export default function Navbar() {
         <Link
           href="/apply"
           onClick={() => trackCTAClick('header')}
-          className="hidden lg:flex items-center justify-center h-9 px-6 rounded-[8px] border border-red text-[13px] font-semibold text-black hover:bg-red/5 transition-colors"
+          className={`hidden h-9 items-center justify-center rounded-[8px] border px-6 text-[13px] font-semibold transition-colors lg:flex ${
+            solidNav
+              ? 'border-red text-black hover:bg-red/5'
+              : 'border-white/45 bg-white/10 text-white hover:border-white/70 hover:bg-white/15'
+          }`}
         >
           Apply · 30 seats
         </Link>
@@ -107,7 +129,7 @@ export default function Navbar() {
           {open ? (
             <X size={24} color={T.red} />
           ) : (
-            <Menu size={24} color={T.red} />
+            <Menu size={24} color={solidNav ? T.red : '#FFFFFF'} />
           )}
         </button>
       </div>

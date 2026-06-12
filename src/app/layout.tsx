@@ -113,15 +113,6 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <head>
-        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
-          <script
-            src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-            data-cookieconsent="ignore"
-            async
-          />
-        )}
-      </head>
       <body className="min-h-full flex flex-col">
         <CookiebotScript />
         <Suspense fallback={null}>

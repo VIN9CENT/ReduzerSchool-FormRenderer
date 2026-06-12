@@ -12,19 +12,26 @@ export default function PricingSection() {
         </p>
 
         <h2 className="mb-6 text-3xl font-bold leading-tight text-black md:text-4xl lg:text-5xl">
-          KSh 20,000 a month. KSh 240,000 for the year.
+          KSh 240,000 for the year.
         </h2>
 
         <p className="mb-6 text-base md:text-lg leading-relaxed text-gray-600">
-          A full year, in person. KSh 20,000 a month, paid across the year, for
-          a total of KSh 240,000. A small deposit holds your seat and counts
-          toward your first month. You can pay one month at a time, or one term
-          at a time if that is easier to plan around.
+          Reduzer School is a one-year, full-time, in-person programme. Total
+          tuition is KSh 240,000, equivalent to KSh 20,000 per month.
         </p>
 
-        <p className="mb-10 text-base md:text-lg leading-relaxed text-gray-900 font-medium">
-          We keep the fee low so more serious applicants can apply. The work
-          still has to meet the same standard.
+        <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6">
+          <p className="text-base leading-relaxed text-gray-700 md:text-lg">
+            To confirm your seat, you pay a KSh 60,000 deposit. This is part of
+            the total tuition, not an extra fee. After the deposit, the
+            remaining KSh 180,000 can be paid at KSh 20,000 per month for nine
+            months.
+          </p>
+        </div>
+
+        <p className="text-base md:text-lg leading-relaxed text-gray-900 font-medium">
+          The fee is set to keep the programme accessible while maintaining the
+          standard of work expected from every student.
         </p>
       </div>
     </section>

@@ -17,9 +17,16 @@ const qualityBars = [
 
 const phaseBlocks = [
   {
+    title: 'Orientation and Computing History',
+    phases: 'Phase 0',
+    body: 'Students begin with the story behind computing: what created the need for computers, how the field escalated from calculation into networks, products, automation, AI, and global infrastructure, and where moral lines appear when software affects people.',
+    standard:
+      'They should understand why the programme is demanding, what responsible technologists must take seriously, and how to stay mentally steady when the work becomes difficult.',
+  },
+  {
     title: 'Foundation Before Frameworks',
     phases: 'Phases 1–4',
-    body: 'Students start below the framework: computer architecture, Linux, Bash, relational databases, SQL, Git, GitHub, and pull requests. They learn the tools and mental models that later make frameworks less mysterious.',
+    body: 'Students start below the framework by learning how modern computers actually work: how code runs, how memory and files are handled, how operating systems organise work, and how the terminal gives them control. From there, they move into Linux, Bash, relational databases, SQL, Git, GitHub, and pull requests.',
     standard:
       'They should be able to model data, write useful queries, automate simple work, use Git clearly, and explain how their code and data are organised.',
   },
@@ -40,16 +47,16 @@ const phaseBlocks = [
   {
     title: 'Product Interfaces',
     phases: 'Phases 12–13 + Single Sprint Residency II',
-    body: 'Front-end is taught as product work, not decoration. Students work through HCI, personas, user journeys, wireframes, semantic HTML, accessibility, colour, typography, forms, responsive CSS, React, routing, state, API data, Tailwind, testing, performance, analytics, and deployment.',
+    body: 'Students learn front-end as the part of the product people actually use. They study HCI: the psychology of how humans understand, trust, and move through software. From there, they work through personas, user journeys, wireframes, semantic HTML, accessibility, colour, typography, forms, responsive CSS, React, routing, state, API data, Tailwind, testing, performance, analytics, and deployment.',
     standard:
       'An interface should connect to real data, support real user flows, work across screens, expose useful analytics events, and make clear UX decisions a product team can discuss.',
   },
   {
     title: 'Product Delivery and Capstone',
     phases: 'Phases 14–15',
-    body: 'The final stretch brings the product process together: requirements, user stories, ERD diagrams, KPIs, analytics setup, sprint planning, CI/CD, documentation, demos, and a full-stack capstone.',
+    body: 'The final stretch is where students prove they can carry a product from idea to handover. They bring together requirements, user stories, ERD diagrams, KPIs, analytics setup, sprint planning, CI/CD, documentation, demos, and a full-stack capstone while also clarifying the kind of tech role they are ready to pursue next.',
     standard:
-      'The capstone is assessed across functionality, UI/UX, state, routing, REST API design, database integration, validation, security, authentication, testing, deployment, code quality, CI/CD, documentation, and presentation.',
+      'The capstone should show a working product, clear product decisions, solid engineering workflow, deployment discipline, documentation, presentation skill, and a realistic next step for the student.',
   },
 ];
 

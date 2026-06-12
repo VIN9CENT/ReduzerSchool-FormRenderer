@@ -20,12 +20,12 @@ const nonNegotiables = [
   {
     icon: Wallet,
     title: 'You have a realistic funding plan.',
-    body: 'You need a way to cover the fee and your living costs for the year. That may be family, a sponsor, savings, an employer, a county partner, an NGO, or a funded seat. Working enough hours alongside the programme will break the study rhythm.',
+    body: 'You need a realistic way to cover the fee and your living costs for the year. This may come from family, a sponsor, savings, an employer, a county partner, or an NGO. Because classes run every working day from 8am to 5pm, applicants should not rely on regular daytime work to fund the year.',
   },
   {
     icon: MapPin,
-    title: 'You can live the Kisii commitment.',
-    body: 'You need a practical plan for where you will stay, how you will get to class, and how you will keep showing up when the work becomes difficult.',
+    title: 'You can make Kisii work practically.',
+    body: 'The school is near Rongo University, where there are many hostel options and the cost of living is relatively low. You still need a practical plan for where you will stay, how you will get to class daily, and how you will attend consistently through demanding periods of the programme.',
   },
   {
     icon: Laptop,
@@ -37,8 +37,8 @@ const nonNegotiables = [
 const strongSignals = [
   {
     icon: ShieldCheck,
-    title: 'Grit under friction',
-    body: 'You have taught yourself something hard before, failed at parts of it, returned to it, and kept going long enough to improve.',
+    title: 'Persistence through difficult learning',
+    body: 'You have tried to learn something difficult before, struggled with it, returned to it, and improved over time.',
   },
   {
     icon: Brain,
@@ -48,7 +48,7 @@ const strongSignals = [
   {
     icon: MessageSquare,
     title: 'Clear communication',
-    body: 'You can read and write clearly in English, ask specific questions, explain what you tried, and accept direct feedback without disappearing.',
+    body: 'You can read and write clearly in English, ask specific questions, explain what you tried, respond to direct feedback, and keep participating.',
   },
   {
     icon: Check,
@@ -59,12 +59,12 @@ const strongSignals = [
 
 const notFits = [
   'You want a certificate more than the quality of the work behind it.',
-  'You need a job guaranteed before the work has been done.',
+  'You need a guaranteed job outcome before applying. Reduzer School does not guarantee employment.',
   'You can only give this evenings, weekends, or whatever time is left after work.',
-  'Your plan for fees, rent, food, transport, and the daily cost of studying full-time is still unclear.',
-  'You want AI to do the thinking, debugging, writing, and decision-making for you.',
-  'You want tutorial projects and dummy deployments instead of real product habits.',
-  'You are looking for a place that will let things slide if you go quiet.',
+  'Your plan for fees and daily living costs is not yet realistic enough to protect your study time.',
+  'You want AI to replace your thinking instead of supporting your learning.',
+  'You only want guided tutorial projects, rather than learning the habits needed for real product work.',
+  'You would rather go quiet than communicate consistently when you are stuck.',
 ];
 
 export default function WhoThisIsFor() {
@@ -79,19 +79,19 @@ export default function WhoThisIsFor() {
         </p>
 
         <h2 className="mb-6 text-3xl font-bold leading-tight text-black md:text-4xl lg:text-5xl">
-          The right student may be a beginner with the right readiness.
+          Beginners can apply if full-time study fits their life.
         </h2>
 
         <p className="mb-12 max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
-          We filter for readiness over polish. A beginner can be a strong
-          applicant when the year is practically possible, they can stay with
-          hard work, and they are willing to be taught how real product work is
-          done.
+          Strong applicants can be new to software engineering. What matters is
+          practical readiness: a full-time year, a workable funding and living
+          plan, steady participation, and willingness to learn real product
+          engineering habits.
         </p>
 
         <div className="mb-12">
           <h3 className="mb-6 text-xl font-bold text-gray-950">
-            Non-negotiables before applying
+            What must be in place before you start
           </h3>
           <div className="grid gap-5 md:grid-cols-2">
             {nonNegotiables.map(({ icon: Icon, title, body }) => (
@@ -114,7 +114,7 @@ export default function WhoThisIsFor() {
         <div className="mb-10 grid gap-8 lg:grid-cols-[1fr_0.85fr]">
           <div>
             <h3 className="mb-6 text-xl font-bold text-gray-950">
-              Strong signals we look for
+              Signals we look for
             </h3>
             <div className="divide-y divide-gray-200 border-y border-gray-200">
               {strongSignals.map(({ icon: Icon, title, body }) => (
@@ -137,7 +137,9 @@ export default function WhoThisIsFor() {
           </div>
 
           <aside className="rounded-lg border border-gray-200 bg-gray-950 p-6 text-white md:p-8">
-            <h3 className="mb-6 text-xl font-bold">Wait before applying if:</h3>
+            <h3 className="mb-6 text-xl font-bold">
+              It may be better to wait if:
+            </h3>
             <ul className="flex flex-col gap-4">
               {notFits.map((item) => (
                 <li key={item} className="flex items-start gap-3">
@@ -155,9 +157,9 @@ export default function WhoThisIsFor() {
         </div>
 
         <p className="mt-10 text-base md:text-lg leading-relaxed text-gray-600">
-          The programme fits a specific kind of commitment. We would rather say
-          that clearly before enrolment than take a year of your life and a seat
-          from someone who is ready for it.
+          This programme asks for a specific kind of commitment. We would rather
+          help applicants see that clearly before enrolment than ask anyone to
+          commit a year before the practical readiness is in place.
         </p>
       </div>
     </section>

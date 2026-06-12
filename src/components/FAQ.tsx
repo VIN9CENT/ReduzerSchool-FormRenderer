@@ -6,132 +6,108 @@ import { useLandingTracking } from '@/hooks/useLandingTracking';
 const faqs = [
   {
     id: 0,
-    question: 'Is this fully in person?',
+    question: 'Is Reduzer School fully in person?',
     answer: [
-      'Yes. In person, Monday to Friday, 8am to 5pm, in Kisii. The programme has one delivery mode: on-site learning with the cohort.',
-      'Being in the room matters because instructors can see blockers early, review habits directly, and keep the cohort moving together.',
-      'This intake requires the full Kisii commitment.',
+      'Yes. The programme runs in person in Kisii, Monday to Friday, 8am to 5pm, for one year.',
+      'The in-person structure helps instructors see blockers early, review work habits directly, and keep the cohort in a steady learning rhythm.',
     ],
   },
   {
     id: 1,
-    question: 'I have no coding experience. Can I still apply?',
+    question: 'Can I apply if I have no coding experience?',
     answer: [
-      'Yes. The year starts before application code: computer architecture, binary, memory, Linux, Bash, SQL, and Git.',
-      'In admissions we pay attention to how you think, how you communicate, and what you have taught yourself before. Drive matters more than a head start.',
+      'Yes. Beginners can apply if full-time study fits their life and they are ready for a demanding year.',
+      'The programme starts with Phase 0 and foundations: computing history, how modern computers work, Linux, Bash, SQL, Git, and the habits needed before application code.',
     ],
   },
   {
     id: 2,
-    question: 'What is the LMS and how does Reduzer AI work?',
+    question: 'Can I work while studying?',
     answer: [
-      'Reduzer School runs on its own LMS. Inside lessons, Reduzer AI helps you get unstuck: highlight a sentence, ask a question, and keep that thread attached to the topic.',
-      'Code Labs run on a real editor with visible test cases, autosaved progress, and saved drafts. Submissions can include code, product decisions, tests, deployment work, and review notes. AI can help explain and flag issues. Instructors still decide whether the work passes.',
+      'This is a full-time, in-person programme. Applicants should not rely on regular daytime work during the year.',
+      'Any outside commitment must fit around attendance, workload, recovery time, and living costs.',
     ],
   },
   {
     id: 3,
-    question: 'Will I get a job at Reduzer when I finish?',
+    question: 'How much does the programme cost, and how is it paid?',
     answer: [
-      'Maybe. Students who clear the Single Sprint Residencies and capstone at the standard we set are considered for the Reduzer engineering pipeline.',
-      'That path is earned through the work itself. It is never promised upfront.',
-      'Outside the Reduzer pipeline, you still leave with product work, coached communication, deployment habits, a full-stack capstone, and relationships built through Reduzer partners and client-facing opportunities.',
+      'Total tuition is KSh 240,000. A KSh 60,000 deposit confirms your seat and counts toward the total tuition; it is not an extra fee.',
+      'After the deposit, the remaining KSh 180,000 can be paid at KSh 20,000 per month for nine months.',
     ],
   },
   {
     id: 4,
-    question: 'Can I work part-time while studying?',
+    question: 'What extra costs should families plan for?',
     answer: [
-      'This is a full-time programme, full working days, five days a week. Students who try to combine it with employment consistently fall behind and leave early. We’d rather say this clearly upfront than take the seat.',
+      'Families should plan for accommodation, food, transport, a reliable laptop, internet or data, and personal living costs.',
+      'The school is near Rongo University, so hostel options are available nearby and daily living costs are relatively lower than in major cities.',
     ],
   },
   {
     id: 5,
-    question: 'Why does this take longer than a short bootcamp?',
+    question: 'Is accommodation provided?',
     answer: [
-      'Because the things that make a new engineer useful take time: understanding users, modelling data, writing code, testing, debugging, checking security, deploying properly, communicating clearly, and improving work after feedback.',
-      'A shorter programme can introduce syntax. Reduzer School gives students time to build product habits beyond exercises.',
+      'Accommodation is not provided by the school. Students arrange where they stay.',
+      'The school is near Rongo University, where there are many hostel options. Admissions can share local guidance before enrolment.',
     ],
   },
   {
     id: 6,
-    question: 'What happens if I struggle and fall behind?',
-    answer: [
-      'Progress is visible through lessons, Code Labs, assessments, product plans, project submissions, tests, deployments, review comments, and instructor observation. If you start to drift, we want to catch it while the gap is still small.',
-      'You still have to own the recovery. We can support early, while the work remains yours.',
-    ],
-  },
-  {
-    id: 7,
-    question: 'What if I don’t meet the standard at the end?',
-    answer: [
-      'You still leave with the real software you built and a clear account of where you stand.',
-      'That is useful because it tells you what to work on next. If the gap is something you can close, you can reapply for a future cohort.',
-    ],
-  },
-  {
-    id: 8,
-    question: 'Why is the programme in person?',
-    answer: [
-      'Beginners need structure before they can handle freedom. Online learning offers flexibility before most people have the habits to use it well.',
-      'In person, instructors can see when you are stuck, and you learn to raise blockers before they become missed deadlines. That habit is hard to build alone.',
-    ],
-  },
-  {
-    id: 9,
-    question: 'Why Kisii?',
-    answer: [
-      'The programme runs in Nyamarambe, Kisii because the year needs focus. Nairobi is expensive, loud, and hard to stay consistent in. Long commutes and daily survival pressure take energy away from learning.',
-      'Kisii gives students a lower-cost, quieter environment where full-time study is more realistic. Students from the first cohort told us they would have been more distracted if the programme had been online.',
-      'Being together also changes the student dynamic: classmates see each other struggle, recover, ask questions, and keep showing up. That kind of rhythm is difficult to create alone.',
-    ],
-  },
-  {
-    id: 10,
-    question: 'How does this compare to a university degree?',
-    answer: [
-      'A degree gives you time, theory, and formal recognition, and that can be valuable. Reduzer School focuses on delivery environment habits.',
-      'Many people study software for years and still leave without the habits a working engineering team expects on Monday morning: clear product thinking, visible progress, safe code, useful communication, tested work, and deployment discipline.',
-      'If you want a traditional academic qualification, choose that. If you want a practical year focused on real software engineering work, that is what Reduzer School is for.',
-    ],
-  },
-  {
-    id: 11,
-    question: 'How does this compare to a short bootcamp?',
-    answer: [
-      'Short programmes can be useful for exposure. They help you find out whether coding interests you at all.',
-      'Reduzer School is for the next question: can you define, build, secure, deploy, measure, and explain work the way a real product team expects?',
-    ],
-  },
-  {
-    id: 12,
-    question: 'Are internships counted as job placements?',
-    answer: [
-      'Internships are reported separately from full-time placements. When our first cohort graduates, we will report outcomes with clear definitions.',
-      'Full-time roles, internships, freelance work, continued study, Reduzer pipeline entry, and unverified outcomes will be reported separately.',
-    ],
-  },
-  {
-    id: 13,
     question: 'What laptop do I need?',
     answer: [
-      'A reliable personal laptop that can run a modern browser, a code editor, local development tools, Docker, and basic project environments.',
+      'You need a reliable personal laptop that can run a modern browser, a code editor, local development tools, Docker, and basic project environments.',
       'The admissions team shares recommended specifications before enrolment.',
     ],
   },
   {
-    id: 14,
-    question: 'Do parents or sponsors receive progress updates?',
+    id: 7,
+    question: 'Who built the curriculum, and who runs the programme?',
     answer: [
-      'Yes. The admissions team explains the update rhythm before enrolment.',
-      'Progress is visible in lessons completed, assessments passed, product plans submitted, tests run, deployments checked, feedback resolved, and instructor feedback throughout the year.',
+      'The curriculum was built by respected Kenyan engineers for students learning in Kenya.',
+      'Reduzer Technologies runs the programme from Kisii and brings the delivery habits its engineers use when working for or with global companies.',
     ],
   },
   {
-    id: 15,
-    question: 'Is accommodation provided?',
+    id: 8,
+    question: 'How are parents or sponsors kept updated?',
     answer: [
-      'Not at the moment. Students arrange where they stay, and the admissions team can share local guidance before enrolment.',
+      'Parents and sponsors receive monthly progress updates from the dedicated student success team.',
+      'Updates may cover attendance, lessons completed, Code Labs, assessments, submissions, tests, deployments, feedback resolved, and instructor observations.',
+      'The student success team may also call parents or sponsors occasionally when a conversation is more useful than a written update.',
+    ],
+  },
+  {
+    id: 9,
+    question: 'What happens if I struggle and fall behind?',
+    answer: [
+      'The programme has attendance, progress, submission, review, and feedback guidelines designed to catch problems before a student falls too far behind.',
+      'The serious gaps we have seen usually start with missed classes, missed submissions, or silence when a student is stuck.',
+      'If that happens, instructors and the student success team help identify the gap and agree on a recovery path. The student still has to attend, communicate, and do the recovery work.',
+    ],
+  },
+  {
+    id: 10,
+    question: 'Will I get a job at Reduzer when I finish?',
+    answer: [
+      'No employment is guaranteed. Reduzer School does not guarantee employment at Reduzer or anywhere else.',
+      'Students who meet the required standard through residency and capstone work are considered for the Reduzer engineering pipeline, but entry is not promised upfront.',
+    ],
+  },
+  {
+    id: 11,
+    question: 'How will graduate outcomes be reported?',
+    answer: [
+      'Placement claims will wait until graduate outcomes exist. The first cohort started in 2025 and graduates in August 2026.',
+      'Outcomes will be reported by category, including full-time roles, internships, freelance work, continued study, Reduzer pipeline entry, and unverified outcomes.',
+    ],
+  },
+  {
+    id: 12,
+    question: 'Why does the programme take one year?',
+    answer: [
+      'The year gives students time to build foundations, product thinking, engineering workflow, deployment discipline, communication habits, and a full-stack capstone.',
+      'Students also use the year to understand where they fit next in tech, such as front-end, back-end, data analysis, QA, or another product role.',
     ],
   },
 ];

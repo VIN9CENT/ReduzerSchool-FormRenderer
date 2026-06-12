@@ -8,7 +8,7 @@ const steps = [
   },
   {
     title: 'You interview and sit an assessment.',
-    desc: 'We pay attention to how you think, how you communicate, how you reason through unclear work, and how you respond when something is difficult at first. We are looking for aptitude, effort, and drive far more than a head start.',
+    desc: 'The interview and assessment help us understand how you think, how you communicate, how you reason through unclear work, and how you respond when something is difficult at first.',
   },
   {
     title: 'We answer within 3 to 5 business days.',
@@ -16,7 +16,7 @@ const steps = [
   },
   {
     title: 'You confirm your seat and arrange payment.',
-    desc: 'A small deposit holds your place and counts toward your first month. The remaining fee is structured before enrolment, so the cost is clear before the year starts.',
+    desc: 'A KSh 60,000 deposit confirms your seat and counts toward the total tuition. The remaining balance is structured before enrolment, so the cost is clear before the year starts.',
   },
 ];
 

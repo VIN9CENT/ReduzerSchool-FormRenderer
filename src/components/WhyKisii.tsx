@@ -6,7 +6,7 @@ const reasons = [
   {
     icon: Wallet,
     title: 'Lower daily pressure',
-    body: 'Kisii keeps the cost of the programme more realistic. Rent, food, movement, and basic living costs matter when a student needs to study full-time without carrying Nairobi-level pressure every day.',
+    body: 'Kisii keeps the cost of the programme more realistic. The school is near Rongo University, where affordable hostels are easier to find, and daily costs like food and movement are lower than Nairobi-level pressure.',
   },
   {
     icon: WifiOff,
