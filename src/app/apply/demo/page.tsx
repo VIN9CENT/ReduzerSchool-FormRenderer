@@ -70,9 +70,9 @@ export default function RendererDemoPage() {
       <main className="flex-grow bg-gray-50 py-12 px-4">
         <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Assignment: Question Renderer</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Fill the Form to Start Your Application</h1>
             <p className="text-gray-600 mt-2">
-              This page demonstrates the dynamic form rendering component.
+              This is my demonstration of the dynamic form rendering component.
             </p>
           </div>
 
