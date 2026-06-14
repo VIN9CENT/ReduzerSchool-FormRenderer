@@ -40,10 +40,9 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
     return questions.every((q: Question) => validateField(answers[q.id], q.validation) === '');
   }, [answers, questions]);
 
-  // Autofill fix: override Chrome's blue background with inset box-shadow
   const inputBase = "w-full px-3 py-2.5 sm:px-4 sm:py-2 border rounded-sm outline-none transition-all focus:ring-1 focus:ring-red-600 focus:border-red-600 text-sm sm:text-base autofill:shadow-[inset_0_0_0px_1000px_white] autofill:[-webkit-text-fill-color:theme(colors.gray.900)]";
-  const inputNormal = "border-gray-400 text-gray-900 bg-white";
-  const inputError = "border-red-600 bg-red-50";
+  const inputNormal = "border-gray-400 text-gray-900 bg-white placeholder:text-gray-400";
+  const inputError = "border-red-600 bg-red-50 placeholder:text-gray-400";
 
   return (
     <form onSubmit={(e) => { e.preventDefault(); if (isFormValid) onSubmit(answers); }} className="space-y-5 sm:space-y-6">
@@ -64,6 +63,7 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
               <input
                 id={q.id}
                 type="text"
+                placeholder={q.placeholder}
                 className={`${inputBase} ${fieldError ? inputError : inputNormal}`}
                 value={typeof val === 'string' ? val : ''}
                 onPaste={(e) => !allowPasting && e.preventDefault()}
@@ -75,6 +75,7 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
               <textarea
                 id={q.id}
                 rows={4}
+                placeholder={q.placeholder}
                 className={`${inputBase} ${fieldError ? inputError : inputNormal}`}
                 value={typeof val === 'string' ? val : ''}
                 onPaste={(e) => !allowPasting && e.preventDefault()}

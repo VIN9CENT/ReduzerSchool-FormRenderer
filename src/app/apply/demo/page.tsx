@@ -6,19 +6,20 @@ import { Question } from '../validation/QuestionTypes';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-// Define the assignment's test questions
 const demoQuestions: Question[] = [
   {
     id: 'fullName',
     type: 'text',
     label: 'Full Name',
-    validation: { required: true, minLength: 2 }
+    placeholder: 'e.g. Jane Mwangi',
+    validation: { required: true, minLength: 2 },
   },
   {
     id: 'motivation',
     type: 'textarea',
     label: 'Why do you want to join Reduzer School?',
-    validation: { required: true, minLength: 10 }
+    placeholder: 'Tell us what drives you to pursue software engineering...',
+    validation: { required: true, minLength: 10 },
   },
   {
     id: 'educationLevel',
@@ -28,9 +29,9 @@ const demoQuestions: Question[] = [
       { label: 'High School', value: 'high_school' },
       { label: 'Undergraduate', value: 'undergraduate' },
       { label: 'Post-Graduate', value: 'graduate' },
-      { label: 'Self-Taught', value: 'self_taught' }
+      { label: 'Self-Taught', value: 'self_taught' },
     ],
-    validation: { required: true }
+    validation: { required: true },
   },
   {
     id: 'preferredTrack',
@@ -39,9 +40,9 @@ const demoQuestions: Question[] = [
     options: [
       { label: 'Frontend', value: 'frontend' },
       { label: 'Backend', value: 'backend' },
-      { label: 'Fullstack', value: 'fullstack' }
+      { label: 'Fullstack', value: 'fullstack' },
     ],
-    validation: { required: true }
+    validation: { required: true },
   },
   {
     id: 'skills',
@@ -51,10 +52,10 @@ const demoQuestions: Question[] = [
       { label: 'HTML', value: 'html' },
       { label: 'CSS', value: 'css' },
       { label: 'JavaScript', value: 'javascript' },
-      { label: 'TypeScript', value: 'typescript' }
+      { label: 'TypeScript', value: 'typescript' },
     ],
-    validation: { required: true }
-  }
+    validation: { required: true },
+  },
 ];
 
 export default function RendererDemoPage() {
@@ -66,7 +67,7 @@ export default function RendererDemoPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      
+
       <main className="flex-grow bg-gray-50 py-12 px-4">
         <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
           <div className="mb-8">
@@ -76,12 +77,11 @@ export default function RendererDemoPage() {
             </p>
           </div>
 
-          <QuestionRenderer 
-            questions={demoQuestions} 
-            onSubmit={handleSubmission} 
-            allowPasting={false} 
+          <QuestionRenderer
+            questions={demoQuestions}
+            onSubmit={handleSubmission}
+            allowPasting={false}
           />
-          
         </div>
       </main>
 
