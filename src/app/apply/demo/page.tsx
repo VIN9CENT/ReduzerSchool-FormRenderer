@@ -6,62 +6,215 @@ import { Question } from '../validation/QuestionTypes';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+// Reusable regex patterns
+const PATTERNS = {
+  // Kenyan phone: 07XXXXXXXX, 01XXXXXXXX, +2547XXXXXXXX, 2547XXXXXXXX
+  kenyanPhone: '^(\\+?254|0)(7[0-9]{8}|1[0-9]{8})$',
+  email: '^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$',
+  url: '^https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z]{2,6}(\\/[-a-zA-Z0-9()@:%_+.~#?&/=]*)?$',
+  gpa: '^(4(\\.0+)?|[0-3](\\.[0-9]+)?)$', // 0.0 to 4.0
+  fullName: '^[a-zA-Z]+([ \\-][a-zA-Z]+)+$', // at least two words
+};
+
 const demoQuestions: Question[] = [
+  // Personal Information
   {
     id: 'fullName',
     type: 'text',
     label: 'Full Name',
     placeholder: 'e.g. Jane Mwangi',
-    validation: { required: true, minLength: 2 },
+    validation: {
+      required: true,
+      minLength: 2,
+      pattern: PATTERNS.fullName,
+      patternMessage: 'Enter your first and last name',
+    },
   },
   {
-    id: 'motivation',
-    type: 'textarea',
-    label: 'Why do you want to join Reduzer School?',
-    placeholder: 'Tell us what drives you to pursue software engineering...',
-    validation: { required: true, minLength: 10 },
+    id: 'email',
+    type: 'email',
+    label: 'Email Address',
+    placeholder: 'e.g. jane@example.com',
+    validation: {
+      required: true,
+      pattern: PATTERNS.email,
+      patternMessage: 'Enter a valid email address',
+    },
   },
+  {
+    id: 'phone',
+    type: 'tel',
+    label: 'Phone Number',
+    placeholder: 'e.g. 0712 345 678',
+    hint: 'Kenyan number — 07XXXXXXXX or 01XXXXXXXX or +2547XXXXXXXX',
+    validation: {
+      required: true,
+      pattern: PATTERNS.kenyanPhone,
+      patternMessage: 'Enter a valid Kenyan phone number e.g. 0712345678',
+    },
+  },
+  {
+    id: 'dateOfBirth',
+    type: 'date',
+    label: 'Date of Birth',
+    hint: 'You must be at least 16 years old to apply.',
+    validation: {
+      required: true,
+      max: new Date(new Date().setFullYear(new Date().getFullYear() - 16))
+        .toISOString()
+        .split('T')[0], // 16 years ago
+      maxMessage: 'You must be at least 16 years old',
+    },
+  },
+  {
+    id: 'portfolio',
+    type: 'url',
+    label: 'Portfolio or LinkedIn URL',
+    placeholder: 'e.g. https://linkedin.com/in/yourname',
+    hint: 'Optional but recommended.',
+    validation: {
+      pattern: PATTERNS.url,
+      patternMessage: 'Enter a valid URL starting with https://',
+    },
+  },
+
+  // Academic Background
   {
     id: 'educationLevel',
     type: 'select',
-    label: 'Highest Education Level',
-    options: [
-      { label: 'High School', value: 'high_school' },
-      { label: 'Undergraduate', value: 'undergraduate' },
-      { label: 'Post-Graduate', value: 'graduate' },
-      { label: 'Self-Taught', value: 'self_taught' },
-    ],
+    label: 'Highest Level of Education Completed',
     validation: { required: true },
+    options: [
+      { label: 'High School / KCSE', value: 'highschool' },
+      { label: 'Diploma', value: 'diploma' },
+      { label: "Bachelor's Degree", value: 'bachelors' },
+      { label: "Master's Degree or Higher", value: 'masters' },
+      { label: 'Other', value: 'other' },
+    ],
   },
+  {
+    id: 'gpa',
+    type: 'number',
+    label: 'Current or Most Recent GPA',
+    placeholder: 'e.g. 3.5',
+    hint: 'Enter on a 4.0 scale.',
+    unit: '/ 4.0',
+    step: 0.1,
+    validation: {
+      min: 0,
+      max: 4,
+      pattern: PATTERNS.gpa,
+      patternMessage: 'GPA must be between 0.0 and 4.0',
+    },
+  },
+
+  // Programme
   {
     id: 'preferredTrack',
     type: 'radio',
     label: 'Preferred Track',
-    options: [
-      { label: 'Frontend', value: 'frontend' },
-      { label: 'Backend', value: 'backend' },
-      { label: 'Fullstack', value: 'fullstack' },
-    ],
+    hint: 'Select the track you want to enrol in.',
     validation: { required: true },
+    options: [
+      { label: 'Frontend Development', value: 'frontend' },
+      { label: 'Backend Development', value: 'backend' },
+      { label: 'Fullstack Development', value: 'fullstack' },
+    ],
   },
   {
     id: 'skills',
     type: 'checkbox',
-    label: 'Skills you already have',
+    label: 'Skills You Already Have',
+    hint: 'Select all that apply.',
+    validation: { required: true },
     options: [
       { label: 'HTML', value: 'html' },
       { label: 'CSS', value: 'css' },
       { label: 'JavaScript', value: 'javascript' },
       { label: 'TypeScript', value: 'typescript' },
+      { label: 'Python', value: 'python' },
+      { label: 'Git', value: 'git' },
     ],
+  },
+
+  // Commitment
+  {
+    id: 'commitmentLevel',
+    type: 'range',
+    label: 'How many hours per week can you commit?',
+    hint: 'Drag to indicate your weekly availability.',
+    unit: 'hrs',
+    step: 5,
+    validation: {
+      required: true,
+      min: 0,
+      max: 60,
+      minMessage: 'Please select at least 5 hours',
+    },
+  },
+
+  // Essays
+  {
+    id: 'motivation',
+    type: 'textarea',
+    label: 'Why do you want to join Reduzer School?',
+    placeholder: 'Tell us what drives you to pursue software engineering...',
+    validation: {
+      required: true,
+      minLength: 50,
+      maxLength: 1000,
+    },
+  },
+  {
+    id: 'obstacle',
+    type: 'textarea',
+    label: 'What is the biggest obstacle between you and software engineering right now?',
+    placeholder: 'Be honest — we want to understand your situation...',
+    validation: {
+      required: true,
+      minLength: 30,
+      maxLength: 500,
+    },
+  },
+
+  // Documents
+  {
+    id: 'transcript',
+    type: 'file',
+    label: 'Upload Academic Transcript',
+    hint: 'PDF only, max 5MB.',
+    validation: {
+      required: true,
+      accept: '.pdf',
+      maxSizeMB: 5,
+    },
+  },
+  {
+    id: 'nationalId',
+    type: 'file',
+    label: 'Upload National ID or Passport',
+    hint: 'PDF or image, max 2MB.',
+    validation: {
+      required: true,
+      accept: '.pdf,.jpg,.jpeg,.png',
+      maxSizeMB: 2,
+    },
+  },
+
+  // Declaration
+  {
+    id: 'declaration',
+    type: 'declaration',
+    label:
+      'I confirm that all information provided in this application is accurate and truthful. I understand that providing false information may result in disqualification.',
     validation: { required: true },
   },
 ];
 
 export default function RendererDemoPage() {
-  const handleSubmission = (data: Record<string, string | string[]>) => {
-    console.log('Assignment Data Output:', data);
-    alert('Form Submitted Successfully! Data is in the console.');
+  const handleSubmission = (data: Record<string, string | string[] | File | null>) => {
+    console.log('Submitted data:', data);
+    alert('Application submitted! Check the console for output.');
   };
 
   return (
@@ -71,9 +224,9 @@ export default function RendererDemoPage() {
       <main className="flex-grow bg-gray-50 py-12 px-4">
         <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Fill the Form to Start Your Application</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Reduzer School Application</h1>
             <p className="text-gray-600 mt-2">
-              This is my demonstration of the dynamic form rendering component.
+              Complete all required fields to submit your application.
             </p>
           </div>
 
