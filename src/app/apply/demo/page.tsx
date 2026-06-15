@@ -22,7 +22,7 @@ const demoQuestions: Question[] = [
     id: 'fullName',
     type: 'text',
     label: 'Full Name',
-    placeholder: 'e.g. Jane Mwangi',
+    placeholder: 'Jane Doe',
     validation: {
       required: true,
       minLength: 2,
@@ -34,7 +34,7 @@ const demoQuestions: Question[] = [
     id: 'email',
     type: 'email',
     label: 'Email Address',
-    placeholder: 'e.g. jane@example.com',
+    placeholder: 'jane@example.com',
     validation: {
       required: true,
       pattern: PATTERNS.email,
@@ -45,36 +45,11 @@ const demoQuestions: Question[] = [
     id: 'phone',
     type: 'tel',
     label: 'Phone Number',
-    placeholder: 'e.g. 0712 345 678',
-    hint: 'Kenyan number — 07XXXXXXXX or 01XXXXXXXX or +2547XXXXXXXX',
+    placeholder: 'Type your phone number',
     validation: {
       required: true,
       pattern: PATTERNS.kenyanPhone,
       patternMessage: 'Enter a valid Kenyan phone number e.g. 0712345678',
-    },
-  },
-  {
-    id: 'dateOfBirth',
-    type: 'date',
-    label: 'Date of Birth',
-    hint: 'You must be at least 16 years old to apply.',
-    validation: {
-      required: true,
-      max: new Date(new Date().setFullYear(new Date().getFullYear() - 16))
-        .toISOString()
-        .split('T')[0], // 16 years ago
-      maxMessage: 'You must be at least 16 years old',
-    },
-  },
-  {
-    id: 'portfolio',
-    type: 'url',
-    label: 'Portfolio or LinkedIn URL',
-    placeholder: 'e.g. https://linkedin.com/in/yourname',
-    hint: 'Optional but recommended.',
-    validation: {
-      pattern: PATTERNS.url,
-      patternMessage: 'Enter a valid URL starting with https://',
     },
   },
 
@@ -92,23 +67,6 @@ const demoQuestions: Question[] = [
       { label: 'Other', value: 'other' },
     ],
   },
-  {
-    id: 'gpa',
-    type: 'number',
-    label: 'Current or Most Recent GPA',
-    placeholder: 'e.g. 3.5',
-    hint: 'Enter on a 4.0 scale.',
-    unit: '/ 4.0',
-    step: 0.1,
-    validation: {
-      min: 0,
-      max: 4,
-      pattern: PATTERNS.gpa,
-      patternMessage: 'GPA must be between 0.0 and 4.0',
-    },
-  },
-
-  // Programme
   {
     id: 'preferredTrack',
     type: 'radio',
