@@ -1,12 +1,15 @@
 # ReduzerSchool — QuestionRenderer
 
-A reusable, fully validated dynamic form renderer built with Next.js and TypeScript. Renders any question array into a working form — no hardcoded questions, no hardcoded validation messages.
+A reusable, fully validated dynamic form renderer built with Next.js and TypeScript. Renders any question array into a working form; no hardcoded questions, no hardcoded validation messages.
 
 ---
 
 ## How to run the app
 
 ```bash
+- Create a directory where you want the project to live and navigate into it then run the following commands on your terminal:
+git clone git@github.com:VIN9CENT/ReduzerSchool-FormRenderer.git
+cd ReduzerSchool-QuestionRenderer
 npm install
 npm run dev
 ```
@@ -24,7 +27,7 @@ npm test
 To run in watch mode:
 
 ```bash
-npm test -- --watch
+npm jest  --watch
 ```
 
 ---
@@ -87,7 +90,7 @@ validation: {
 | Kenyan phone | `^(\+?254\|0)(7[0-9]{8}\|1[0-9]{8})$` | `07XX`, `01XX`, `+2547XX`, `2547XX` |
 | URL | `^https?:\/\/(www\.)?[-a-zA-Z0-9...` | Must start with `https://` |
 | Full name | `^[a-zA-Z]+([ \-][a-zA-Z]+)+$` | At least two words |
-| GPA | `^(4(\.0+)?|[0-3](\.[0-9]+)?)$` | 0.0 to 4.0 |
+
 
 ---
 
@@ -224,7 +227,6 @@ const questions: Question[] = [
 ```
 
 - Applies only to `text`, `email`, and `textarea` fields
-- Does not affect `select`, `radio`, `checkbox`, `file`, `date`, `range`, or `declaration`
 
 ---
 
@@ -260,14 +262,13 @@ src/
 
 ---
 
-## Assumptions made
+## Design & Technical Assumptions
 
-- **No hardcoded questions** — the component renders entirely from the `questions` prop
-- **Custom error messages** — every validation rule accepts an optional `*Message` override so errors read naturally to the user
-- **Checkbox and declaration answers are always arrays** — even when only one option is selected
-- **All other answer types are strings** — including `date`, `number`, `range`, `radio`, and `select`
-- **File answers are `File | null`** — the raw File object is passed to `onSubmit` for the parent to handle uploading
-- **Validation is real-time** — errors appear after a field is touched, not on initial render
-- **Submit button** — disabled until every required field passes all validation rules
-- **Accessibility** — all inputs have matching `htmlFor`/`id` pairs, error messages use `role="alert"`, and radio/checkbox groups use `<fieldset>` + `<legend>`
-- **Styling** — Tailwind CSS utility classes, no external UI library
+1. **Brand Identity:** The form styling uses the Reduzer brand colors (Red, Black, and White). 
+2. **Next.js Environment:** The component uses the `'use client'` directive as it is intended for use within a Next.js App Router environment and requires client-side state management.
+
+3. **Validation Timing:** Validation triggers on the `onChange` event, but error messages only appear after a field has been "touched" (interacted with) to ensure a smooth, non-distracting user experience.
+
+4. **Strict Typing:** All data structures are strictly typed using TypeScript interfaces to ensure data integrity and prevent runtime errors.
+
+5. **Accessibility:** We assumed standard screen-reader support was required, implementing `fieldset`/`legend` for groups and `aria-invalid`/`aria-describedby` for error reporting.
