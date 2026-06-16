@@ -67,16 +67,16 @@ validation: {
   maxLength?: number;
   maxLengthMessage?: string;
 
-  pattern?: string;        // regex string
+  pattern?: string;        
   patternMessage?: string;
 
-  min?: number | string;   // number for number/range, date string for date
+  min?: number | string;   
   minMessage?: string;
 
   max?: number | string;
   maxMessage?: string;
 
-  accept?: string;         // file types e.g. ".pdf,.jpg"
+  accept?: string;        
   maxSizeMB?: number;
   maxSizeMessage?: string;
 }
@@ -133,17 +133,7 @@ const questions: Question[] = [
       patternMessage: 'Enter a valid Kenyan phone number e.g. 0712345678',
     },
   },
-  {
-    id: 'dateOfBirth',
-    type: 'date',
-    label: 'Date of Birth',
-    hint: 'You must be at least 16 years old.',
-    validation: {
-      required: true,
-      max: '2009-06-15',
-      maxMessage: 'You must be at least 16 years old',
-    },
-  },
+  
   {
     id: 'motivation',
     type: 'textarea',
@@ -204,7 +194,6 @@ const questions: Question[] = [
   "fullName": "Jane Mwangi",
   "email": "jane@example.com",
   "phone": "0712345678",
-  "dateOfBirth": "2000-03-15",
   "motivation": "I want to join because...",
   "preferredTrack": "fullstack",
   "skills": ["html", "css", "javascript"],

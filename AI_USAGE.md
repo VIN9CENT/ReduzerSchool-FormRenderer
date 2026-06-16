@@ -66,6 +66,7 @@ List the specific files, functions, or sections where AI played a role.
 | | | |
 
 | QuestionRenderer.test.tsx | Initial test cases for all question types, validation, paste blocking | I verified that all the test cases were correct. |
+| README.md| README.md structure and documentation to ensure all important documentation are captured| I verified that all important documenations were added, removed some unnecessary documentation|
 
 
 > If AI only gave explanations and no final code or content was used, state that clearly.
